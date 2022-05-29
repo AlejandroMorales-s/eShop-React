@@ -1,8 +1,16 @@
+import React from 'react';
+import { BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import Login from './components/views/Login';
+
 function App() {
   return (
-    <div className="App">
-      <h1 className=" text-primary text-6xl font-poppins font-semibold">si</h1>
-    </div>
+    <Router>
+      <Routes>
+        {/* Login - Sign Up */}
+        <Route path="/login" element={<Login/>} />
+
+      </Routes>
+    </Router>
   );
 }
 
