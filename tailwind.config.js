@@ -2,10 +2,14 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx}",
   ],
+  darkMode: 'class',
   theme: {
     colors: {
       transparent: "transparent",
-      gray: "#E5E7EB",
+      gray: {
+        DEFAULT: "#E5E7EB",
+        grayDark: '#e5e7eb4d',
+      },
       primary:{
         DEFAULT: '#9341DD',
         ligth: '#C084FC',
