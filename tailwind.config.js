@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     colors: {
       transparent: "transparent",
+      green: "#00b894",
       gray: {
         DEFAULT: "#E5E7EB",
         grayDark: '#e5e7eb4d',
@@ -56,8 +57,13 @@ module.exports = {
         'shadow': '0px 3px 6px 0px rgba(147, 65, 221, 0.15)',
       },
       width: {
+        '30': '300px',
+        '40': '400px',
         '95': '95%',
         '100': '100%',
+      },
+      height: {
+        '20': '200px',
       }
     },
     fontWeight: {
