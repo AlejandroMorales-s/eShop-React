@@ -32,6 +32,7 @@ export default function Form() {
         setSucces(!succes);
     }
 
+    //* Enable/Disable Button
     const validation = () => {
         if (password.current.value.length >= 8 && email.current.value !== "") {
             setInactiveButton(false);
@@ -40,6 +41,7 @@ export default function Form() {
         }
     }
 
+    //* Effect
     useEffect(() => {
         password.current.oninput = validation;
         email.current.oninput = validation;
