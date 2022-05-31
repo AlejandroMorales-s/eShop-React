@@ -7,9 +7,10 @@ export default function Form() {
     const [validPassword, setValidPassword] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(false);
-    const [active, setActive] = useState(true);
+    const [inactiveButton, setInactiveButton] = useState(true);
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [succes, setSucces] = useState(false);
+    const [inputClicked, setInputClicked] = useState(false);
 
     //* Refs
     const password = useRef();
@@ -31,13 +32,13 @@ export default function Form() {
         emailRegex.test(mail) ? setValidEmail(true) : setValidEmail(false);
         emailRegex.test(mail) ? validEmail = true : validEmail = false;
 
-        if (confirmPassword.current.value !== password.current.value || confirmPassword.current.value === "" || name.current.value === "" || email.current.value === "" || validEmail === false || validPassword === false) {
-            setPasswordsMatch(false);
-            setActive(true);
+        if (confirmPassword.current.value === "" || name.current.value === "" || email.current.value === "" || validEmail === false || validPassword === false) {
+            setInactiveButton(true);
         } else {
-            setPasswordsMatch(true);
-            setActive(false);
+            setInactiveButton(false);
         }
+        
+        confirmPassword.current.value !== password.current.value || password.current.value === "" ? setPasswordsMatch(false) : setPasswordsMatch(true);
     }
     
     //* Show/Hide Password
@@ -49,13 +50,16 @@ export default function Form() {
     //* Open/Close Modal
     const accountCreated = (e) => {
         e.preventDefault();
-        setActive(true);
+        setInactiveButton(true);
         setSucces(true);
         password.current.value = "";
         confirmPassword.current.value = "";
         name.current.value = "";
         email.current.value = "";
+        setInputClicked(false);
     }
+
+    const clicked = () => {setInputClicked(true);}
 
     //* Effect
     useEffect(()=>{
@@ -64,7 +68,6 @@ export default function Form() {
         name.current.oninput = validation;
         email.current.oninput = validation;
     },[password, confirmPassword, name, email])
-
 
     return (
         <>
@@ -80,7 +83,7 @@ export default function Form() {
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
                     <label htmlFor="password" className='font-semibold dark:text-primary-ligth'>Password</label>
                     <div className='relative w-100'>
-                        <input ref={password} id='password' type="password" placeholder="Password" className=' w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray' />      
+                        <input onClick={clicked} ref={password} id='password' type="password" placeholder="Password" className={`w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none ${validPassword? 'focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green' : 'focus:border-yellow focus:ring-yellow dark:focus:border-yellow dark:focus:ring-yellow'}`} />      
                         {isPasswordVisible ?
                             <svg onClick={showPassword} xmlns="http://www.w3.org/2000/svg" className=" font-semibold text-darkBg dark:text-gray h-6 w-6 absolute -translate-y-2/4 top-2/4 right-0.5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -93,16 +96,22 @@ export default function Form() {
                             </svg>
                         }
                     </div>
+                    <div className={`${validPassword ? 'bg-green' : 'bg-yellow'} transition-all delay-100 ease-out h-fit -translate-y-0.5 px-1 py-0.5 ${inputClicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
+                        {validPassword ? <p>Password valid! 🙌</p> : <p>8-16 characters, at least one digit, one lower case letter and one upper case letter 😢</p>}
+                    </div>
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
                     <label htmlFor="confirmPassword" className='font-semibold dark:text-primary-ligth'>Confirm password</label>
-                    <input ref={confirmPassword} id='confirmPassword' type="password" placeholder="Confirm password" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray' />            
+                    <input ref={confirmPassword} id='confirmPassword' type="password" placeholder="Confirm password" className={` border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none ${passwordsMatch? 'focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green' : 'focus:border-red focus:ring-red dark:focus:border-red dark:focus:ring-red'}`} />            
+                    <div className={`${passwordsMatch ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit -translate-y-0.5 px-1 py-0.5 ${inputClicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
+                        {passwordsMatch ? <p>Passwords match! 🥳</p> : <p>Passwords not match 😞</p>}
+                    </div>
                 </div>
                 <div className='mt-1 flex justify-between items-center'>
                     <Link to='/login'>
                         <p className='text-primary font-medium dark:text-primary-ligth'>You already have account? Login</p>
                     </Link>
-                    <button disabled={active} className={`${active ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Sign Up</button>
+                    <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Sign Up</button>
                 </div>
             </form>
             {succes ? <InfoModal open={['green', 'Account created successfully!', 'Your account has been created successfully. Please go to the login page to log in.', 'Go to Login', succes]}/> : null}
