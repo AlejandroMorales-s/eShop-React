@@ -38,7 +38,12 @@ export default function Form() {
             setInactiveButton(false);
         }
         
-        confirmPassword.current.value !== password.current.value || password.current.value === "" ? setPasswordsMatch(false) : setPasswordsMatch(true);
+        if (confirmPassword.current.value === password.current.value && password.current.value !== "") {
+            setPasswordsMatch(true);
+        } else{
+            setPasswordsMatch(false);
+            setInactiveButton(true);
+        }
     }
     
     //* Show/Hide Password
