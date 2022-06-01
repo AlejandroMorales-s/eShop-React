@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { IoMdCart } from 'react-icons/io';
+import MyAccountDropdown from './MyAccountDropdown';
 
 
 export default function Navbar() {
@@ -45,15 +46,7 @@ export default function Navbar() {
                         <input className='px-1 w-100 h-4 border-2 border-primary focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary rounded' type="search" name="" id="" />
                     </div>
                     <div className='flex gap-5'>
-                        <div>
-                            <p className=''>{`Hello ${auth.name}!`}</p>
-                            <div className='flex'>
-                                <p className='font-semibold text-center'>My account</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </div>
-                        </div>
+                        <MyAccountDropdown auth={auth}/>
                         <div className='flex justify-center items-center'>
                             <IoMdCart className='h-3 w-3 text-primary' />
                             <div className='flex'>
@@ -62,7 +55,6 @@ export default function Navbar() {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </div>
-
                         </div>
                     </div>
                 </div>
