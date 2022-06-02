@@ -71,6 +71,8 @@ module.exports = {
         '30': '300px',
         '40': '400px',
         '55': '550px',
+        '65': '650px',
+        '70': '700px',
         '130': '1300px',
         '95': '95%',
         '100': '100%',
@@ -91,8 +93,9 @@ module.exports = {
     },
     fontSize: {
       'text': '14px',
-      'logo': '26px',
       'bold': '16px',
+      'title': '20px',
+      'logo': '26px',
       'base': '1rem',
       'lg': '1.125rem',
     }
