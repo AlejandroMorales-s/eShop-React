@@ -9,8 +9,9 @@ import ShoppingCartDropdown from './ShoppingCartDropdown';
 export default function Navbar() {
     //* Global Context
     const {user} = useContext(globalContext);
+    const {direction} = useContext(globalContext);
 
-    console.log(user); 
+    console.log(direction); 
 
     const [showNavbar, setShowNavbar] = useState(true);
 
@@ -34,13 +35,21 @@ export default function Navbar() {
                     <Link to='/feed'>
                         <h1 className='text-primary dark:text-primary-ligth font-semibold text-logo'>LOGO</h1>
                     </Link>
-                    <div>
-                        <p className='text-text dark:text-gray'>{`Send to ${user.name}`}</p>
+                    <Link to='/direction'>
+                        {direction.directionAdded ? 
+                            <p className='text-text dark:text-gray'>{`Send to ${direction.name}`}</p>
+                        :
+                            <p className='text-text dark:text-gray'>{`Send to ${user.name}`}</p>
+                        }
                         <div className='flex gap-0.5'>
                             <FaMapMarkerAlt className='text-primary dark:text-primary-ligth' />
-                            <p className=' text-boldText font-semibold dark:text-white'>Add direction...</p>
+                            {direction.directionAdded ? 
+                                <p className=' text-boldText font-semibold dark:text-white'>{`${direction.streetAndNumber}, ${direction.country}`}</p>
+                            :
+                                <p className=' text-boldText font-semibold dark:text-white'>Add direction...</p>
+                            }
                         </div>
-                    </div>
+                    </Link>
                     <div className='w-90 max-w-55 mx-2 h-fit relative'>
                         <input className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-ligth focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth rounded dark:bg-darkBg dark:text-gray' type="search" name="" id="" />
                     </div>
