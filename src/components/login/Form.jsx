@@ -1,9 +1,8 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useRef, useState, useEffect, useContext} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import InfoModal from '../modals/InfoModal';
-
-let passwordTest = '998940714289Qw';
-
+import { post } from '../../api';
+import { globalContext } from '../globalContext/GlobalContext';
 
 export default function Form() {
     //* States
@@ -14,6 +13,12 @@ export default function Form() {
     //* Refs
     const password = useRef();
     const email = useRef();
+
+    //* Navigate
+    const navigate = useNavigate();
+
+    //* Global Context
+    const {setUser} = useContext(globalContext);
     
     //* Show/Hide Password
     const showPassword = () => {
@@ -24,17 +29,34 @@ export default function Form() {
     //* Open/Close Modal
     const login = (e) => {
         e.preventDefault();
-        if (password.current.value === passwordTest) {
-            setSucces(true);
-        } else {
-            setSucces(false);
-        }
-        setSucces(!succes);
+        
+        //* API authtentication
+        post('api/auth/login', {
+            email: email.current.value,
+            password: password.current.value
+        })
+        .then(res => {
+            //console.log(res);
+            const user = res.user;
+            setUser({
+                id:user.id,
+                name:user.name,
+                email:user.email,
+                logged:true
+            })
+            navigate("/feed",{
+                replace:true
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            setSucces(!succes);
+        }); 
     }
 
     //* Enable/Disable Button
     const validation = () => {
-        if (password.current.value.length >= 8 && email.current.value !== "") {
+        if (password.current.value.length >= 6 && email.current.value !== "") {
             setInactiveButton(false);
         } else {
             setInactiveButton(true);
@@ -78,7 +100,7 @@ export default function Form() {
                     <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Login</button>
                 </div>
             </form>
-            {!succes ? <InfoModal open={['red', 'Wrong credentials', '', 'Ok']} /> : null}
+            {!succes && <InfoModal open={['red', 'Wrong credentials', '', 'Ok']} />}
         </>
     )
 }

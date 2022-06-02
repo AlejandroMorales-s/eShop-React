@@ -5,7 +5,7 @@ export const globalContext = createContext();
 export default function GlobalContext({children}) {
 
     //* States
-    const [auth,setAuth] = useState({
+    const [user,setUser] = useState({
         id:"",
         name:"",
         email:"",
@@ -14,7 +14,7 @@ export default function GlobalContext({children}) {
 
     return (
         <globalContext.Provider value={{
-            auth,setAuth
+            user,setUser
         }}>
             {children}
         </globalContext.Provider>
