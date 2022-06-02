@@ -1,5 +1,8 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect, useState, useContext} from 'react';
 import {Link} from 'react-router-dom';
+import { post } from '../../api';
+import { useNavigate } from 'react-router-dom';
+import {globalContext} from '../globalContext/GlobalContext';
 import InfoModal from '../modals/InfoModal';
 
 export default function Form() {
@@ -9,14 +12,23 @@ export default function Form() {
     const [passwordsMatch, setPasswordsMatch] = useState(false);
     const [inactiveButton, setInactiveButton] = useState(true);
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-    const [succes, setSucces] = useState(false);
     const [inputClicked, setInputClicked] = useState(false);
+    const [error, setError] = useState({
+        isError: false,
+        error: []
+    });
+
+    //* Global Context
+    const {setUser} = useContext(globalContext);
 
     //* Refs
     const password = useRef();
     const confirmPassword = useRef();
     const name = useRef();
     const email = useRef();
+
+    //* Navigate
+    const navigate = useNavigate();
 
     //* Regular Expressions
     const passwordRegex = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
@@ -56,7 +68,25 @@ export default function Form() {
     const accountCreated = (e) => {
         e.preventDefault();
         setInactiveButton(true);
-        setSucces(true);
+        post('/api/auth/signup', {
+            name: name.current.value,
+            email: email.current.value,
+            password: password.current.value
+        }).then(({user}) => {
+            setUser({
+                logged:true,
+                user
+            });
+            navigate("/feed",{
+                replace:true
+            });
+        }).catch((error) => {
+            console.log(error.errors); 
+            setError({
+                isError: true,
+                error: error.errors[0]
+            });
+        })
         password.current.value = "";
         confirmPassword.current.value = "";
         name.current.value = "";
@@ -73,6 +103,8 @@ export default function Form() {
         name.current.oninput = validation;
         email.current.oninput = validation;
     },[password, confirmPassword, name, email])
+
+    console.log(error); 
 
     return (
         <>
@@ -119,7 +151,7 @@ export default function Form() {
                     <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Sign Up</button>
                 </div>
             </form>
-            {succes ? <InfoModal open={['green', 'Account created successfully!', 'Your account has been created successfully. Please go to the login page to log in.', 'Go to Login', succes]}/> : null}
+            {error.isError && <InfoModal open={['red', 'An error ocurred', `${error.error.email}`, 'Ok', error.isError]}/>}
         </>
     )
 }
