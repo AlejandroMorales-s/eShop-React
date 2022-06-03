@@ -62,6 +62,7 @@ module.exports = {
         'containersShadow': '0px 3px 6px 0px rgba(0, 0, 0, 0.15)',
       },
       width: {
+        '7.5': '75px',
         '30': '300px',
         '40': '400px',
         '120': '1200px',
@@ -84,6 +85,7 @@ module.exports = {
         '2': '20px',
         '3': '30px',
         '4': '40px',
+        '7.5': '75px',
         '20': '200px',
         '130': '1300px',
       }
@@ -97,7 +99,8 @@ module.exports = {
     fontSize: {
       'text': '14px',
       'bold': '16px',
-      'title': '20px',
+      'title': '24px',
+      'subtitle': '20px',
       'logo': '26px',
       'base': '1rem',
       'lg': '1.125rem',

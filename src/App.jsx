@@ -10,6 +10,8 @@ import SignUp from './components/views/SignUp';
 
 //* Direction
 import Direction from './components/views/Direction';
+//* My Account
+import MyAccount from './components/views/MyAccount';
 
 function App() {
 
@@ -41,6 +43,8 @@ function App() {
 
         {/* Direction */}
         <Route path="/direction" element={<Direction/>} />
+        {/* My Account */}
+        <Route path="/account" element={<MyAccount/>} />
       </Routes>
   );
 }
