@@ -1,14 +1,32 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Menu, Transition } from '@headlessui/react'
+import { get } from '../../api';
+import { useNavigate } from 'react-router-dom';
+import { globalContext } from '../globalContext/GlobalContext';
 
 export default function MyAccountDropdown({auth}) {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const rotateIcon = () => setIsOpen(!isOpen);
 
+    const {setUser} = useContext(globalContext);
+
+    const navigate = useNavigate();
+
     const darkMode = () => {
         document.getElementById('html').classList.toggle('dark');
         document.getElementById('html').classList.toggle('bg-darkBg');
+    }
+    const logout = () => {
+        get("/api/auth/logout")
+        .then(result=>{
+            console.log(result)
+            setUser({
+                logged:false,
+                user:{}
+            })
+            navigate("/login")
+        })
     }
     return (
         <>
@@ -88,9 +106,19 @@ export default function MyAccountDropdown({auth}) {
                             {({ active }) => (
                             <p
                                 onClick={darkMode}
-                                className={`${active && 'bg-blue-500'} hover:text-primary hover:underline transition-all ease-in-out delay-50`}
+                                className={`${active && 'bg-blue-500'} hover:text-primary  hover:underline transition-all ease-in-out delay-50`}
                             >
                                 Dark mode
+                            </p>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item>
+                            {({ active }) => (
+                            <p
+                                onClick={logout}
+                                className={`${active && 'bg-blue-500'} cursor-pointer hover:text-primary hover:underline transition-all ease-in-out delay-50`}
+                            >
+                                Log out
                             </p>
                             )}
                         </Menu.Item>
