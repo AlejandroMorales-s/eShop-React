@@ -1,24 +1,52 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { globalContext } from '../globalContext/GlobalContext';
+import InfoModal from '../modals/InfoModal';
 
 export default function AddDirection() {
 
     //* Context
     const {setDirection} = useContext(globalContext);
+    const [error, setError] = useState({
+        isError: false,
+        error: ""
+    });
+    const [success, setSuccess] = useState(false);
 
     //* Add Direction
     const addDirection = (e) => {
         e.preventDefault();
         const {country, name, streetAndNumber, postalCode, phoneNumber, instructions} = e.target;
-        setDirection({
-            directionAdded: true,
-            country: country.value,
-            name: name.value,
-            streetAndNumber: streetAndNumber.value,
-            postalCode: postalCode.value,
-            phoneNumber: phoneNumber.value,
-            instructions: instructions.value,
-        });
+
+        if (country.value === "" || name.value === "" || streetAndNumber.value === "") {
+            //alert("Please fill in all the fields");
+            setError({
+                isError: true,
+                error: "Please fill in all the fields"
+            });
+        } else if (postalCode.value.length !== 5) {
+            //alert("Please enter a valid postal code");
+            setError({
+                isError: true,
+                error: "Please enter a valid postal code"
+            });
+        } else if (phoneNumber.value.length < 8) {
+            //alert("Please enter a valid phone number");
+            setError({
+                isError: true,
+                error: "Please enter a valid phone number"
+            });
+        } else {
+            setSuccess(true);
+            setDirection({
+                directionAdded: true,
+                country: country.value,
+                name: name.value,
+                streetAndNumber: streetAndNumber.value,
+                postalCode: postalCode.value,
+                phoneNumber: phoneNumber.value,
+                instructions: instructions.value,
+            });
+        }
     }
     return (
         <>
@@ -52,6 +80,7 @@ export default function AddDirection() {
                 </div>
                 <button className='shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth' type="submit">Add direction</button>
             </form>
+            {success && <InfoModal open={['green', 'Address created succesfully', '', 'Ok', `${success}`]}/>}
         </>
     )
 }

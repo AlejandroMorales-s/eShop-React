@@ -8,6 +8,8 @@ import { get } from './api';
 import Login from './components/views/Login';
 import SignUp from './components/views/SignUp';
 
+//* Direction
+import Direction from './components/views/Direction';
 
 function App() {
 
@@ -26,7 +28,7 @@ function App() {
       });
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
     })
   }, [setUser])
 
@@ -37,6 +39,8 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<SignUp/>} />
 
+        {/* Direction */}
+        <Route path="/direction" element={<Direction/>} />
       </Routes>
   );
 }
