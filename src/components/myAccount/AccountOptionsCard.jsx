@@ -6,6 +6,8 @@ export default function AccountOptionsCard({title, icon, link, desc}) {
     return (
         <Link to={link}>
             <div className='bg-white flex justify-between items-center gap-2 p-2 rounded shadow-containersShadow w-100 dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark'>
+                <div className='bg-white flex justify-between items-center gap-2 w-100 dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
+
                 <div className='w-fit'>
                     <p>{icon}</p>
                 </div>
@@ -14,6 +16,7 @@ export default function AccountOptionsCard({title, icon, link, desc}) {
                     <p className='text-text'>{desc}</p>
                 </div>
                 <IoIosArrowForward className='text-primary dark:text-primary-ligth text-[30px]'/>
+                </div>
             </div>
         </Link>
     )

@@ -36,18 +36,22 @@ export default function Navbar() {
                         <h1 className='text-primary dark:text-primary-ligth font-semibold text-logo'>LOGO</h1>
                     </Link>
                     <Link to='/direction'>
-                        {direction.directionAdded ? 
-                            <p className='text-text dark:text-gray'>{`Send to ${direction.name}`}</p>
-                        :
-                            <p className='text-text dark:text-gray'>{`Send to ${user.name}`}</p>
-                        }
-                        <div className='flex gap-0.5'>
-                            <FaMapMarkerAlt className='text-primary dark:text-primary-ligth' />
-                            {direction.directionAdded ? 
-                                <p className=' text-boldText font-semibold dark:text-white'>{`${direction.streetAndNumber}, ${direction.country}`}</p>
-                            :
-                                <p className=' text-boldText font-semibold dark:text-white'>Add direction...</p>
-                            }
+                        <div className='flex items-center gap-0.5'>
+                            <FaMapMarkerAlt className='text-primary dark:text-primary-ligth text-[30px] hover:-translate-y-0.5 transition-all ease-in-out delay-50' />
+                            <div className='flex flex-col'>
+                                {direction.directionAdded ? 
+                                    <>
+                                        <p className='text-text dark:text-gray'>{`Send to ${direction.name}`}</p>
+                                        <p className=' text-boldText font-semibold dark:text-white'>{`${direction.streetAndNumber}, ${direction.country}`}</p>
+                                    </>
+                                :
+                                    <>
+                                        <p className='text-text dark:text-gray'>{`Send to ${user.name}`}</p>
+                                        <p className=' text-boldText font-semibold dark:text-white'>Add direction...</p>
+                                    </>
+                                }
+                            </div>
+                        
                         </div>
                     </Link>
                     <div className='w-90 max-w-55 mx-2 h-fit relative'>
