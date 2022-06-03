@@ -7,7 +7,10 @@ import { globalContext } from '../globalContext/GlobalContext';
 export default function Form() {
     //* States
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-    const [succes, setSucces] = useState(true);
+    const [error, setError] = useState({
+        isError: false,
+        error: []
+    });
     const [inactiveButton, setInactiveButton] = useState(true);
 
     //* Refs
@@ -36,21 +39,21 @@ export default function Form() {
             password: password.current.value
         })
         .then(res => {
-            //console.log(res);
             const user = res.user;
             setUser({
-                id:user.id,
-                name:user.name,
-                email:user.email,
+                user: user,
                 logged:true
             })
             navigate("/feed",{
                 replace:true
             })
         })
-        .catch(err => {
-            console.log(err)
-            setSucces(!succes);
+        .catch(error => {
+            console.log(error)
+            setError({
+                isError: true,
+                error: error.errors.map(error => error)
+            });
         }); 
     }
 
@@ -100,7 +103,7 @@ export default function Form() {
                     <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Login</button>
                 </div>
             </form>
-            {!succes && <InfoModal open={['red', 'Wrong credentials', '', 'Ok']} />}
+            {error.isError && <InfoModal color={'red'} title={'An error ocurred'} desc={error.error} btn={'Ok'} open={error.isError} />}
         </>
     )
 }

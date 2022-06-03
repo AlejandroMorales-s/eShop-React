@@ -81,10 +81,10 @@ export default function Form() {
                 replace:true
             });
         }).catch((error) => {
-            console.log(error.errors); 
+            //console.log(error.errors); 
             setError({
                 isError: true,
-                error: error.errors[0]
+                error: error.errors.map(error => error.message)
             });
         })
         password.current.value = "";
@@ -94,7 +94,7 @@ export default function Form() {
         setInputClicked(false);
     }
 
-    const clicked = () => {setInputClicked(true);}
+    const clicked = () => setInputClicked(true);
 
     //* Effect
     useEffect(()=>{
@@ -104,23 +104,21 @@ export default function Form() {
         email.current.oninput = validation;
     },[password, confirmPassword, name, email])
 
-    console.log(error); 
-
     return (
         <>
             <form onSubmit={accountCreated} className='flex flex-col w-100 max-w-45 m-auto'>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
                     <label htmlFor="name" className='font-semibold dark:text-primary-ligth'>Name</label>
-                    <input ref={name} id='name' type="text" placeholder="Name" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray' />             
+                    <input ref={name} id='name' type="text" placeholder="Name" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
                     <label htmlFor="email" className='font-semibold dark:text-primary-ligth'>Email</label>
-                    <input ref={email} id='email' type="email" placeholder="Email" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray' />             
+                    <input ref={email} id='email' type="email" placeholder="example@gmail.com" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
                     <label htmlFor="password" className='font-semibold dark:text-primary-ligth'>Password</label>
                     <div className='relative w-100'>
-                        <input onClick={clicked} ref={password} id='password' type="password" placeholder="Password" className={`w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none ${validPassword? 'focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green' : 'focus:border-yellow focus:ring-yellow dark:focus:border-yellow dark:focus:ring-yellow'}`} />      
+                        <input onClick={clicked} ref={password} id='password' type="password" placeholder="********" className={`w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none ${validPassword? 'focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green' : 'focus:border-yellow focus:ring-yellow dark:focus:border-yellow dark:focus:ring-yellow'}`} />      
                         {isPasswordVisible ?
                             <svg onClick={showPassword} xmlns="http://www.w3.org/2000/svg" className=" font-semibold text-darkBg dark:text-gray h-6 w-6 absolute -translate-y-2/4 top-2/4 right-0.5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -151,7 +149,7 @@ export default function Form() {
                     <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Sign Up</button>
                 </div>
             </form>
-            {error.isError && <InfoModal open={['red', 'An error ocurred', `${error.error.email}`, 'Ok', error.isError]}/>}
+            {error.isError && <InfoModal color={'red'} title={'An error ocurred'} desc={error.error} btn={'Ok'} open={error.isError} />}
         </>
     )
 }
