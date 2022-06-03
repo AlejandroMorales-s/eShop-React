@@ -20,6 +20,7 @@ module.exports = {
       },
       text: '#6B7280',
       darkBg: '#0F172A',
+      ligthBg: '#ededed',
       boldText: '#111827',
       white: '#FFFFFF',
       black: '#000000',
@@ -58,6 +59,7 @@ module.exports = {
       },
       boxShadow: {
         'shadow': '0px 3px 6px 0px rgba(147, 65, 221, 0.15)',
+        'containersShadow': '0px 3px 6px 0px rgba(0, 0, 0, 0.15)',
       },
       width: {
         '30': '300px',

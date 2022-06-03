@@ -30,7 +30,7 @@ export default function Navbar() {
 
     return (
         <>
-            <div className={`fixed ${showNavbar ? 'top-0' : '-top-[100px]'} bg-white dark:bg-darkBg transition-all ease-in-out delay-100 w-100 border-b-2 border-b-gray dark:border-gray-grayDark`}>
+            <div className={`fixed ${showNavbar ? 'top-0' : '-top-[100px]'} bg-white shadow-containersShadow dark:bg-darkBg transition-all ease-in-out delay-100 w-100 border-b-2 border-b-gray dark:border-gray-grayDark`}>
                 <div className='w-95 max-w-130 m-auto flex justify-between items-center py-1'>
                     <Link to='/feed'>
                         <h1 className='text-primary dark:text-primary-ligth font-semibold text-logo'>LOGO</h1>

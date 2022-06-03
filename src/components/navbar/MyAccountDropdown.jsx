@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { get } from '../../api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 
 export default function MyAccountDropdown({auth}) {
@@ -16,6 +16,7 @@ export default function MyAccountDropdown({auth}) {
     const darkMode = () => {
         document.getElementById('html').classList.toggle('dark');
         document.getElementById('html').classList.toggle('bg-darkBg');
+        document.getElementById('html').classList.toggle('bg-ligthBg');
     }
     const logout = () => {
         get("/api/auth/logout")
@@ -54,12 +55,12 @@ export default function MyAccountDropdown({auth}) {
                     <Menu.Items className=' flex flex-col bg-white border-2 border-gray rounded p-1'>
                         <Menu.Item>
                             {({ active }) => (
-                            <a
+                            <Link to='/account'
                                 className={`${active && 'bg-blue-500'} transition-all ease-in-out delay-50 hover:text-primary hover:underline`}
                                 href="/account-settings"
                             >
                                 Account
-                            </a>
+                            </Link>
                             )}
                         </Menu.Item>
                         <Menu.Item>

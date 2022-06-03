@@ -7,6 +7,7 @@ export default function DarkModeToggle() {
     const darkMode = () => {
         document.getElementById('html').classList.toggle('bg-darkBg');
         document.getElementById('html').classList.toggle('dark');
+        document.getElementById('html').classList.toggle('bg-ligthBg');
     }
     return (
 
