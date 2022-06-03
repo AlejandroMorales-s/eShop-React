@@ -1,17 +1,49 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { get } from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
+//* Icons
+import { BiHistory } from 'react-icons/bi';
+import { BsBoxSeam, BsCreditCard } from 'react-icons/bs';
+import { AiOutlineUser, AiOutlineHeart } from 'react-icons/ai';
 
 export default function MyAccountDropdown({auth}) {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const options = [
+        {
+            title: 'My account',
+            link: '/account',
+            icon: <AiOutlineUser className='text-primary dark:text-primary-ligth text-[17.5px]'/>
+        },
+        {
+            title: 'Payment methods',
+            link: '/account/my-cards',
+            icon: <BsCreditCard className='text-primary dark:text-primary-ligth text-[17.5px]'/>
+        },
+        {
+            title: 'Wishlist',
+            link: '/account/my-wishlist',
+            icon: <AiOutlineHeart className='text-primary dark:text-primary-ligth text-[17.5px]'/>
+        },
+        {
+            title: 'Orders',
+            link: '/account/my-orders',
+            icon: <BsBoxSeam className='text-primary dark:text-primary-ligth text-[17.5px]'/>
+        },
+        {
+            title: 'History',
+            link: '/account/history',
+            icon: <BiHistory className='text-primary dark:text-primary-ligth text-[17.5px]'/>
+        }
+    ]
 
-    const rotateIcon = () => setIsOpen(!isOpen);
+    const [isOpen, setIsOpen] = useState(false);
 
     const {setUser} = useContext(globalContext);
-
+    
     const navigate = useNavigate();
+    
+    const rotateIcon = () => setIsOpen(!isOpen);
 
     const darkMode = () => {
         document.getElementById('html').classList.toggle('dark');
@@ -50,77 +82,38 @@ export default function MyAccountDropdown({auth}) {
                     leave="transition duration-100 ease-out"
                     leaveFrom="transform scale-100 opacity-100"
                     leaveTo="transform scale-95 opacity-0"
-                    className='absolute top-16'
+                    className='absolute top-16 right-[15%]'
                 >
-                    <Menu.Items className=' flex flex-col bg-white border-2 border-gray rounded p-1'>
-                        <Menu.Item>
+                    <Menu.Items className=' flex flex-col bg-white border-2 border-gray rounded p-1 gap-1 shadow-containersShadow dark:bg-darkBg dark:border-gray-grayDark'>
+                        {options.map((option, index) => (
+                            <Menu.Item key={index}>
+                                {({ active }) => (
+                                    <Link to={option.link}>
+                                        <div className='bg-white flex justify-between items-center gap-2 p-1 rounded w-100 dark:bg-darkBg hover:border-2 hover:border-gray hover:dark:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
+                                            {option.icon}
+                                            <div className='w-100'>
+
+                                                <p className='text-text dark:text-gray'>{option.title}</p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )}
+                            </Menu.Item>
+                        ))}
+                        <Menu.Item onClick={darkMode} className='cursor-pointer bg-white p-1 rounded shadow-shadow w-100 border-2 border-primary dark:bg-darkBg dark:border-primary-ligth'>
                             {({ active }) => (
-                            <Link to='/account'
-                                className={`${active && 'bg-blue-500'} transition-all ease-in-out delay-50 hover:text-primary hover:underline`}
-                                href="/account-settings"
-                            >
-                                Account
-                            </Link>
+                                <p>
+                                    <div>
+                                        <p className='text-primary font-medium dark:text-gray text-center'>Dark mode</p>
+                                    </div>
+                                </p>
                             )}
                         </Menu.Item>
-                        <Menu.Item>
+                        <Menu.Item onClick={logout} className='cursor-pointer bg-red p-1 rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50'>
                             {({ active }) => (
-                            <a
-                                className={`${active && 'bg-blue-500'} hover:text-primary hover:underline transition-all ease-in-out delay-50`}
-                                href="/account-settings"
-                            >
-                                Payment methods
-                            </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                            <a
-                                className={`${active && 'bg-blue-500'} hover:text-primary hover:underline transition-all ease-in-out delay-50`}
-                                href="/account-settings"
-                            >
-                                Favorites
-                            </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                            <a
-                                className={`${active && 'bg-blue-500'} hover:text-primary hover:underline transition-all ease-in-out delay-50`}
-                                href="/account-settings"
-                            >
-                                Orders
-                            </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                            <a
-                                className={`${active && 'bg-blue-500'} hover:text-primary hover:underline transition-all ease-in-out delay-50`}
-                                href="/account-settings"
-                            >
-                                History
-                            </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                            <p
-                                onClick={darkMode}
-                                className={`${active && 'bg-blue-500'} hover:text-primary  hover:underline transition-all ease-in-out delay-50`}
-                            >
-                                Dark mode
-                            </p>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                            <p
-                                onClick={logout}
-                                className={`${active && 'bg-blue-500'} cursor-pointer hover:text-primary hover:underline transition-all ease-in-out delay-50`}
-                            >
-                                Log out
-                            </p>
+                                <div className=''>
+                                    <p className='text-white font-medium text-center hover:text-red transition-all ease-in-out delay-50'>Log Out</p>
+                                </div>
                             )}
                         </Menu.Item>
                     </Menu.Items>
