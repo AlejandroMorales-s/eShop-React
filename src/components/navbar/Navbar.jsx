@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+//* Dropdowns
 import MyAccountDropdown from './MyAccountDropdown';
 import ShoppingCartDropdown from './ShoppingCartDropdown';
 
@@ -9,9 +10,7 @@ import ShoppingCartDropdown from './ShoppingCartDropdown';
 export default function Navbar() {
     //* Global Context
     const {user} = useContext(globalContext);
-    const {direction} = useContext(globalContext);
-
-    console.log(direction); 
+    const {shoppingAddress} = useContext(globalContext);
 
     const [showNavbar, setShowNavbar] = useState(true);
 
@@ -35,14 +34,14 @@ export default function Navbar() {
                     <Link to='/feed'>
                         <h1 className='text-primary dark:text-primary-ligth font-semibold text-logo'>LOGO</h1>
                     </Link>
-                    <Link to='/direction'>
+                    <Link to='/my-addresses'>
                         <div className='flex items-center gap-0.5'>
                             <FaMapMarkerAlt className='text-primary dark:text-primary-ligth text-[30px] hover:-translate-y-0.5 transition-all ease-in-out delay-50' />
                             <div className='flex flex-col'>
-                                {direction.directionAdded ? 
+                                {shoppingAddress.directionAdded ? 
                                     <>
-                                        <p className='text-text dark:text-gray'>{`Send to ${direction.name}`}</p>
-                                        <p className=' text-boldText font-semibold dark:text-white'>{`${direction.streetAndNumber}, ${direction.country}`}</p>
+                                        <p className='text-text dark:text-gray'>{`Send to ${shoppingAddress.name}`}</p>
+                                        <p className=' text-boldText font-semibold dark:text-white'>{`${shoppingAddress.streetAndNumber}, ${shoppingAddress.country}`}</p>
                                     </>
                                 :
                                     <>

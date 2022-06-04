@@ -9,14 +9,9 @@ export default function GlobalContext({children}) {
         user:{},
         logged:false
     });
-    const [direction, setDirection] = useState({
-        directionAdded:false,
-        country: "",
-        name: "",
-        streetAndNumber: "",
-        postalCode: "",
-        phoneNumber: "",
-        instructions: "",
+    const [addresses, setAddresses] = useState([]);
+    const [shoppingAddress, setShoppingAddress] = useState({
+        direccionAdded: false
     });
 
     return (
@@ -24,15 +19,10 @@ export default function GlobalContext({children}) {
             user:user.user,
             logged:user.logged,
             setUser,
-            direction,
-            directionAdded: direction.directionAdded,
-            country:direction.country,
-            name:direction.name,
-            streetAndNumber:direction.streetAndNumber,
-            postalCode:direction.postalCode,
-            phoneNumber:direction.phoneNumber,
-            instructions:direction.instructions,
-            setDirection,
+            addresses,
+            setAddresses,
+            shoppingAddress,
+            setShoppingAddress
         }}>
             {children}
         </globalContext.Provider>
