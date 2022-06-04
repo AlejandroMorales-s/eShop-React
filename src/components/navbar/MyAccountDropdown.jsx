@@ -100,19 +100,19 @@ export default function MyAccountDropdown({auth}) {
                                 )}
                             </Menu.Item>
                         ))}
-                        <Menu.Item onClick={darkMode} className='cursor-pointer bg-white p-1 rounded shadow-shadow w-100 border-2 border-primary dark:bg-darkBg dark:border-primary-ligth'>
+                        <Menu.Item onClick={darkMode} className='cursor-pointer bg-white rounded shadow-shadow w-100 border-2 border-primary dark:bg-darkBg dark:border-primary-ligth hover:bg-primary dark:hover:bg-primary-ligth transition-all ease-in-out delay-50'>
                             {({ active }) => (
                                 <p>
                                     <div>
-                                        <p className='text-primary font-medium dark:text-gray text-center'>Dark mode</p>
+                                        <p className='text-primary font-medium dark:text-primary-ligth p-1 text-center hover:text-white dark:hover:text-white transition-all ease-in-out delay-50 h-full w-full'>Dark mode</p>
                                     </div>
                                 </p>
                             )}
                         </Menu.Item>
-                        <Menu.Item onClick={logout} className='cursor-pointer bg-red p-1 rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50'>
+                        <Menu.Item onClick={logout} className='cursor-pointer bg-red rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50'>
                             {({ active }) => (
                                 <div className=''>
-                                    <p className='text-white font-medium text-center hover:text-red transition-all ease-in-out delay-50'>Log Out</p>
+                                    <p className='p-1 text-white font-medium text-center hover:text-red transition-all ease-in-out delay-50 h-full w-full'>Log Out</p>
                                 </div>
                             )}
                         </Menu.Item>

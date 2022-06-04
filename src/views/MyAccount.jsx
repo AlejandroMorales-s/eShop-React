@@ -49,22 +49,24 @@ export default function MyAccount() {
             <ReactDocumentTitle title='My Profile'/>
             <Navbar/>
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>My Profile</h2>
-            <div className='m-auto w-95 max-w-70 flex flex-col gap-2 '>
+            <div className='m-auto w-95 max-w-[1000px] flex flex-col gap-2 '>
                 <div className='bg-white flex items-center gap-2 p-2 rounded shadow-containersShadow w-100 dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark'>
                     <div className='h-7.5 w-7.5 bg-darkBg rounded-full border-2 border-primary dark:border-primary-ligth'>
                         <img src="" alt="" />
                     </div>
                     <h3 className='text-subtitle font-medium dark:text-gray'>{user.name}</h3>
                 </div>
-                {cards.map((card, index) => (
-                    <AccountOptionsCard
-                        key={index}
-                        title={card.title}
-                        icon={card.icon}
-                        link={card.link}
-                        desc={card.desc}
-                    />
-                ))}
+                <div className='w-100 grid grid-cols-2 gap-2'>
+                    {cards.map((card, index) => (
+                        <AccountOptionsCard
+                            key={index}
+                            title={card.title}
+                            icon={card.icon}
+                            link={card.link}
+                            desc={card.desc}
+                        />
+                    ))}
+                </div>
             </div>
         </>
     )
