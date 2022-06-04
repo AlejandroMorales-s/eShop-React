@@ -5,13 +5,14 @@ import { globalContext } from './components/globalContext/GlobalContext';
 //* GET method
 import { get } from './api';
 //* Login - SignUp
-import Login from './components/views/Login';
-import SignUp from './components/views/SignUp';
+import Login from './views/Login';
+import SignUp from './views/SignUp';
 
-//* Direction
-import Direction from './components/views/Direction';
+//* Address
+import Addresses from './views/Addresses';
+import AddAddress from './views/AddAddress';
 //* My Account
-import MyAccount from './components/views/MyAccount';
+import MyAccount from './views/MyAccount';
 
 function App() {
 
@@ -41,8 +42,9 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<SignUp/>} />
 
-        {/* Direction */}
-        <Route path="/direction" element={<Direction/>} />
+        {/* Address */}
+        <Route path="/my-addresses" element={<Addresses/>} />
+        <Route path="/my-addresses/add-address" element={<AddAddress/>} />
         {/* My Account */}
         <Route path="/account" element={<MyAccount/>} />
       </Routes>
