@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import { globalContext } from '../globalContext/GlobalContext';
+import { globalContext } from '../components/globalContext/GlobalContext';
 //* Components
 import ReactDocumentTitle from 'react-document-title';
-import AccountOptionsCard from '../myAccount/AccountOptionsCard';
-import Navbar from '../navbar/Navbar';
+import AccountOptionsCard from '../components/myAccount/AccountOptionsCard';
+import Navbar from '../components/navbar/Navbar';
 //* Icons
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { BsBoxSeam, BsCreditCard } from 'react-icons/bs';

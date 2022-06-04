@@ -1,8 +1,8 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import Form from '../login/Form';
-import SocialMedia from '../login/SocialMedia';
-import DarkModeToggle from '../login/DarkModeToggle';
+import Form from '../components/login/Form';
+import SocialMedia from '../components/login/SocialMedia';
+import DarkModeToggle from '../components/login/DarkModeToggle';
 
 export default function Login() {
     return (
