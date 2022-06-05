@@ -13,6 +13,7 @@ import Addresses from './views/Addresses';
 import AddAddress from './views/AddAddress';
 //* My Account
 import MyAccount from './views/MyAccount';
+import MyData from './views/MyData';
 
 function App() {
 
@@ -34,7 +35,6 @@ function App() {
       //console.log(err);
     })
   }, [setUser])
-
   
   return (
       <Routes>
@@ -47,6 +47,7 @@ function App() {
         <Route path="/my-addresses/add-address" element={<AddAddress/>} />
         {/* My Account */}
         <Route path="/account" element={<MyAccount/>} />
+        <Route path="/account/my-data" element={<MyData/>} />
       </Routes>
   );
 }
