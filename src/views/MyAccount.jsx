@@ -4,6 +4,7 @@ import { globalContext } from '../components/globalContext/GlobalContext';
 import ReactDocumentTitle from 'react-document-title';
 import AccountOptionsCard from '../components/myAccount/AccountOptionsCard';
 import Navbar from '../components/navbar/Navbar';
+import Breadcrumb from '../components/breadcrumbTrail/Breadcrumb';
 //* Icons
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { BsBoxSeam, BsCreditCard } from 'react-icons/bs';
@@ -12,6 +13,12 @@ import { AiOutlineUser, AiOutlineHeart } from 'react-icons/ai';
 
 export default function MyAccount() {
     const {user} = useContext(globalContext);
+    const breadcrumb = [
+        {
+            link:'/account',
+            text:'My account'
+        }
+    ]
     const cards = [
         {
             title: 'My Data',
@@ -48,6 +55,7 @@ export default function MyAccount() {
         <>
             <ReactDocumentTitle title='My Profile'/>
             <Navbar/>
+            <Breadcrumb array={breadcrumb}/>
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>My Profile</h2>
             <div className='m-auto w-95 max-w-[1000px] flex flex-col gap-2 '>
                 <div className='bg-white flex items-center gap-2 p-2 rounded shadow-containersShadow w-100 dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark'>
@@ -65,7 +73,7 @@ export default function MyAccount() {
                             link={card.link}
                             desc={card.desc}
                         />
-                    ))}
+                        ))}
                 </div>
             </div>
         </>

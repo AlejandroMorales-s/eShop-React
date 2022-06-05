@@ -34,7 +34,7 @@ export default function Navbar() {
                     <Link to='/feed'>
                         <h1 className='text-primary dark:text-primary-ligth font-semibold text-logo'>LOGO</h1>
                     </Link>
-                    <Link to='/my-addresses'>
+                    <Link to='/account/my-addresses'>
                         <div className='flex items-center gap-0.5'>
                             <FaMapMarkerAlt className='text-primary dark:text-primary-ligth text-[30px] hover:-translate-y-0.5 transition-all ease-in-out delay-50' />
                             <div className='flex flex-col'>
