@@ -89,7 +89,7 @@ export default function MyAccountDropdown({auth}) {
                             <Menu.Item key={index}>
                                 {({ active }) => (
                                     <Link to={option.link}>
-                                        <div className='bg-white flex justify-between items-center gap-2 p-1 rounded w-100 dark:bg-darkBg border-2 border-white hover:border-gray hover:dark:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
+                                        <div className='bg-white flex justify-between items-center gap-2 p-1 rounded w-100 dark:bg-darkBg border-2 border-white hover:border-gray dark:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
                                             {option.icon}
                                             <div className='w-100'>
 

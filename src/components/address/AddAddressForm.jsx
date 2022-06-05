@@ -87,7 +87,7 @@ export default function AddAddressForm() {
     return (
         <>
             <h2 className='text-center m-3 text-title text-boldText font-semibold dark:text-gray'>Add address</h2>
-            <form onSubmit={addDirection} className='bg-white shadow-containersShadow p-4 rounded flex flex-col m-auto w-95 max-w-70'>
+            <form onSubmit={addDirection} className='bg-white shadow-containersShadow p-4 border-2 border-gray dark:border-gray-grayDark rounded flex flex-col m-auto w-95 max-w-70 dark:bg-darkBg'>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
                     <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Country or region</label>
                     <input ref={country} name='country' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="text" placeholder='Country or region' />
