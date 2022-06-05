@@ -1,6 +1,6 @@
 import React, {useContext, useState, useRef, useEffect} from 'react';
 import { globalContext } from '../globalContext/GlobalContext';
-import InfoModal from '../modals/InfoModal';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddAddressForm() {
 
@@ -12,8 +12,10 @@ export default function AddAddressForm() {
         isError: false,
         error: ""
     });
-    const [success, setSuccess] = useState(false);
     const [inactiveButton, setInactiveButton] = useState(true);
+
+    //* Navigate
+    const navigate = useNavigate();
     
     //* Refs
     const country = useRef();
@@ -61,7 +63,6 @@ export default function AddAddressForm() {
                 error: "Please enter a valid phone number"
             });
         } else {
-            setSuccess(true);
             setAddresses([...addresses,{
                 directionAdded: true,
                 country: country.current.value,
@@ -72,6 +73,7 @@ export default function AddAddressForm() {
                 instructions: instructions.current.value,
                 id: createId()
             }]);
+            navigate('/my-addresses');
         }
     }
     
@@ -116,7 +118,6 @@ export default function AddAddressForm() {
                 </div>
                 <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Add address</button>
             </form>
-            {success && <InfoModal color={'green'} title={'Address created succesfully'} desc={''} btn={'Ok'} open={success} />}
         </>
     )
 }
