@@ -47,7 +47,7 @@ export default function MyAccountDropdown({auth}) {
 
     const darkMode = () => {
         document.getElementById('html').classList.toggle('dark');
-        document.getElementById('html').classList.toggle('bg-darkBg');
+        document.getElementById('html').classList.toggle('bg-darkBody');
         document.getElementById('html').classList.toggle('bg-ligthBg');
     }
     const logout = () => {
