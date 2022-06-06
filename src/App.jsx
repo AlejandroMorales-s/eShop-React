@@ -19,7 +19,7 @@ function App() {
 
   const navigate = useNavigate();
   const {setUser} = useContext(globalContext);
-  
+
   useEffect(() => {
     get('/api/auth/validate')
     .then(res => {
@@ -35,7 +35,7 @@ function App() {
       //console.log(err);
     })
   }, [setUser])
-  
+
   return (
       <Routes>
         {/* Login - Sign Up */}
@@ -43,8 +43,8 @@ function App() {
         <Route path="/signup" element={<SignUp/>} />
 
         {/* Address */}
-        <Route path="/my-addresses" element={<Addresses/>} />
-        <Route path="/my-addresses/add-address" element={<AddAddress/>} />
+        <Route path="/account/my-addresses" element={<Addresses/>} />
+        <Route path="/account/my-addresses/add-address" element={<AddAddress/>} />
         {/* My Account */}
         <Route path="/account" element={<MyAccount/>} />
         <Route path="/account/my-data" element={<MyData/>} />
