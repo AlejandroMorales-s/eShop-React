@@ -73,7 +73,7 @@ export default function AddAddressForm() {
                 instructions: instructions.current.value,
                 id: createId()
             }]);
-            navigate('/my-addresses');
+            navigate('/account/my-addresses');
         }
     }
     
