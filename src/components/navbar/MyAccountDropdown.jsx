@@ -38,6 +38,7 @@ export default function MyAccountDropdown({auth}) {
     ]
 
     const [isOpen, setIsOpen] = useState(false);
+    const [dark, setDark] = useState(false);
 
     const {setUser} = useContext(globalContext);
     
@@ -49,6 +50,7 @@ export default function MyAccountDropdown({auth}) {
         document.getElementById('html').classList.toggle('dark');
         document.getElementById('html').classList.toggle('bg-darkBody');
         document.getElementById('html').classList.toggle('bg-ligthBg');
+        document.getElementById('html').classList.contains('bg-darkBody') ? setDark(true) : setDark(false); 
     }
     const logout = () => {
         get("/api/auth/logout")
@@ -104,7 +106,7 @@ export default function MyAccountDropdown({auth}) {
                             {({ active }) => (
                                 <p>
                                     <div>
-                                        <p className='text-primary font-medium dark:text-primary-ligth p-1 text-center hover:text-white dark:hover:text-white transition-all ease-in-out delay-50 h-full w-full'>Dark mode</p>
+                                        <p className='text-primary font-medium dark:text-primary-ligth p-1 text-center hover:text-white dark:hover:text-boldText transition-all ease-in-out delay-50 h-full w-full'>{dark ? 'Light' : 'Dark'} mode</p>
                                     </div>
                                 </p>
                             )}
