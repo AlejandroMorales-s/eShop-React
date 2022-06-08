@@ -14,6 +14,7 @@ export default function GlobalContext({children}) {
         direccionAdded: false
     });
     const [wishlist, setWishlist] = useState([]);
+    const [shoppingCart, setShoppingCart] = useState([]);
 
     return (
         <globalContext.Provider value={{
@@ -25,7 +26,9 @@ export default function GlobalContext({children}) {
             shoppingAddress,
             setShoppingAddress,
             wishlist,
-            setWishlist
+            setWishlist,
+            shoppingCart,
+            setShoppingCart
         }}>
             {children}
         </globalContext.Provider>
