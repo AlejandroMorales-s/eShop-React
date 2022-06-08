@@ -42,6 +42,10 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"]
       },
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        'product': '1.75fr, 1.25fr',
+      },
       spacing: {
         '0.5': "5px",
         '1': "10px",

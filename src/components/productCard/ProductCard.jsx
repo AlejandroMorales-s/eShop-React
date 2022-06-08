@@ -1,17 +1,21 @@
 import React, {useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 
-export default function ProductCard({name, price, image, desc}) {
+export default function ProductCard({name, price, image, desc, id}) {
+    const navigate = useNavigate();
     const btn = useRef()
     const si = (e) => {
         alert('Added to cart')
         e.stopPropagation()
     };
-    const no = () => alert('Product');
+    const product = () => {
+        navigate(`/product-details/${id}`);
+    };
     return (
         <>
-            <div onClick={no} className='bg-white relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-ligth  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
+            <div onClick={product} className='bg-white relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-ligth  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
                 <div className='h-[250px] overflow-hidden rounded'>
                     <img className='w-100 object-cover h-100' src={image} alt={name}/>
                 </div>
