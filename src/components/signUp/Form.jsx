@@ -67,31 +67,19 @@ export default function Form() {
     //* Open/Close Modal
     const accountCreated = (e) => {
         e.preventDefault();
-        setInactiveButton(true);
         post('/api/auth/signup', {
             name: name.current.value,
             email: email.current.value,
             password: password.current.value
         }).then(({user}) => {
-            setUser({
-                logged:true,
-                user
-            });
-            navigate("/feed",{
-                replace:true
-            });
+            setUser({type: 'SIGNUP', user: user});
+            navigate("/feed");
         }).catch((error) => {
-            //console.log(error.errors); 
             setError({
                 isError: true,
                 error: error.errors.map(error => error.message)
             });
-        })
-        password.current.value = "";
-        confirmPassword.current.value = "";
-        name.current.value = "";
-        email.current.value = "";
-        setInputClicked(false);
+        });
     }
 
     const clicked = () => setInputClicked(true);

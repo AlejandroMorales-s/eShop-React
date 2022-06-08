@@ -38,18 +38,11 @@ export default function Form() {
             email: email.current.value,
             password: password.current.value
         })
-        .then(res => {
-            const user = res.user;
-            setUser({
-                user: user,
-                logged:true
-            })
-            navigate("/feed",{
-                replace:true
-            })
+        .then(({user}) => {
+            setUser({type: 'LOGIN', user: user});
+            navigate("/feed");
         })
         .catch(error => {
-            console.log(error)
             setError({
                 isError: true,
                 error: error.errors.map(error => error)

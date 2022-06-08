@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
 import { BiHistory } from 'react-icons/bi';
-import { BsBoxSeam, BsCreditCard } from 'react-icons/bs';
+import { BsBoxSeam } from 'react-icons/bs';
 import { AiOutlineUser, AiOutlineHeart } from 'react-icons/ai';
 
 export default function MyAccountDropdown({auth}) {
@@ -14,11 +14,6 @@ export default function MyAccountDropdown({auth}) {
             title: 'My account',
             link: '/account',
             icon: <AiOutlineUser className='text-primary dark:text-primary-ligth text-[17.5px]'/>
-        },
-        {
-            title: 'Payment methods',
-            link: '/account/my-cards',
-            icon: <BsCreditCard className='text-primary dark:text-primary-ligth text-[17.5px]'/>
         },
         {
             title: 'Wishlist',
@@ -54,13 +49,9 @@ export default function MyAccountDropdown({auth}) {
     }
     const logout = () => {
         get("/api/auth/logout")
-        .then(result=>{
-            console.log(result)
-            setUser({
-                logged:false,
-                user:{}
-            })
-            navigate("/login")
+        .then( res => {
+            setUser({type: 'LOGOUT', user: null});
+            navigate("/login");
         })
     }
     return (
