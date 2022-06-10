@@ -7,13 +7,19 @@ import { get } from './api';
 //* Login - SignUp
 import Login from './views/Login';
 import SignUp from './views/SignUp';
-
+//* Feed
+import Feed from './views/Feed';
 //* Address
 import Addresses from './views/Addresses';
 import AddAddress from './views/AddAddress';
 //* My Account
 import MyAccount from './views/MyAccount';
 import MyData from './views/MyData';
+import MyCards from './views/MyCards';
+//* Product Details
+import Product from './views/Product';
+//* Buy Product
+import Shipping from './components/buyProduct/Shipping';
 
 function App() {
 
@@ -22,32 +28,34 @@ function App() {
 
   useEffect(() => {
     get('/api/auth/validate')
-    .then(res => {
-      setUser({
-        logged:true,
-        user:res.user
-      })
-      navigate("/feed",{
-        replace:true
-      });
+    .then(({user}) => {
+      setUser({type:'LOGIN', user: user});
+      navigate("/feed");
     })
     .catch(err => {
       //console.log(err);
     })
-  }, [setUser])
+  }, [setUser]);
 
   return (
       <Routes>
         {/* Login - Sign Up */}
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<SignUp/>} />
-
+        {/* Feed */}
+        <Route path="/feed" element={<Feed/>} />
         {/* Address */}
         <Route path="/account/my-addresses" element={<Addresses/>} />
         <Route path="/account/my-addresses/add-address" element={<AddAddress/>} />
         {/* My Account */}
         <Route path="/account" element={<MyAccount/>} />
         <Route path="/account/my-data" element={<MyData/>} />
+        {/* My Cards */}
+        <Route path="/account/my-cards" element={<MyCards/>} />
+        {/* Product Details */}
+        <Route path="/product-details/:id" element={<Product/>} />
+        {/* Buy Product */}
+        <Route path="/:id/buy/shipping" element={<Shipping/>} />
       </Routes>
   );
 }
