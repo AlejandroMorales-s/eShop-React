@@ -40,6 +40,11 @@ export default function ProductCard({name, price, image, desc, id}) {
         }
     }
 
+    const buyProduct = (e) => {
+        e.stopPropagation();
+        navigate(`/${id}/buy/shipping`);
+    }
+
     const product = () => {
         navigate(`/product-details/${id}`);
     };
@@ -55,7 +60,7 @@ export default function ProductCard({name, price, image, desc, id}) {
                 <p className='text-text dark:text-gray line-clamp-2'>{desc}</p>
                 <div className='absolute w-full h-full top-0 left-0 rounded pt-1.5 px-1.5 opacity-0 hover:opacity-100 transition-all ease-in-out delay-50'>
                     <div className='flex gap-1 justify-center'>
-                        <button 
+                        <button onClick={buyProduct}
                         className='px-1 py-0.5 bg-primary dark:bg-primary-ligth rounded border-2 border-primary dark:border-primary-ligth hover:bg-primary-ligth hover:border-primary-ligth hover:text-boldText font-medium text-white dark:text-boldText transition-all ease-in-out delay-50'>
                             Buy now
                         </button>
