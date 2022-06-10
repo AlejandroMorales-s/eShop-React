@@ -7,10 +7,10 @@ export default function Aside() {
     const [product, setProduct] = useState();
 
     const {id} = useParams();
+    
     useEffect(() => {
         setProduct(products.find(product => product.id === parseInt(id)));
     }, [id, products]);
-    console.log(product); 
     
     return (
         <>
