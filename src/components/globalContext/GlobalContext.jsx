@@ -67,6 +67,29 @@ const prod = [
     },
 ]
 
+const card = [
+    {
+        id: 1,
+        name: 'Alejandro',
+        number: '4242 4242 4242 1234',
+        expiry: '12/20',
+        cvv: '123',
+        type: 'Visa',
+        default: true,
+        paymentMethod: 'credit'
+    },
+    {
+        id: 2,
+        name: 'Alejandro',
+        number: '4242 4242 4242 4382',
+        expiry: '12/26',
+        cvv: '123',
+        type: 'Mastercard',
+        default: true,
+        paymentMethod: 'debit'
+    },
+]
+
 export default function GlobalContext({children}) {
 
     //* States
@@ -75,7 +98,7 @@ export default function GlobalContext({children}) {
         logged:false
     });
     const [addresses, setAddresses] = useState([]);
-    const [cards, setCards] = useState([]);
+    const [cards, setCards] = useState(card);
     const [shoppingAddress, setShoppingAddress] = useState({
         direccionAdded: false
     });
