@@ -16,10 +16,12 @@ import AddAddress from './views/AddAddress';
 import MyAccount from './views/MyAccount';
 import MyData from './views/MyData';
 import MyCards from './views/MyCards';
+import AddCard from './components/myCards/AddCard';
 //* Product Details
 import Product from './views/Product';
 //* Buy Product
 import Shipping from './components/buyProduct/Shipping';
+import Payments from './components/buyProduct/Payments';
 
 function App() {
 
@@ -52,10 +54,14 @@ function App() {
         <Route path="/account/my-data" element={<MyData/>} />
         {/* My Cards */}
         <Route path="/account/my-cards" element={<MyCards/>} />
+        <Route path="/account/add-card" element={<AddCard/>} />
         {/* Product Details */}
         <Route path="/product-details/:id" element={<Product/>} />
         {/* Buy Product */}
-        <Route path="/:id/buy/shipping" element={<Shipping/>} />
+        <Route path="/:id/buy/">
+          <Route path="shipping" element={<Shipping/>} />
+          <Route path="payments" element={<Payments/>} />
+        </Route>
       </Routes>
   );
 }

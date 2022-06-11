@@ -75,6 +75,7 @@ export default function GlobalContext({children}) {
         logged:false
     });
     const [addresses, setAddresses] = useState([]);
+    const [cards, setCards] = useState([]);
     const [shoppingAddress, setShoppingAddress] = useState({
         direccionAdded: false
     });
@@ -104,7 +105,9 @@ export default function GlobalContext({children}) {
             buyDetails,
             setBuyDetails,
             products,
-            setProducts
+            setProducts,
+            cards,
+            setCards
         }}>
             {children}
         </globalContext.Provider>
