@@ -69,13 +69,13 @@ export default function Form() {
         <>
             <form onSubmit={login} className='flex flex-col w-100 max-w-45 m-auto'>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="email" className='font-semibold dark:text-primary-ligth'>Email</label>
-                    <input ref={email} id='email' type="email" placeholder="Email" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
+                    <label htmlFor="email" className='font-semibold dark:text-primary-light'>Email</label>
+                    <input ref={email} id='email' type="email" placeholder="Email" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="password" className='font-semibold dark:text-primary-ligth'>Password</label>
+                    <label htmlFor="password" className='font-semibold dark:text-primary-light'>Password</label>
                     <div className='relative w-100'>
-                        <input ref={password} id='password' type="password" placeholder="Password" className='w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-ligth dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />            
+                        <input ref={password} id='password' type="password" placeholder="Password" className='w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />            
                         {isPasswordVisible ?
                             <svg onClick={showPassword} xmlns="http://www.w3.org/2000/svg" className=" font-semibold text-darkBg dark:text-gray h-6 w-6 absolute -translate-y-2/4 top-2/4 right-0.5" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -91,9 +91,9 @@ export default function Form() {
                 </div>
                 <div className='mt-1 flex justify-between items-center'>
                     <Link to='/signup'>
-                        <p className='text-primary font-medium dark:text-primary-ligth'>You don't have account? Sign Up</p>
+                        <p className='text-primary font-medium dark:text-primary-light'>You don't have account? Sign Up</p>
                     </Link>
-                    <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Login</button>
+                    <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`} type="submit">Login</button>
                 </div>
             </form>
             {error.isError && <InfoModal color={'red'} title={'An error ocurred'} desc={error.error} btn={'Ok'} open={error.isError} />}

@@ -56,7 +56,7 @@ export default function InfoModal({color, title, desc, btn, onClose}) {
                             <div className="">
                                 <button
                                 type="button"
-                                className="inline-flex justify-center shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary  dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth "
+                                className="inline-flex justify-center shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary  dark:bg-primary-light dark:text-darkBg dark:border-primary-light "
                                 onClick={closeModal}
                                 >
                                 {btn}

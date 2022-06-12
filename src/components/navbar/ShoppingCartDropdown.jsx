@@ -29,10 +29,10 @@ export default function ShoppingCartDropdown() {
             <Menu>
                 <Menu.Button>
                     <div onClick={rotateIcon} className='flex justify-center items-center'>
-                        <IoMdCart className={`${isOpen ? 'text-primary dark:text-primary-ligth' : 'dark:text-white text-boldText'} transition-all ease-in-out delay-100 h-3 w-3`} />
+                        <IoMdCart className={`${isOpen ? 'text-primary dark:text-primary-light' : 'dark:text-white text-boldText'} transition-all ease-in-out delay-100 h-3 w-3`} />
                         <div className='flex gap-0.5'>
-                            <p className={`${isOpen ? 'text-primary dark:text-primary-ligth' : 'dark:text-white text-boldText'} transition-all ease-in-out delay-100 font-semibold`}>Cart</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" className={`${isOpen ? 'rotate-180 text-primary dark:text-primary-ligth' : 'text-primary dark:text-primary-ligth rotate-0'} transition-all ease-in-out delay-100 h-6 w-6`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <p className={`${isOpen ? 'text-primary dark:text-primary-light' : 'dark:text-white text-boldText'} transition-all ease-in-out delay-100 font-semibold`}>Cart</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" className={`${isOpen ? 'rotate-180 text-primary dark:text-primary-light' : 'text-primary dark:text-primary-light rotate-0'} transition-all ease-in-out delay-100 h-6 w-6`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                             </svg>
                         </div>

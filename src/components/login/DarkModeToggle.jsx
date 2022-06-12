@@ -7,14 +7,14 @@ export default function DarkModeToggle() {
     const darkMode = () => {
         document.getElementById('html').classList.toggle('bg-darkBg');
         document.getElementById('html').classList.toggle('dark');
-        document.getElementById('html').classList.toggle('bg-ligthBg');
+        document.getElementById('html').classList.toggle('bg-lightBg');
     }
     return (
 
             <Switch.Group>
                 <div className='absolute right-3 top-1 flex flex-col items-center justify-center'>
 
-                    <Switch.Label className={`${enabled && 'text-gray'} font-medium`}>{enabled ? 'Dark mode' : 'Ligth mode'}</Switch.Label>
+                    <Switch.Label className={`${enabled && 'text-gray'} font-medium`}>{enabled ? 'Dark mode' : 'light mode'}</Switch.Label>
                 
                     <Switch
                         onClick={darkMode}

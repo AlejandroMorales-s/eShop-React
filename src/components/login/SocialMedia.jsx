@@ -10,7 +10,7 @@ export default function SocialMedia() {
             <div className='flex items-center justify-center gap-2 pt-2'>
                 <a href='https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/facebook'><SiFacebook className='h-3 w-3 text-fb'/></a>
                 <a href='https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/google'><FcGoogle className='h-3 w-3'/></a>
-                <a href='https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/github'><BsGithub className='h-3 w-3 dark:text-primary-ligth'/></a>
+                <a href='https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/github'><BsGithub className='h-3 w-3 dark:text-primary-light'/></a>
             </div>
         </div>
     )

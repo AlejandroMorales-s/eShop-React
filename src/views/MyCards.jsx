@@ -27,7 +27,7 @@ export default function MyCards() {
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>My cards</h2>
             <div className='shadow-containersShadow w-95 max-w-[1000px] border-2 bg-white dark:bg-darkBg border-gray flex flex-col gap-2 dark:border-gray-grayDark rounded p-2 m-auto'>
                 <Link to='/account/add-card'>
-                    <div className='border-3 h-[100px] w-full rounded flex gap-2  items-center border-dashed border-gray p-2 hover:shadow-containersShadow bg-white dark:bg-darkBg dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-ligth hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
+                    <div className='border-3 h-[100px] w-full rounded flex gap-2  items-center border-dashed border-gray p-2 hover:shadow-containersShadow bg-white dark:bg-darkBg dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
                         <BsPlusCircle className='text-[65px] text-[#bababa]'/>
                         <h3 className='text-[#bababa] text-subtitle text-center font-medium'>Add Card</h3>
                     </div>

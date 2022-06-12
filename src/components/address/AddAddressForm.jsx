@@ -91,32 +91,32 @@ export default function AddAddressForm() {
             <h2 className='text-center m-3 text-title text-boldText font-semibold dark:text-gray'>Add address</h2>
             <form onSubmit={addDirection} className='bg-white shadow-containersShadow p-4 border-2 border-gray dark:border-gray-grayDark rounded flex flex-col m-auto w-95 max-w-70 dark:bg-darkBg'>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Country or region</label>
-                    <input ref={country} name='country' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="text" placeholder='Country or region' />
+                    <label className='text-bold font-medium dark:text-primary-light text-boldText' htmlFor="">Country or region</label>
+                    <input ref={country} name='country' className='border-2 border-primary dark:border-primary-light rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light dark:text-gray dark:bg-darkBg' type="text" placeholder='Country or region' />
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Full name</label>
-                    <input ref={name} name='name' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="text" placeholder='Full name' />
+                    <label className='text-bold font-medium dark:text-primary-light text-boldText' htmlFor="">Full name</label>
+                    <input ref={name} name='name' className='border-2 border-primary dark:border-primary-light rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light dark:text-gray dark:bg-darkBg' type="text" placeholder='Full name' />
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Street and number</label>
-                    <input ref={streetNumber} name='streetAndNumber' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="text" placeholder='Street and number' />
+                    <label className='text-bold font-medium dark:text-primary-light text-boldText' htmlFor="">Street and number</label>
+                    <input ref={streetNumber} name='streetAndNumber' className='border-2 border-primary dark:border-primary-light rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light dark:text-gray dark:bg-darkBg' type="text" placeholder='Street and number' />
                 </div>
                 <div className='flex justify-around'>
                     <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                        <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Postal code</label>
-                        <input ref={postalCode} name='postalCode' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="number" placeholder='For example, 01000' />
+                        <label className='text-bold font-medium dark:text-primary-light text-boldText' htmlFor="">Postal code</label>
+                        <input ref={postalCode} name='postalCode' className='border-2 border-primary dark:border-primary-light rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light dark:text-gray dark:bg-darkBg' type="number" placeholder='For example, 01000' />
                     </div>
                     <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                        <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Phone number</label>
-                        <input ref={phoneNumber} name='phoneNumber' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="number" placeholder='For example, +48123456789' />
+                        <label className='text-bold font-medium dark:text-primary-light text-boldText' htmlFor="">Phone number</label>
+                        <input ref={phoneNumber} name='phoneNumber' className='border-2 border-primary dark:border-primary-light rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light dark:text-gray dark:bg-darkBg' type="number" placeholder='For example, +48123456789' />
                     </div>
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label className='text-bold font-medium dark:text-primary-ligth text-boldText' htmlFor="">Aditional instructions (optional)</label>
-                    <textarea ref={instructions} name='instructions' className='border-2 border-primary dark:border-primary-ligth rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-ligth dark:focus:ring-primary-ligth dark:text-gray dark:bg-darkBg' type="text" placeholder='For example, "Do not forget to bring your passport"' />
+                    <label className='text-bold font-medium dark:text-primary-light text-boldText' htmlFor="">Aditional instructions (optional)</label>
+                    <textarea ref={instructions} name='instructions' className='border-2 border-primary dark:border-primary-light rounded px-0.5 w-100 h-4.5 shadow-shadow focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light dark:text-gray dark:bg-darkBg' type="text" placeholder='For example, "Do not forget to bring your passport"' />
                 </div>
-                <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-ligth dark:text-darkBg dark:border-primary-ligth dark:hover:bg-transparent dark:hover:text-primary-ligth`} type="submit">Add address</button>
+                <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`} type="submit">Add address</button>
             </form>
         </>
     )

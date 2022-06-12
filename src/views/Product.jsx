@@ -91,7 +91,7 @@ export default function Product() {
                     <div className='flex flex-col gap-2 overflow-auto'>
                         <div className='flex justify-between items-center'>
                             <h2 className='m-0 font-semibold text-title dark:text-white'>{product.name}</h2>
-                            <AiOutlineHeart className='text-[26px] cursor-pointer hover:text-primary dark:text-gray dark:hover:text-primary-ligth transition-all ease-out delay-50'/>
+                            <AiOutlineHeart className='text-[26px] cursor-pointer hover:text-primary dark:text-gray dark:hover:text-primary-light transition-all ease-out delay-50'/>
                         </div>
                         <p className='text-[32.5px] text-green font-semibold'>{product.price} MXN</p>
                     </div>

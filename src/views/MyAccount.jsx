@@ -22,31 +22,31 @@ export default function MyAccount() {
     const cards = [
         {
             title: 'My Data',
-            icon: <AiOutlineUser className='text-[60px] text-primary dark:text-primary-ligth'/>,
+            icon: <AiOutlineUser className='text-[60px] text-primary dark:text-primary-light'/>,
             desc: 'Manage your personal data.',
             link: '/account/my-data',
         },
         {
             title: 'My Orders',
-            icon: <BsBoxSeam className='text-[60px] text-primary dark:text-primary-ligth'/>,
+            icon: <BsBoxSeam className='text-[60px] text-primary dark:text-primary-light'/>,
             desc: 'Manage your orders.',
             link: '/account/my-orders',
         },
         {
             title: 'My Addresses',
-            icon: <HiOutlineLocationMarker className='text-[60px] text-primary dark:text-primary-ligth'/>,
+            icon: <HiOutlineLocationMarker className='text-[60px] text-primary dark:text-primary-light'/>,
             desc: 'Manage your addresses.',
             link: '/account/my-addresses',
         },
         {
             title: 'My Wishlist',
-            icon: <AiOutlineHeart className='text-[60px] text-primary dark:text-primary-ligth'/>,
+            icon: <AiOutlineHeart className='text-[60px] text-primary dark:text-primary-light'/>,
             desc: 'Manage your wishlist.',
             link: '/account/my-wishlist',
         },
         {
             title: 'My Cards',
-            icon: <BsCreditCard className='text-[60px] text-primary dark:text-primary-ligth'/>,
+            icon: <BsCreditCard className='text-[60px] text-primary dark:text-primary-light'/>,
             desc: 'Manage your cards.',
             link: '/account/my-cards',
         },
@@ -59,7 +59,7 @@ export default function MyAccount() {
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>My Profile</h2>
             <div className='m-auto w-95 max-w-[1000px] flex flex-col gap-2 '>
                 <div className='bg-white flex items-center gap-2 p-2 rounded shadow-containersShadow w-100 dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark'>
-                    <div className='h-7.5 w-7.5 bg-darkBg rounded-full border-2 border-primary dark:border-primary-ligth'>
+                    <div className='h-7.5 w-7.5 bg-darkBg rounded-full border-2 border-primary dark:border-primary-light'>
                         <img src="" alt="" />
                     </div>
                     <h3 className='text-subtitle font-medium dark:text-gray'>{user.name}</h3>
