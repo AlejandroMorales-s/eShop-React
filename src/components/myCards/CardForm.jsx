@@ -109,8 +109,7 @@ export default function CardForm() {
                 ...validNumber,
                 valid: true,
             });
-        }
-
+        };
 
         setCardInfo({
             ...cardInfo,
@@ -120,8 +119,6 @@ export default function CardForm() {
         inactiveButtonCheck();
     };
     
-    console.log(typeof(cardInfo.number.toString().slice(0,1))); 
-    console.log(cardInfo); 
     //* Expiry
     const date = new Date();
     const currentYear = date.getFullYear();
@@ -131,8 +128,6 @@ export default function CardForm() {
         setRotate(false);
         let newMonth;
         month < 10 ? newMonth = month.toString().slice(1, 2) : newMonth = month;
-        console.log(newMonth);
-        console.log(currentMonth);
         
         if (month === '' || month === undefined || month.toString().slice(0, 2) > 12 || month.toString().slice(0, 2) < 1) {
             month = month.slice(0, 2);
@@ -159,7 +154,6 @@ export default function CardForm() {
         });
         inactiveButtonCheck();
     };
-
 
     const changeYear = (year) => {
         setRotate(false);
@@ -219,8 +213,8 @@ export default function CardForm() {
             setInactiveButton(false);
         } else {
             setInactiveButton(true);
-        }
-    }
+        };
+    };
 
     return (
         <>

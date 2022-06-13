@@ -11,8 +11,7 @@ export default function Card({card}) {
     const deleteCard = () => {
         const card = cards.filter(card => card.id !== id);
         setCards(card);
-    }
-    console.log(card); 
+    };
     return (
         <>
             <div className='border-2 h-[100px] w-full rounded flex gap-2  items-center border-gray p-2 hover:shadow-containersShadow bg-white dark:bg-darkBg dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light hover:-translate-y-0.5 transition-all ease-in-out delay-50'>

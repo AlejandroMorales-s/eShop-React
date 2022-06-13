@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Chip from '../../assets/chip-card.png';
 import Visa from '../../assets/logo-visa.png';
 import Mastercard from '../../assets/logo-mastercard.png';
@@ -10,7 +10,7 @@ export default function CardPreview({name, number, month, year, type, ccv, rotat
         type = 'Mastercard';
     } else {
         type = '';
-    }
+    };
 
     return (
         <>
