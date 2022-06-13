@@ -13,22 +13,22 @@ export default function MyAccountDropdown({auth}) {
         {
             title: 'My account',
             link: '/account',
-            icon: <AiOutlineUser className='text-primary dark:text-primary-light text-[17.5px]'/>
+            icon: <AiOutlineUser className='text-primary dark:text-primary-light text-[30px]'/>
         },
         {
             title: 'Wishlist',
             link: '/account/my-wishlist',
-            icon: <AiOutlineHeart className='text-primary dark:text-primary-light text-[17.5px]'/>
+            icon: <AiOutlineHeart className='text-primary dark:text-primary-light text-[30px]'/>
         },
         {
             title: 'Orders',
             link: '/account/my-orders',
-            icon: <BsBoxSeam className='text-primary dark:text-primary-light text-[17.5px]'/>
+            icon: <BsBoxSeam className='text-primary dark:text-primary-light text-[30px]'/>
         },
         {
             title: 'History',
             link: '/account/history',
-            icon: <BiHistory className='text-primary dark:text-primary-light text-[17.5px]'/>
+            icon: <BiHistory className='text-primary dark:text-primary-light text-[30px]'/>
         }
     ]
 
@@ -82,7 +82,7 @@ export default function MyAccountDropdown({auth}) {
                             <Menu.Item key={index}>
                                 {({ active }) => (
                                     <Link to={option.link}>
-                                        <div className='bg-white flex justify-between items-center gap-2 p-1 rounded w-100 dark:bg-darkBg border-2 border-white hover:border-gray dark:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
+                                        <div className='bg-white flex justify-between items-center gap-2 p-0.5 rounded w-100 dark:bg-darkBg border-2 border-white hover:border-gray dark:border-darkBg dark:hover:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
                                             {option.icon}
                                             <div className='w-100'>
 
@@ -95,11 +95,9 @@ export default function MyAccountDropdown({auth}) {
                         ))}
                         <Menu.Item onClick={darkMode} className='cursor-pointer bg-white rounded shadow-shadow w-100 border-2 border-primary dark:bg-darkBg dark:border-primary-light hover:bg-primary dark:hover:bg-primary-light transition-all ease-in-out delay-50'>
                             {({ active }) => (
-                                <p>
                                     <div>
                                         <p className='text-primary font-medium dark:text-primary-light p-1 text-center hover:text-white dark:hover:text-boldText transition-all ease-in-out delay-50 h-full w-full'>{dark ? 'Light' : 'Dark'} mode</p>
                                     </div>
-                                </p>
                             )}
                         </Menu.Item>
                         <Menu.Item onClick={logout} className='cursor-pointer bg-red rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50'>
