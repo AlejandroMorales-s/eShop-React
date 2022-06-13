@@ -4,6 +4,7 @@ import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { useEffect } from 'react';
 
 export default function ProductCard({name, price, image, desc, id}) {
     //* States
@@ -19,12 +20,18 @@ export default function ProductCard({name, price, image, desc, id}) {
     //* Add/Remove to wishlist
     const addToWishlist = (e) => {
         e.stopPropagation();
-        if (wishlist.find(item => item === id)) {
-            setWishlist(wishlist.filter(item => item !== id));
+        if (wishlist.find(item => item.id === id)) {
+            setWishlist(wishlist.filter(item => item.id !== id));
             setInWishlist(false);
         } else {
-            setWishlist([...wishlist, id]);
-            setInWishlist(true);
+            setWishlist([...wishlist, {
+                id,
+                name,
+                price,
+                image,
+                desc
+            }]);
+            setInWishlist(wishlist.some(item => item.id === id));
         };
     };
 
@@ -37,17 +44,22 @@ export default function ProductCard({name, price, image, desc, id}) {
         } else {
             setShoppingCart([...shoppingCart, id]);
             setInShoppingCart(true);
-        }
-    }
+        };
+    };
 
     const buyProduct = (e) => {
         e.stopPropagation();
         navigate(`/${id}/buy/shipping`);
-    }
+    };
 
     const product = () => {
         navigate(`/product-details/${id}`);
     };
+
+    useEffect(() => {
+        setInWishlist(wishlist.find(item => item.id === id));
+    }, [inWishlist]);
+    
 
     return (
         <>

@@ -22,6 +22,8 @@ import Product from './views/Product';
 //* Buy Product
 import Shipping from './components/buyProduct/Shipping';
 import Payments from './components/buyProduct/Payments';
+//* Wishlist
+import Wishlist from './views/Wishlist';
 
 function App() {
 
@@ -55,6 +57,8 @@ function App() {
         {/* My Cards */}
         <Route path="/account/my-cards" element={<MyCards/>} />
         <Route path="/account/add-card" element={<AddCard/>} />
+        {/* Wishlist */}
+        <Route path="/account/my-wishlist" element={<Wishlist/>} />
         {/* Product Details */}
         <Route path="/product-details/:id" element={<Product/>} />
         {/* Buy Product */}
