@@ -69,11 +69,11 @@ export default function Form() {
         <>
             <form onSubmit={login} className='flex flex-col w-100 max-w-45 m-auto'>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="email" className='font-semibold dark:text-primary-light'>Email</label>
+                    <label htmlFor="email" className='text-bold font-medium dark:text-gray text-boldText'>Email</label>
                     <input ref={email} id='email' type="email" placeholder="Email" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="password" className='font-semibold dark:text-primary-light'>Password</label>
+                    <label htmlFor="password" className='text-bold font-medium dark:text-gray text-boldText'>Password</label>
                     <div className='relative w-100'>
                         <input ref={password} id='password' type="password" placeholder="Password" className='w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />            
                         {isPasswordVisible ?

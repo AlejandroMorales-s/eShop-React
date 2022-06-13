@@ -96,15 +96,15 @@ export default function Form() {
         <>
             <form onSubmit={accountCreated} className='flex flex-col w-100 max-w-45 m-auto'>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="name" className='font-semibold dark:text-primary-light'>Name</label>
+                    <label htmlFor="name" className='text-bold font-medium dark:text-gray text-boldText'>Name</label>
                     <input ref={name} id='name' type="text" placeholder="Name" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="email" className='font-semibold dark:text-primary-light'>Email</label>
+                    <label htmlFor="email" className='text-bold font-medium dark:text-gray text-boldText'>Email</label>
                     <input ref={email} id='email' type="email" placeholder="example@gmail.com" className='border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary' />             
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="password" className='font-semibold dark:text-primary-light'>Password</label>
+                    <label htmlFor="password" className='text-bold font-medium dark:text-gray text-boldText'>Password</label>
                     <div className='relative w-100'>
                         <input onClick={clicked} ref={password} id='password' type="password" placeholder="********" className={`w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none ${validPassword? 'focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green' : 'focus:border-yellow focus:ring-yellow dark:focus:border-yellow dark:focus:ring-yellow'}`} />      
                         {isPasswordVisible ?
@@ -124,7 +124,7 @@ export default function Form() {
                     </div>
                 </div>
                 <div className='flex flex-col gap-y-0.5 mb-1.5'>
-                    <label htmlFor="confirmPassword" className='font-semibold dark:text-primary-light'>Confirm password</label>
+                    <label htmlFor="confirmPassword" className='text-bold font-medium dark:text-gray text-boldText'>Confirm password</label>
                     <input ref={confirmPassword} id='confirmPassword' type="password" placeholder="Confirm password" className={` border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none ${passwordsMatch? 'focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green' : 'focus:border-red focus:ring-red dark:focus:border-red dark:focus:ring-red'}`} />            
                     <div className={`${passwordsMatch ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit -translate-y-0.5 px-1 py-0.5 ${inputClicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
                         {passwordsMatch ? <p>Passwords match! 🥳</p> : <p>Passwords not match 😞</p>}
