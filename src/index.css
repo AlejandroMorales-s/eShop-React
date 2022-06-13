@@ -12,3 +12,43 @@
 body{
     padding-top: 62px;
 }
+.card {
+    color: #fff;
+    transform: rotateY(0deg);
+    transform-style: preserve-3d;
+    border-radius: 15% ;
+    -webkit-border-radius: 15% ;
+    -moz-border-radius: 15% ;
+    -ms-border-radius: 15% ;
+    -o-border-radius: 15% ;
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+}
+
+.card.active {
+	transform: rotateY(180deg);
+}
+
+.card > div {
+	border-radius: 15px;
+	min-height: 315px;
+}
+.back{
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+}
+.visa{
+    background: rgb(41,36,94);
+    background: linear-gradient(230deg, rgba(41,36,94,1) 0%, rgba(41,57,145,1) 100%);
+}
+.mastercard{
+    background: rgb(249,249,249);
+    background: linear-gradient(230deg, rgba(249,249,249,1) 0%, rgba(214,215,213,1) 100%);
+}

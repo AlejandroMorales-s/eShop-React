@@ -16,7 +16,7 @@ import AddAddress from './views/AddAddress';
 import MyAccount from './views/MyAccount';
 import MyData from './views/MyData';
 import MyCards from './views/MyCards';
-import AddCard from './components/myCards/AddCard';
+import AddCard from './views/AddCard';
 //* Product Details
 import Product from './views/Product';
 //* Buy Product
