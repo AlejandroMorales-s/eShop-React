@@ -17,7 +17,7 @@ export default function CardPreview({name, number, month, year, type, ccv, rotat
             <div id='rotate' className={`${rotate && 'active'} card m-auto my-5 transition-all ease-in-out delay-50 relative w-[100%] max-w-[550px] cursor-pointer z-10`}>
                 <div className={`${type === 'Visa' ? 'visa' : type === 'Mastercard' ? 'mastercard' : 'bg-white'} p-[30px] shadow-containersShadow flex justify-between`}>
                     <div className='flex flex-col gap-4 h-fit my-auto w-auto'>
-                        <img className='h-[50px] w-fit' src={Chip} alt="" srcset="" />
+                        <img className='h-[50px] w-fit' srcSet={Chip} alt="chip" />
                         <div className='min-h-[45px]'>
                             <p className={`${type === 'Visa' ? 'text-gray' : 'text-boldText'}`}>Card number</p>
                             <p className={`${type === 'Visa' ? 'text-white' : 'text-boldText'} text-bold font-semibold`}>{number === undefined || number.length === 0 ? '#### #### #### ####' : number}</p>
@@ -41,7 +41,7 @@ export default function CardPreview({name, number, month, year, type, ccv, rotat
                             <p className={`${type === 'Visa' ? 'text-gray' : 'text-boldText'}`}>CCV</p>
                         </div>
                         <div className='h-[40px] w-full bg-white flex justify-end items-center rounded'>
-                            <input type='password' className='text-boldText px-1 text-bold font-semibold w-[45px] rounded' value={ccv === undefined || ccv.length === 0 ? '' : ccv}/>
+                            <input type='password' className='text-boldText px-1 text-bold font-semibold w-[45px] rounded' defaultValue={ccv === undefined || ccv.length === 0 ? '' : ccv}/>
                         </div>
                     </div>
                 </div>

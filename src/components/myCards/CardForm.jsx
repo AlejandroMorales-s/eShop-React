@@ -224,14 +224,14 @@ export default function CardForm() {
                 <form onSubmit={addCard} className='flex flex-col gap-2'>
                     <div>
                         <label className='text-bold font-medium dark:text-gray text-boldText'>Number</label>
-                        <input onClick={() => setValidNumber({...validNumber, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeNumber(e.target.value)} type="text" placeholder='#### #### #### ####' value={number} />
+                        <input onClick={() => setValidNumber({...validNumber, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeNumber(e.target.value)} type="text" placeholder='#### #### #### ####' defaultValue={number} />
                         <div className={`${validNumber.valid ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit px-1 py-0.5 ${validNumber.clicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
                             {validNumber.valid ? <p>Valid card! 🥳</p> : <p>Put a valid number 😞</p>}
                         </div>
                     </div>
                     <div>
                         <label className='text-bold font-medium dark:text-gray text-boldText'>Name</label>
-                        <input onClick={() => setValidName({...validName, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeName(e.target.value)} type="text" placeholder='John Doe' value={name} />
+                        <input onClick={() => setValidName({...validName, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeName(e.target.value)} type="text" placeholder='John Doe' defaultValue={name} />
                         <div className={`${validName.valid ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit px-1 py-0.5 ${validName.clicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
                             {validName.valid ? <p>🥳</p> : <p>Write your name 😁</p>}
                         </div>
@@ -244,14 +244,14 @@ export default function CardForm() {
                     <div className='flex gap-2'>
                         <div className='w-full'>
                             <label className='text-bold font-medium dark:text-gray text-boldText'>Month</label>
-                            <input onClick={() => setValidMonth({...validMonth, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeMonth(e.target.value)} type="number" placeholder='01' value={month} />
+                            <input onClick={() => setValidMonth({...validMonth, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeMonth(e.target.value)} type="number" placeholder='01' defaultValue={month} />
                             <div className={`${validMonth.valid ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit px-1 py-0.5 ${validMonth.clicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
                                 {validMonth.valid ? <p>Valid month! 🥳</p> : <p>Select a month between 01-12 😞</p>}
                             </div>
                         </div>
                         <div className='w-full'>
                             <label className='text-bold font-medium dark:text-gray text-boldText'>Year</label>
-                            <input onClick={() => setValidYear({...validYear, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeYear(e.target.value)} type="number" placeholder='22' value={year} />
+                            <input onClick={() => setValidYear({...validYear, clicked: true})} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeYear(e.target.value)} type="number" placeholder='22' defaultValue={year} />
                             <div className={`${validYear.valid ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit px-1 py-0.5 ${validYear.clicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
                                 {validYear.valid ? <p>Valid Year! 🥳</p> : <p>Select a valid year 😞</p>}
                             </div>
@@ -264,7 +264,7 @@ export default function CardForm() {
                     </div>
                     <div>
                         <label className='text-bold font-medium dark:text-gray text-boldText'>CCV</label>
-                        <input onClick={rotateCard} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeCcv(e.target.value)} type="password" placeholder='***' value={ccv} />
+                        <input onClick={rotateCard} className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' onChange={e => changeCcv(e.target.value)} type="password" placeholder='***' defaultValue={ccv} />
                         <div className={`${validCcv.valid ? 'bg-green' : 'bg-red'} transition-all delay-100 ease-out h-fit px-1 py-0.5 ${validCcv.clicked ? 'relative opacity-100' : 'absolute opacity-0'} rounded rounded-bl-xl`}>
                             {validCcv.valid ? <p>Valid card! 🥳</p> : <p>Put a valid number 😞</p>}
                         </div>

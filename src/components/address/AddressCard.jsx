@@ -25,8 +25,6 @@ export default function AddressCard({currentAddress}) {
     navigate('/feed');
   }
 
-  console.log(deleted); 
-
   return (
     <>
       <div className='border-2 gap-1 rounded flex flex-col justify-between items-center border-gray dark:border-gray-grayDark p-2 hover:shadow-containersShadow bg-white dark:bg-darkBg h-[400px] w-100 hover:border-primary dark:hover:border-primary-light hover:-translate-y-0.5 transition-all ease-in-out delay-50'>

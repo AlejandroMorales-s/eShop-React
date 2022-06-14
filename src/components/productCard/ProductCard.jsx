@@ -65,7 +65,7 @@ export default function ProductCard({name, price, image, desc, id}) {
         <>
             <div onClick={product} className='bg-white relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
                 <div className='h-[250px] overflow-hidden rounded'>
-                    <img className='w-100 object-cover h-100' src={image} alt={name}/>
+                    <img className='w-100 object-cover h-100' srcSet={image} alt={name}/>
                 </div>
                 <h3 className='text-bold text-boldText dark:text-white font-semibold'>{name}</h3>
                 <p className='text-bold text-green font-semibold'>{price} MXN</p>
