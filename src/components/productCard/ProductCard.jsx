@@ -49,7 +49,7 @@ export default function ProductCard({name, price, image, desc, id}) {
 
     const buyProduct = (e) => {
         e.stopPropagation();
-        navigate(`/${id}/buy/shipping`);
+        navigate(`/${id}/buy-product`);
     };
 
     const product = () => {

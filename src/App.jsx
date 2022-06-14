@@ -24,6 +24,7 @@ import Shipping from './components/buyProduct/Shipping';
 import Payments from './components/buyProduct/Payments';
 //* Wishlist
 import Wishlist from './views/Wishlist';
+import Template from './components/buyProduct/Template';
 
 function App() {
 
@@ -62,10 +63,7 @@ function App() {
         {/* Product Details */}
         <Route path="/product-details/:id" element={<Product/>} />
         {/* Buy Product */}
-        <Route path="/:id/buy/">
-          <Route path="shipping" element={<Shipping/>} />
-          <Route path="payments" element={<Payments/>} />
-        </Route>
+        <Route path="/:id/buy-product" element={<Template/>} />
       </Routes>
   );
 }
