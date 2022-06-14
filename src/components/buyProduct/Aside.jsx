@@ -18,7 +18,7 @@ export default function Aside({product}) {
                         <p className='text-text font-medium text-bold dark:text-gray'>{product.price} MXN</p> 
                     </div>
                     <div className='flex items-center justify-between'>
-                        <p className='text-text font-medium text-bold dark:text-gray'>Shopping:</p> 
+                        <p className='text-text font-medium text-bold dark:text-gray'>Shipping:</p> 
                         <p className='text-text font-medium text-bold dark:text-gray'>$0 MXN</p> 
                     </div>
                 </div>

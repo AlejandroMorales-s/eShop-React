@@ -3,7 +3,7 @@ import VisaLogo from '../../assets/logo-visa.png';
 import MastercardLogo from '../../assets/logo-mastercard.png';
 import { globalContext } from '../globalContext/GlobalContext';
 
-export default function Card({card}) {
+export default function Card({card, component}) {
     const {id, type, name, number, month, year} = card;
     
     const {cards, setCards} = useContext(globalContext);
@@ -25,8 +25,14 @@ export default function Card({card}) {
                     <p className='text-text dark:text-gray'>{name}</p>
                 </div>
                 <div className='min-w-[250px] flex justify-end gap-2 '>
-                    <button className='shadow-shadow px-2 py-1 bg-primary text-white font-medium rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light'>Set default</button>
-                    <button onClick={deleteCard} className='px-2 py-1 bg-red dark:bg-red text-white font-medium rounded border-2 border-red transition-all hover:bg-transparent hover:text-red  dark:border-red dark:hover:bg-transparent dark:hover:text-red'>Delete</button>
+                    {component !== 'MyCards' ? 
+                        <button className='shadow-shadow px-2 py-1 bg-primary text-white font-medium rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light'>Select</button>
+                    :
+                        <>
+                            <button className='shadow-shadow px-2 py-1 bg-primary text-white font-medium rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light'>Set default</button>
+                            <button onClick={deleteCard} className='px-2 py-1 bg-red dark:bg-red text-white font-medium rounded border-2 border-red transition-all hover:bg-transparent hover:text-red  dark:border-red dark:hover:bg-transparent dark:hover:text-red'>Delete</button>
+                        </> 
+                    }
                 </div>
             </div>
         </>

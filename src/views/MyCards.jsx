@@ -36,6 +36,7 @@ export default function MyCards() {
                     <Card
                         key={index}
                         card={card}
+                        component={'MyCards'}
                     />
                 ))}
             </div>
