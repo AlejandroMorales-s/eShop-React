@@ -8,6 +8,7 @@ export default function Shipping({setView, product, shipping, quantity}) {
     const {buyDetails, setBuyDetails} = useContext(globalContext);
 
     const [arrives, setArrives] = useState('');
+    const [inactiveButton, setInactiveButton] = useState(true);
 
     const date = new Date();
     const month = date.getMonth();
@@ -28,15 +29,25 @@ export default function Shipping({setView, product, shipping, quantity}) {
     };
 
     const arrivesTomorrow = () => {
-        arrives === 'Tomorrow' ? setArrives('') : setArrives('Tomorrow');
+        if (arrives === 'Tomorrow') {
+            setArrives('');
+            setInactiveButton(true);
+        } else {
+            setArrives('Tomorrow');
+            setInactiveButton(false);
+        }
     };
     
     const arrivesLater = () => {
-        arrives === 'Later' ? setArrives('') : setArrives('Later'); 
+        if (arrives === 'Later') {
+            setArrives('');
+            setInactiveButton(true);
+        } else {
+            setArrives('Later');
+            setInactiveButton(false);
+        } 
     };
     
-    console.log(arrives); 
-
     return (
         <>
             <DocumentTitle title='Shipping'/>
@@ -64,7 +75,7 @@ export default function Shipping({setView, product, shipping, quantity}) {
                         <p className={`${arrives === 'Later' ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
                     </div>
                 </div>
-                <button onClick={modifyView} className='w-fit shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light'>Continue</button>
+                <button disabled={inactiveButton} onClick={modifyView} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} w-fit shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`}>Continue</button>
             </div>
         </>
     )
