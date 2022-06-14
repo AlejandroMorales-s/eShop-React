@@ -3,16 +3,39 @@ import DocumentTitle from 'react-document-title';
 import { globalContext } from '../globalContext/GlobalContext';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 
-export default function Shipping({setView}) {
+export default function Shipping({setView, product, shipping, quantity}) {
     const {shoppingAddress} = useContext(globalContext);
+    const {buyDetails, setBuyDetails} = useContext(globalContext);
+
+    const [arrives, setArrives] = useState('');
+
     const date = new Date();
     const month = date.getMonth();
     const day = date.getDate();
     const year = date.getFullYear();
 
     const modifyView = () => {
+        setBuyDetails({
+            ...buyDetails,
+            shippingAddress: shoppingAddress,
+            shipping: arrives,
+            products: [{
+                ...product,
+                quantity: quantity
+            }],
+        });
         setView('payments');
-    }
+    };
+
+    const arrivesTomorrow = () => {
+        arrives === 'Tomorrow' ? setArrives('') : setArrives('Tomorrow');
+    };
+    
+    const arrivesLater = () => {
+        arrives === 'Later' ? setArrives('') : setArrives('Later'); 
+    };
+    
+    console.log(arrives); 
 
     return (
         <>
@@ -32,13 +55,13 @@ export default function Shipping({setView}) {
                 </div>
                 <div className='flex flex-col gap-2'>
                     <p className='text-boldText font-medium text-bold dark:text-white'>Receive purchase</p>
-                    <div className='hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark'>
+                    <div onClick={arrivesTomorrow} className={`${arrives === 'Tomorrow' && 'border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
                         <p className='text-text dark:text-gray'>Arrives tomorrow</p>
-                        <p className='text-bold text-green font-semibold'>FREE</p>
+                        <p className={`${arrives === 'Tomorrow' ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
                     </div>
-                    <div className='hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark'>
+                    <div onClick={arrivesLater} className={`${arrives === 'Later' && 'border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
                         <p className='text-text dark:text-gray'>Arrives {day + 2}/{month}/{year} </p>
-                        <p className='text-bold text-green font-semibold'>FREE</p>
+                        <p className={`${arrives === 'Later' ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
                     </div>
                 </div>
                 <button onClick={modifyView} className='w-fit shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light'>Continue</button>
