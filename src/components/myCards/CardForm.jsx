@@ -4,6 +4,9 @@ import { globalContext } from '../globalContext/GlobalContext';
 import CardPreview from './CardPreview';
 
 export default function CardForm() {
+    
+    //* Context
+    const {cards, setCards} = useContext(globalContext);
 
     //* State
     const [validNumber, setValidNumber] = useState({
@@ -29,6 +32,7 @@ export default function CardForm() {
     const [rotate, setRotate] = useState(false);
     const [inactiveButton, setInactiveButton] = useState(true);
     const [cardInfo, setCardInfo] = useState({
+        id: cards.length + 1,
         name: '',
         number: '',
         month: '',
@@ -38,17 +42,18 @@ export default function CardForm() {
         ccv: '',
         default: false
     });
-    const {name, number, month, year, type, ccv} = cardInfo;
+    const {name, number, month, year, type, ccv, id} = cardInfo;
 
     const navigate = useNavigate();
-
-    //* Context
-    const {cards, setCards} = useContext(globalContext);
 
     //* Add card
     const addCard = (e) => {
         e.preventDefault();
-        setCards([...cards, cardInfo]);
+        setCards([
+            ...cards, 
+            cardInfo,
+
+        ]);
         navigate('/account/my-cards');
     };
     

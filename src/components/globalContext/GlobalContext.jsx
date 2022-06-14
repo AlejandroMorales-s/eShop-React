@@ -88,7 +88,7 @@ export default function GlobalContext({children}) {
         total: 0
     });
     const [products, setProducts] = useState(prod);
-    
+
     return (
         <globalContext.Provider value={{
             user:user.user,
