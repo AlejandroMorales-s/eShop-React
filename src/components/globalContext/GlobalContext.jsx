@@ -69,7 +69,7 @@ const prod = [
 
 export default function GlobalContext({children}) {
 
-    //* States
+    //* User
     const [user, setUser] = useState({
         user:{},
         logged:false
@@ -77,18 +77,21 @@ export default function GlobalContext({children}) {
     const [addresses, setAddresses] = useState([]);
     const [cards, setCards] = useState([]);
     const [shoppingAddress, setShoppingAddress] = useState({
-        direccionAdded: false
+        directionAdded: false
     });
-    const [wishlist, setWishlist] = useState([]);
     const [orders, setOrders] = useState([]);
     const [shoppingCart, setShoppingCart] = useState([]);
+    const [wishlist, setWishlist] = useState([]);
+    //* Products
+    const [products, setProducts] = useState(prod);
+    //* Buy Product
+    const [buyNowQuantity, setBuyNowQuantity] = useState(1);
     const [buyDetails, setBuyDetails] = useState({
         products: [],
         shipping: '',
         payment: {},
         total: 0
     });
-    const [products, setProducts] = useState(prod);
 
     return (
         <globalContext.Provider value={{
@@ -110,7 +113,9 @@ export default function GlobalContext({children}) {
             cards,
             setCards,
             orders,
-            setOrders
+            setOrders,
+            buyNowQuantity,
+            setBuyNowQuantity
         }}>
             {children}
         </globalContext.Provider>

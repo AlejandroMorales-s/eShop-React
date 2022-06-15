@@ -19,9 +19,6 @@ import MyCards from './views/MyCards';
 import AddCard from './views/AddCard';
 //* Product Details
 import Product from './views/Product';
-//* Buy Product
-import Shipping from './components/buyProduct/Shipping';
-import Payments from './components/buyProduct/Payments';
 //* Wishlist
 import Wishlist from './views/Wishlist';
 import Template from './components/buyProduct/Template';

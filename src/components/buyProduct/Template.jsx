@@ -10,9 +10,10 @@ import Shipping from './Shipping';
 
 export default function Template() {
     const {products} = useContext(globalContext);
+    const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
+
     const [product, setProduct] = useState();
     const [view, setView] = useState('shipping');
-    const [quantity, setQuantity] = useState(1);
     const [shipping, setShipping] = useState(0);
 
     const {id} = useParams();
@@ -28,10 +29,10 @@ export default function Template() {
                 <div>Loading...</div> 
             :
                 <div className='grid grid-cols-product m-auto w-95 max-w-[1000px] my-5 bg-white dark:bg-darkBg border-2 border-white dark:border-gray-grayDark shadow-containersShadow rounded'>
-                    {view === 'shipping' && <Shipping setView={setView} product={product} shipping={shipping} quantity={quantity}/>}
+                    {view === 'shipping' && <Shipping setView={setView} product={product} shipping={shipping} quantity={buyNowQuantity}/>}
                     {view === 'payments' && <Payments setView={setView}/>}
                     {view === 'confirmDetails' && <ConfirmDetails setView={setView}/>}
-                    <Aside product={product} setQuantity={setQuantity} quantity={quantity} setShipping={setShipping} shipping={shipping}/>
+                    <Aside product={product} setQuantity={setBuyNowQuantity} quantity={buyNowQuantity} setShipping={setShipping} shipping={shipping}/>
                 </div>
             }
         </>
