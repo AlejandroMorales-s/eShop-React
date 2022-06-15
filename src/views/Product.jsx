@@ -12,6 +12,7 @@ export default function Product() {
     const {products} = useContext(globalContext);
     const {wishlist, setWishlist} = useContext(globalContext);
     const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
+    const {history, setHistory} = useContext(globalContext);
 
     const [inWishlist, setInWishlist] = useState(false);
     
@@ -36,11 +37,21 @@ export default function Product() {
         };
     };
 
+    const addToHistory = () => {
+        history.some(item => item.id == id) === false && setHistory([...history, {
+                id,
+                name,
+                price,
+                image,
+                desc
+        }]);
+    };
+    
     useEffect(() => {
+        addToHistory();
         setInWishlist(wishlist.find(item => item.id === id));
     }, [inWishlist]);
-
-    
+        
     return (
         <>
             <ReactDocumentTitle title={name}/>

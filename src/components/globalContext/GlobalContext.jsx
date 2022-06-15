@@ -84,6 +84,7 @@ export default function GlobalContext({children}) {
     const [wishlist, setWishlist] = useState([]);
     //* Products
     const [products, setProducts] = useState(prod);
+    const [history, setHistory] = useState([]);
     //* Buy Product
     const [buyNowQuantity, setBuyNowQuantity] = useState(1);
     const [buyDetails, setBuyDetails] = useState({
@@ -115,7 +116,9 @@ export default function GlobalContext({children}) {
             orders,
             setOrders,
             buyNowQuantity,
-            setBuyNowQuantity
+            setBuyNowQuantity,
+            history,
+            setHistory
         }}>
             {children}
         </globalContext.Provider>
