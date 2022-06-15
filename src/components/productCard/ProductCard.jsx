@@ -68,7 +68,7 @@ export default function ProductCard({name, price, image, desc, id}) {
                     <img className='w-100 object-cover h-100' srcSet={image} alt={name}/>
                 </div>
                 <h3 className='text-bold text-boldText dark:text-white font-semibold'>{name}</h3>
-                <p className='text-bold text-green font-semibold'>{price} MXN</p>
+                <p className='text-bold text-green font-semibold'>${price} MXN</p>
                 <p className='text-text dark:text-gray line-clamp-2'>{desc}</p>
                 <div className='absolute w-full h-full top-0 left-0 rounded pt-1.5 px-1.5 opacity-0 hover:opacity-100 transition-all ease-in-out delay-50'>
                     <div className='flex gap-1 justify-center'>
