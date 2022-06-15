@@ -33,12 +33,12 @@ export default function Product() {
                 image,
                 desc
             }]);
-            setInWishlist(wishlist.some(item => item.id == id));
+            setInWishlist(wishlist.some(item => item.id === id));
         };
     };
 
     const addToHistory = () => {
-        history.some(item => item.id == id) === false && setHistory([...history, {
+        history.some(item => item.id === id) === false && setHistory([...history, {
                 id,
                 name,
                 price,
@@ -50,7 +50,8 @@ export default function Product() {
     useEffect(() => {
         addToHistory();
         setInWishlist(wishlist.find(item => item.id === id));
-    }, [inWishlist]);
+         // eslint-disable-next-line
+    }, [inWishlist, wishlist, id]);
         
     return (
         <>
