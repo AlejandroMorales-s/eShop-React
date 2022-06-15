@@ -72,11 +72,11 @@ export default function Shipping({setView, product, shipping, quantity}) {
                 </div>
                 <div className='flex flex-col gap-2'>
                     <p className='text-boldText font-medium text-bold dark:text-white'>Receive purchase</p>
-                    <div onClick={arrivesTomorrow} className={`${arrives.tomorrow && 'border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
+                    <div onClick={arrivesTomorrow} className={`${arrives.tomorrow && 'border-green hover:border-green dark:border-green hover:dark:border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
                         <p className='text-text dark:text-gray'>Arrives tomorrow</p>
                         <p className={`${arrives.tomorrow ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
                     </div>
-                    <div onClick={arrivesLater} className={`${!arrives.tomorrow && 'border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
+                    <div onClick={arrivesLater} className={`${!arrives.tomorrow && 'border-green hover:border-green dark:border-green hover:dark:border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
                         <p className='text-text dark:text-gray'>Arrives {day + 2}/{month}/{year} </p>
                         <p className={`${!arrives.tomorrow ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
                     </div>
