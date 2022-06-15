@@ -80,6 +80,7 @@ export default function GlobalContext({children}) {
         direccionAdded: false
     });
     const [wishlist, setWishlist] = useState([]);
+    const [orders, setOrders] = useState([]);
     const [shoppingCart, setShoppingCart] = useState([]);
     const [buyDetails, setBuyDetails] = useState({
         products: [],
@@ -107,7 +108,9 @@ export default function GlobalContext({children}) {
             products,
             setProducts,
             cards,
-            setCards
+            setCards,
+            orders,
+            setOrders
         }}>
             {children}
         </globalContext.Provider>
