@@ -21,7 +21,10 @@ import AddCard from './views/AddCard';
 import Product from './views/Product';
 //* Wishlist
 import Wishlist from './views/Wishlist';
+//* Buy Product
 import Template from './components/buyProduct/Template';
+//* History
+import History from './views/History';
 
 function App() {
 
@@ -57,6 +60,8 @@ function App() {
         <Route path="/account/add-card" element={<AddCard/>} />
         {/* Wishlist */}
         <Route path="/account/my-wishlist" element={<Wishlist/>} />
+        {/* History */}
+        <Route path="/account/history" element={<History/>} />
         {/* Product Details */}
         <Route path="/product-details/:id" element={<Product/>} />
         {/* Buy Product */}
