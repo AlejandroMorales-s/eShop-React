@@ -70,23 +70,23 @@ export default function Product() {
                             <h2 className='m-0 font-semibold text-title dark:text-white'>{name}</h2>
                             <AiOutlineHeart onClick={addToWishlist} className={`${inWishlist && 'text-primary'} text-[26px] cursor-pointer hover:text-primary dark:text-gray dark:hover:text-primary-light transition-all ease-out delay-50`}/>
                         </div>
-                        <p className='text-[32.5px] font-semibold'>${price} MXN</p>
+                        <p className='text-[32.5px] font-semibold dark:text-gray'>${price} MXN</p>
                         <div className='flex flex-col gap-1'>
                             <div className='flex items-center gap-0.5'>
                                 <TbTruckDelivery className='text-[20px] text-green'/>
                                 <p className='text-green'>
-                                    Arrives <span className='font-semibold'>tomorrow</span> <span className='text-boldText'>for {price < 100 ? '$99 MXN' : 'FREE'}</span>
+                                    Arrives <span className='font-semibold'>tomorrow</span> <span className='text-boldText dark:text-gray'>for {price < 100 ? '$99 MXN' : 'FREE'}</span>
                                 </p>
                             </div>
                             <div className='flex items-center gap-0.5'>
                                 <FiTruck className='text-[17px] text-green'/>
                                 <p className='text-green'>
-                                    Arrives <span className='font-semibold'>the day after tomorrow</span> <span className='text-boldText'>for {price < 100 ? '$99 MXN' : 'FREE'}</span>
+                                    Arrives <span className='font-semibold'>the day after tomorrow</span> <span className='text-boldText dark:text-gray'>for {price < 100 ? '$99 MXN' : 'FREE'}</span>
                                 </p>
                             </div>
                         </div>
                         <div className='flex items-center gap-0.5'>
-                            <p className='text-bold font-medium'>Quantity:</p>
+                            <p className='text-bold font-medium dark:text-gray'>Quantity:</p>
                             <input className='border-2 rounded text-bold pl-0.5 w-[45px] border-gray dark:border-gray-grayDark' 
                             onInput={(e)=>{setBuyNowQuantity(e.target.value)}} type="number" min='1' max='50' defaultValue={buyNowQuantity} />
                         </div>
