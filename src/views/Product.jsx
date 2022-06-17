@@ -9,21 +9,24 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import { FiTruck } from 'react-icons/fi';
 
 export default function Product() {
+    //* Context
     const {products} = useContext(globalContext);
     const {wishlist, setWishlist} = useContext(globalContext);
     const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
     const {history, setHistory} = useContext(globalContext);
-
+    
+    //* State
     const [inWishlist, setInWishlist] = useState(false);
     
-    const { id } = useParams();
+    const {idParams} = useParams();
     
-    const product = products.find(product => product.id === parseInt(id));
-    const {name, price, image, desc} = product;
+    const product = products.find(product => product.id === parseInt(idParams));
+    const {name, price, image, desc, id} = product;
 
+    //* Add/Remove to wishlist
     const addToWishlist = () => {
-        if (wishlist.find(item => item.id === id)) {
-            setWishlist(wishlist.filter(item => item.id !== id));
+        if (wishlist.find(item => item.id === parseInt(idParams))) {
+            setWishlist(wishlist.filter(item => item.id !== parseInt(idParams)));
             setInWishlist(false);
         } else {
             setWishlist([...wishlist, {
@@ -33,12 +36,14 @@ export default function Product() {
                 image,
                 desc
             }]);
-            setInWishlist(wishlist.some(item => item.id === id));
+            setInWishlist(true);
         };
     };
 
+
+    //* Add/Remove to history
     const addToHistory = () => {
-        history.some(item => item.id === id) === false && setHistory([...history, {
+        history.some(item => item.id === parseInt(idParams)) === false && setHistory([...history, {
                 id,
                 name,
                 price,
@@ -49,9 +54,9 @@ export default function Product() {
     
     useEffect(() => {
         addToHistory();
-        setInWishlist(wishlist.find(item => item.id === id));
+        setInWishlist(wishlist.find(item => item.id === parseInt(idParams)));
          // eslint-disable-next-line
-    }, [inWishlist, wishlist, id]);
+    }, [inWishlist, idParams]);
         
     return (
         <>
