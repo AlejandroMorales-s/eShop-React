@@ -31,34 +31,43 @@ export default function ProductCard({name, price, image, desc, id}) {
                 image,
                 desc
             }]);
-            setInWishlist(wishlist.some(item => item.id === id));
+            setInWishlist(true);
         };
     };
 
     //* Add/Remove to cart
     const addToCart = (e) => {
         e.stopPropagation();
-        if (shoppingCart.find(item => item === id)) {
-            setShoppingCart(shoppingCart.filter(item => item !== id));
+        if (shoppingCart.find(item => item.id === id)) {
+            setShoppingCart(shoppingCart.filter(item => item.id !== id));
             setInShoppingCart(false);
         } else {
-            setShoppingCart([...shoppingCart, id]);
+            setShoppingCart([...shoppingCart, {
+                id,
+                name,
+                price,
+                image,
+                desc
+            }]);
             setInShoppingCart(true);
         };
     };
-
+    
+    //* Buy now
     const buyProduct = (e) => {
         e.stopPropagation();
         navigate(`/${id}/buy-product`);
     };
 
+    //* Product details
     const product = () => {
         navigate(`/product-details/${id}`);
     };
-
+    
     useEffect(() => {
         setInWishlist(wishlist.find(item => item.id === id));
-    }, [inWishlist]);
+        setInShoppingCart(shoppingCart.find(item => item.id === id));
+    }, [inWishlist, inShoppingCart]);
     
 
     return (
