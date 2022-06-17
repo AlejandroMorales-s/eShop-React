@@ -63,7 +63,7 @@ function App() {
         {/* History */}
         <Route path="/account/history" element={<History/>} />
         {/* Product Details */}
-        <Route path="/product-details/:id" element={<Product/>} />
+        <Route path="/product-details/:idParams" element={<Product/>} />
         {/* Buy Product */}
         <Route path="/:id/buy-product" element={<Template/>} />
       </Routes>
