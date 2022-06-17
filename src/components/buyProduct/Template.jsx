@@ -32,7 +32,7 @@ export default function Template() {
                     {view === 'shipping' && <Shipping setView={setView} product={product} shipping={shipping} quantity={buyNowQuantity}/>}
                     {view === 'payments' && <Payments setView={setView}/>}
                     {view === 'confirmDetails' && <ConfirmDetails setView={setView}/>}
-                    <Aside product={product} setQuantity={setBuyNowQuantity} quantity={buyNowQuantity} setShipping={setShipping} shipping={shipping}/>
+                    <Aside product={product} setBuyNowQuantity={setBuyNowQuantity} buyNowQuantity={buyNowQuantity} setShipping={setShipping} shipping={shipping}/>
                 </div>
             }
         </>
