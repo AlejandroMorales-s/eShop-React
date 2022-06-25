@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { AiOutlineSearch } from 'react-icons/ai';
 //* Dropdowns
 import MyAccountDropdown from './MyAccountDropdown';
 import MyAccountDropdownPhone from './MyAccountDropdownPhone';
@@ -59,7 +60,8 @@ export default function Navbar() {
                         </div>
                     </Link>
                     <div className='w-90 max-w-55 mx-2 h-fit relative'>
-                        <input className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' type="search" name="" id="" />
+                        <input className='relative px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' type="search"/>
+                        <AiOutlineSearch className='absolute right-0 top-[0] cursor-pointer text-[35px] text-white dark:bg-primary-light dark:text-darkBg rounded bg-primary w-5 h-full'/>
                     </div>
                     <div className='sm:flex hidden gap-5'>
                         <MyAccountDropdown auth={user}/>
