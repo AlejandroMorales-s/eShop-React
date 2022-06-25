@@ -7,7 +7,7 @@ module.exports = {
     colors: {
       transparent: "transparent",
       green: "#00b894",
-      red: "#d63031",
+      red: "#da1e28",
       yellow: "#fdcb6e",
       fb: "#046fe5",
       gray: {
@@ -25,6 +25,14 @@ module.exports = {
       boldText: '#111827',
       white: '#FFFFFF',
       black: '#000000',
+      // Modals
+      lightRed: '#fff1f1',
+      lightBlue: '#edf5ff',
+      blue: '#0043ce',
+      yellowModal: '#f1c21b',
+      lightYellow: '#fff8e1',
+      greenModal: '#24a148',
+      lightGreen: '#defbe6',
     },
     borderWidth: {
       DEFAULT: '2px',
