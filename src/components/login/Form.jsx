@@ -1,6 +1,5 @@
 import React, {useRef, useState, useEffect, useContext} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import InfoModal from '../modals/InfoModal';
 import { post } from '../../api';
 import { globalContext } from '../globalContext/GlobalContext';
 import Modal from '../modals/Modal';

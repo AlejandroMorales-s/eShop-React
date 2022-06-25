@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import { post } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import {globalContext} from '../globalContext/GlobalContext';
-import InfoModal from '../modals/InfoModal';
 import Modal from '../modals/Modal';
 
 export default function Form() {
