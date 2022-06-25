@@ -64,7 +64,7 @@ export default function MyAccount() {
                     </div>
                     <h3 className='text-subtitle font-medium dark:text-gray'>{user.name}</h3>
                 </div>
-                <div className='w-100 grid grid-cols-2 gap-2'>
+                <div className='w-100 flex flex-col sm:grid sm:grid-cols-2 gap-2'>
                     {cards.map((card, index) => (
                         <AccountOptionsCard
                             key={index}

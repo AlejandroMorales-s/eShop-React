@@ -4,8 +4,8 @@ import { globalContext } from '../globalContext/GlobalContext';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 //* Dropdowns
 import MyAccountDropdown from './MyAccountDropdown';
+import MyAccountDropdownPhone from './MyAccountDropdownPhone';
 import ShoppingCartDropdown from './ShoppingCartDropdown';
-
 
 export default function Navbar() {
     //* Global Context
@@ -40,7 +40,7 @@ export default function Navbar() {
                         <h1 className='text-primary dark:text-primary-light font-semibold text-logo'>LOGO</h1>
                     </Link>
                     <Link to='/account/my-addresses'>
-                        <div className='flex items-center gap-0.5'>
+                        <div className='sm:flex hidden items-center gap-0.5'>
                             <FaMapMarkerAlt className='text-primary dark:text-primary-light text-[30px] hover:-translate-y-0.5 transition-all ease-in-out delay-50' />
                             <div className='flex flex-col'>
                                 {shoppingAddress.directionAdded ? 
@@ -61,9 +61,12 @@ export default function Navbar() {
                     <div className='w-90 max-w-55 mx-2 h-fit relative'>
                         <input className='px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' type="search" name="" id="" />
                     </div>
-                    <div className='flex gap-5'>
+                    <div className='sm:flex hidden gap-5'>
                         <MyAccountDropdown auth={user}/>
                         <ShoppingCartDropdown/>
+                    </div>
+                    <div className='sm:hidden block'>
+                        <MyAccountDropdownPhone auth={user}/>
                     </div>
                 </div>
             </div>

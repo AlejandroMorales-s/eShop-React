@@ -10,7 +10,7 @@ export default function PersonalData() {
     return (
         <>
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>Personal data</h2>
-            <div className='flex gap-1 w-95 max-w-[1000px] m-auto'>
+            <div className='flex sm:flex-row flex-col gap-1 w-95 max-w-[1000px] m-auto'>
                 <div className='border-2 border-gray dark:border-gray-grayDark rounded bg-white w-100 shadow-containersShadow p-2 dark:bg-darkBg'>
                     <p className='text-text dark:text-gray'><span className='font-semibold text-bold text-boldText dark:text-white'>Name: </span>{user.name}</p>
                 </div>

@@ -28,7 +28,7 @@ export default function Template() {
             {product === undefined ? 
                 <div>Loading...</div> 
             :
-                <div className='grid grid-cols-product m-auto w-95 max-w-[1000px] my-5 bg-white dark:bg-darkBg border-2 border-white dark:border-gray-grayDark shadow-containersShadow rounded'>
+                <div className='flex flex-col-reverse gap-2 sm:grid sm:grid-cols-product m-auto w-95 max-w-[1000px] my-5 bg-white dark:bg-darkBg border-2 border-white dark:border-gray-grayDark shadow-containersShadow rounded'>
                     {view === 'shipping' && <Shipping setView={setView} product={product} shipping={shipping} quantity={buyNowQuantity}/>}
                     {view === 'payments' && <Payments setView={setView}/>}
                     {view === 'confirmDetails' && <ConfirmDetails setView={setView}/>}
