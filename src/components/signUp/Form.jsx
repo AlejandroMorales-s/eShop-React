@@ -4,6 +4,7 @@ import { post } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import {globalContext} from '../globalContext/GlobalContext';
 import InfoModal from '../modals/InfoModal';
+import Modal from '../modals/Modal';
 
 export default function Form() {
     //* States
@@ -13,6 +14,7 @@ export default function Form() {
     const [inactiveButton, setInactiveButton] = useState(true);
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [inputClicked, setInputClicked] = useState(false);
+    const [showingModal, setShowingModal] = useState(false);
     const [error, setError] = useState({
         isError: false,
         error: []
@@ -79,6 +81,7 @@ export default function Form() {
                 isError: true,
                 error: error.errors.map(error => error.message)
             });
+            setShowingModal(true);
         });
     }
 
@@ -137,7 +140,7 @@ export default function Form() {
                     <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`} type="submit">Sign Up</button>
                 </div>
             </form>
-            {error.isError && <InfoModal color={'red'} title={'An error ocurred'} desc={error.error} btn={'Ok'} open={error.isError} />}
+            {showingModal && error.isError && <Modal type={'error'} title={'An error ocurred'} desc={error.error} open={error.isError} setShowingModal={setShowingModal}/>}
         </>
     )
 }
