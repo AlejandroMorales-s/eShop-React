@@ -12,11 +12,13 @@ export default function Product() {
     //* Context
     const {products} = useContext(globalContext);
     const {wishlist, setWishlist} = useContext(globalContext);
+    const {shoppingCart, setShoppingCart} = useContext(globalContext);
     const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
     const {history, setHistory} = useContext(globalContext);
     
     //* State
     const [inWishlist, setInWishlist] = useState(false);
+    const [inShoppingCart, setInShoppingCart] = useState(false);
     
     const {idParams} = useParams();
     
@@ -40,6 +42,23 @@ export default function Product() {
         };
     };
 
+    //* Add/Remove to cart
+    const addToCart = () => {
+        if (shoppingCart.find(item => item.id === id)) {
+            setShoppingCart(shoppingCart.filter(item => item.id !== id));
+            setInShoppingCart(false);
+        } else {
+            setShoppingCart([...shoppingCart, {
+                id,
+                name,
+                price,
+                image,
+                desc,
+                quantity: buyNowQuantity
+            }]);
+            setInShoppingCart(true);
+        };
+    }
 
     //* Add/Remove to history
     const addToHistory = () => {
@@ -55,6 +74,7 @@ export default function Product() {
     useEffect(() => {
         addToHistory();
         setInWishlist(wishlist.find(item => item.id === parseInt(idParams)));
+        setInShoppingCart(shoppingCart.find(item => item.id === parseInt(idParams)));
          // eslint-disable-next-line
     }, [inWishlist, idParams]);
         
@@ -99,7 +119,7 @@ export default function Product() {
                             <Link to={`/${id}/buy-product`}>
                                 <button className={`shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light w-full`} type="submit">Buy now</button>
                             </Link>
-                            <button className='cursor-pointer bg-white rounded shadow-shadow border-2 border-primary dark:bg-darkBg dark:border-primary-light hover:bg-primary dark:hover:bg-primary-light transition-all ease-in-out delay-50 text-primary font-medium dark:text-primary-light p-1 text-center hover:text-white dark:hover:text-boldText delay-50 h-full w-full' type="submit">Add to shopping cart</button>
+                            <button onClick={addToCart} className='cursor-pointer bg-white rounded shadow-shadow border-2 border-primary dark:bg-darkBg dark:border-primary-light hover:bg-primary dark:hover:bg-primary-light transition-all ease-in-out delay-50 text-primary font-medium dark:text-primary-light p-1 text-center hover:text-white dark:hover:text-boldText delay-50 h-full w-full' type="submit">{inShoppingCart ? 'Remove from shopping cart' : 'Add to shopping cart'}</button>
                         </div>
                         <div>
                             <h3 className='text-subtitle font-medium dark:text-white'>Description</h3>
