@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
+//* Icons
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
 //* Dropdowns
@@ -18,20 +19,14 @@ export default function Navbar() {
 
     //* Show/Hide Navbar on scroll
     let currentPosition  = window.pageYOffset;
+
     window.onscroll = function() {
         let scrolling = window.pageYOffset;
-        if(currentPosition >= scrolling){
-            setShowNavbar(true)
-        }
-        else{
-            setShowNavbar(false)
-        }
+        currentPosition >= scrolling ? setShowNavbar(true) : setShowNavbar(false);
         currentPosition = scrolling;
     }
 
-    const resetBuyNowQuantity = () => {
-        setBuyNowQuantity(1);
-    }
+    const resetBuyNowQuantity = () => setBuyNowQuantity(1);
 
     return (
         <>
