@@ -71,13 +71,13 @@ export default function MyAccountDropdownPhone({auth}) {
                 leave="transition duration-100 ease-out"
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
-                className='absolute top-16 right-[15%]'
+                className='absolute top-16 right-[1%]'
             >
                 <Menu.Items className=' flex flex-col bg-white border-2 border-gray rounded p-1 gap-1 shadow-containersShadow dark:bg-darkBg dark:border-gray-grayDark'>
                     <Menu.Item className='bg-white flex justify-between items-center gap-2 p-0.5 rounded w-100 dark:bg-darkBg border-2 border-white hover:border-gray dark:border-darkBg dark:hover:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
                         {({ active }) => (
                             <div>
-                                <p className='text-center text-text dark:text-white'>{`Hello ${auth.name}!`}</p>
+                                <p className='text-center text-bold font-semibold dark:text-white'>Hello<br/>{`${auth.name}!`}</p>
                             </div>
                         )}
                     </Menu.Item>
