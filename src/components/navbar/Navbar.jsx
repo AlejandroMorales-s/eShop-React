@@ -4,7 +4,6 @@ import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
-
 //* Dropdowns
 import MyAccountDropdown from './MyAccountDropdown';
 import MyAccountDropdownPhone from './MyAccountDropdownPhone';
@@ -15,6 +14,8 @@ export default function Navbar() {
     const {user} = useContext(globalContext);
     const {setBuyNowQuantity} = useContext(globalContext);
     const {shoppingAddress} = useContext(globalContext);
+    const {setProductsFiltered} = useContext(globalContext);
+    const {products} = useContext(globalContext);
 
     //* States
     const [showNavbar, setShowNavbar] = useState(true);
@@ -25,16 +26,24 @@ export default function Navbar() {
     //* Show/Hide Navbar on scroll
     let currentPosition  = window.pageYOffset;
 
-    window.onscroll = function() {
+    window.onscroll = () => {
         let scrolling = window.pageYOffset;
         currentPosition >= scrolling ? setShowNavbar(true) : setShowNavbar(false);
         currentPosition = scrolling;
-    }
+    };
 
     //* Clear input field 
     const clearInput = () => {
         inputRef.current.value = ""; 
         setCharactersInInput(0);
+        setProductsFiltered(products);
+    };
+
+    //* Search products 
+    const searchProduct = (e) => {
+        if (e.key === "Enter") {
+            setProductsFiltered(products.filter(product => product.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
+        };
     };
 
     const resetBuyNowQuantity = () => setBuyNowQuantity(1);
@@ -66,7 +75,7 @@ export default function Navbar() {
                         </div>
                     </Link>
                     <div className='w-90 max-w-55 mx-2 h-fit relative'>
-                        <input ref={inputRef} onChange={(e) => setCharactersInInput(e.target.value.length)} className='relative text-text dark:text-gray px-4 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg' type="text" placeholder='What are you looking for today?'/>
+                        <input ref={inputRef} onKeyDown={(e) => searchProduct(e)} onChange={(e) => setCharactersInInput(e.target.value.length)} className='relative text-text dark:text-gray px-4 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg' type="text" placeholder='What are you looking for today?'/>
                         <AiOutlineSearch className='absolute left-[5px] top-[5px] text-[30px] text-text dark:text-gray'/>
                         <AiOutlineClose onClick={clearInput} className={`${charactersInInput > 0 ? 'absolute' : 'hidden'} right-[5px] top-[10px] cursor-pointer text-[17.5px] text-text dark:text-gray`}/>
                     </div>

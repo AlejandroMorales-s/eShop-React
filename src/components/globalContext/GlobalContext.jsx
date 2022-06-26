@@ -79,11 +79,16 @@ export default function GlobalContext({children}) {
     const [shoppingAddress, setShoppingAddress] = useState({
         directionAdded: false
     });
+    //* Orders
     const [orders, setOrders] = useState([]);
+    //* Shopping cart
     const [shoppingCart, setShoppingCart] = useState([]);
+    //const [state, dispatch] = cartReducer(cartReducer, initialState);
+    //* Wishlist
     const [wishlist, setWishlist] = useState([]);
     //* Products
     const [products, setProducts] = useState(prod);
+    const [productsFiltered, setProductsFiltered] = useState(products);
     const [history, setHistory] = useState([]);
     //* Buy Product
     const [buyNowQuantity, setBuyNowQuantity] = useState(1);
@@ -111,6 +116,8 @@ export default function GlobalContext({children}) {
             setBuyDetails,
             products,
             setProducts,
+            productsFiltered,
+            setProductsFiltered,
             cards,
             setCards,
             orders,
