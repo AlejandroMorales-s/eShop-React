@@ -1,25 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { IoMdCart } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { globalContext } from '../globalContext/GlobalContext';
 
 export default function ShoppingCartDropdown() {
-    let dollar = '$';
-
-    const items = [
-        {
-            name: 'Item 1',
-            price: 10,
-            quantity: 1,
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        },
-        {
-            name: 'Item 2',
-            price: 20,
-            quantity: 2,
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        },
-    ]
+    const {shoppingCart} = useContext(globalContext);
 
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -47,24 +33,25 @@ export default function ShoppingCartDropdown() {
                     leaveTo="transform scale-95 opacity-0"
                     className='absolute top-16 right-24'
                 >
-                    <Menu.Items static className=' pb-[40px] flex flex-col bg-white border-2 border-gray rounded px-1 max-h-[365px] overflow-hidden relative max-w-[400px] shadow-containersShadow'>
-                        {items.map((item, index) => (
+                    <Menu.Items static className=' pb-[40px] flex flex-col bg-white dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark rounded px-1 max-h-[365px] overflow-hidden relative min-w-[320px] max-w-[400px] shadow-containersShadow'>
+                        {shoppingCart.map((item, index) => (
                             <Menu.Item key={index}>
                             {({ active }) => (
-                                <div className='flex gap-1.5 hover:cursor-pointer justify-center items-center max-w-100 border-b-gray border-b-2 py-1'>
-                                    <div className=' border-2 border-gray w-[50px] h-[50px] rounded'>
-                                        <img src="" alt="" />
+                                <div className='flex gap-1.5 hover:cursor-pointer justify-center items-center max-w-100 border-b-gray dark:border-b-gray-grayDark border-b-2 py-1'>
+                                    <div className=' border-2 border-gray dark:border-gray-grayDark w-[50px] overflow-hidden h-[50px] rounded'>
+                                        <img src={item.image} alt="" />
                                     </div>
                                     <div className='max-w-[150px]'>
-                                        <p className='font-semibold'>{item.name}</p>
-                                        <p className='text-text line-clamp-2'>{item.desc}</p>
-                                        <p className='text-sm'>{dollar.concat(item.price, '.00')}</p>
+                                        <p className='font-semibold dark:text-white'>{item.name}</p>
+                                        <p className='text-text dark:text-gray line-clamp-2'>{item.desc}</p>
+                                        <p className='text-sm dark:text-gray'>{`$${item.price}.00`}</p>
                                     </div>
                                     <div className='max-w-100 flex flex-col items-center'>
-                                        <p className='text-sm font-semibold'>Quantity:</p>
-                                        <p className='text-text'>{item.quantity}</p>
-                                        <p className='text-sm font-semibold'>Total:</p>
-                                        <p className='text-text'>{dollar.concat((item.price * item.quantity), '.00')}</p>
+                                        <p className='text-sm dark:text-white font-semibold'>Quantity:</p>
+                                        <input onClick={(e) => e.stopPropagation()} className='border-2 rounded pl-0.5 w-[40px] border-gray dark:border-gray-grayDark dark:bg-darkBg dark:text-gray' 
+                                        type="number" min='1' max='50' onInput={(e) => item.quantity = e.target.value} defaultValue={item.quantity}/>
+                                        <p className='text-sm dark:text-white font-semibold'>Total:</p>
+                                        <p className='text-text dark:text-gray'>{`$${item.price * item.quantity}.00`}</p>
                                     </div>
                                 </div>
                             )}
@@ -73,8 +60,8 @@ export default function ShoppingCartDropdown() {
                         <Menu.Item>
                             {({ active }) => (
                                 <Link to='/account/shopping-cart'>
-                                    <div className='border-t-2 border-t-gray absolute flex items-center justify-center bottom-0 bg-white w-100 h-[45px]'>
-                                        <p className='font-semibold text-primary'>View shopping cart</p>
+                                    <div className='border-t-2 border-t-gray dark:border-t-gray-grayDark absolute flex items-center justify-center bottom-0 bg-white dark:bg-darkBg w-full h-[45px]'>
+                                        <p className='font-semibold text-primary dark:text-primary-light'>View shopping cart</p>
                                     </div>
                                 </Link>
                             )}
