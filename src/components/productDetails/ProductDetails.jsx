@@ -112,7 +112,7 @@ export default function ProductDetails() {
             <div className='w-95 max-w-130 mx-auto flex justify-center items-center my-5'>
                 <div className='bg-white p-2 flex flex-col sm:grid sm:grid-cols-product w-full shadow-containersShadow rounded gap-2 dark:bg-darkBg'>
                     <div className='flex flex-col gap-1.5 overflow-auto'>
-                        <div className='h-[625px] rounded w-full overflow-hidden'>
+                        <div className='sm:h-[625px] h-[300px] rounded w-full overflow-hidden'>
                             <img src={image} className=' w-full h-full object-cover' alt='Product '/>
                         </div>
                     </div>
