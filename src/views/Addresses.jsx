@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import ReactDocumentTitle from 'react-document-title';
 import { Link } from 'react-router-dom';
 import { BsPlusCircle } from 'react-icons/bs';
@@ -8,9 +8,13 @@ import { globalContext } from '../components/globalContext/GlobalContext';
 import Navbar from '../components/navbar/Navbar';
 import AddressCard from '../components/address/AddressCard';
 import Breadcrumb from '../components/breadcrumbTrail/Breadcrumb';
+import Modal from '../components/modals/Modal';
 
 export default function Addresses() {
     const {addresses} = useContext(globalContext);
+
+    const [showingModal, setShowingModal] = useState(false);
+
     const breadcrumb = [
         {
             link:'/account',
@@ -20,7 +24,8 @@ export default function Addresses() {
             link:'/account/my-addresses',
             text:'My addresses'
         }
-    ]
+    ];
+
     return (
         <>
             <ReactDocumentTitle title='Addresses'/>
@@ -38,9 +43,11 @@ export default function Addresses() {
                     <AddressCard 
                         key={index}
                         currentAddress={address}
+                        setShowingModal={setShowingModal}
                     />
                 ))}
             </div>
+            {showingModal && <Modal type={'success'} title={'Deleted successfully'} desc={'The address was deleted successfully'} setShowingModal={setShowingModal}/>}
         </>
     )
 }

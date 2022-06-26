@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import VisaLogo from '../../assets/logo-visa.png';
 import MastercardLogo from '../../assets/logo-mastercard.png';
 import { globalContext } from '../globalContext/GlobalContext';
+import Modal from '../modals/Modal';
 
-export default function Card({card, component}) {
+export default function Card({card, component, setShowingModal}) {
     const {id, type, name, number, month, year} = card;
     
     const {cards, setCards} = useContext(globalContext);
@@ -12,6 +13,7 @@ export default function Card({card, component}) {
     const deleteCard = () => {
         const card = cards.filter(card => card.id !== id);
         setCards(card);
+        setShowingModal(true);
     };
 
     const selectCard = () => {

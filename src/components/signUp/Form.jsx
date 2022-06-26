@@ -3,9 +3,8 @@ import {Link} from 'react-router-dom';
 import { post } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import {globalContext} from '../globalContext/GlobalContext';
-import Modal from '../modals/Modal';
 
-export default function Form() {
+export default function Form({setShowingModal, setError}) {
     //* States
     const [validPassword, setValidPassword] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
@@ -13,11 +12,6 @@ export default function Form() {
     const [inactiveButton, setInactiveButton] = useState(true);
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [inputClicked, setInputClicked] = useState(false);
-    const [showingModal, setShowingModal] = useState(false);
-    const [error, setError] = useState({
-        isError: false,
-        error: []
-    });
 
     //* Global Context
     const {setUser} = useContext(globalContext);
@@ -139,7 +133,6 @@ export default function Form() {
                     <button disabled={inactiveButton} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`} type="submit">Sign Up</button>
                 </div>
             </form>
-            {showingModal && error.isError && <Modal type={'error'} title={'An error ocurred'} desc={error.error} open={error.isError} setShowingModal={setShowingModal}/>}
         </>
     )
 }

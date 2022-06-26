@@ -6,7 +6,7 @@ import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useEffect } from 'react';
 
-export default function ProductCard({name, price, image, desc, id}) {
+export default function ProductCard({setShowingModal, setModalMessage, name, price, image, desc, id}) {
     //* States
     const [inWishlist, setInWishlist] = useState(false);
     const [inShoppingCart, setInShoppingCart] = useState(false);
@@ -23,6 +23,12 @@ export default function ProductCard({name, price, image, desc, id}) {
         if (wishlist.find(item => item.id === id)) {
             setWishlist(wishlist.filter(item => item.id !== id));
             setInWishlist(false);
+            setShowingModal(true);
+            setModalMessage({
+                title: `${name} removed from your wishlist`,
+                isShowing: true,
+                message: "Item has been removed from your wishlist successfully"
+            });
         } else {
             setWishlist([...wishlist, {
                 id,
@@ -32,6 +38,12 @@ export default function ProductCard({name, price, image, desc, id}) {
                 desc
             }]);
             setInWishlist(true);
+            setShowingModal(true);
+            setModalMessage({
+                title: `${name} added to your wishlist`,
+                isShowing: true,
+                message: "Item has been added to your wishlist"
+            });
         };
     };
 
@@ -41,15 +53,28 @@ export default function ProductCard({name, price, image, desc, id}) {
         if (shoppingCart.find(item => item.id === id)) {
             setShoppingCart(shoppingCart.filter(item => item.id !== id));
             setInShoppingCart(false);
+            setShowingModal(true);
+            setModalMessage({
+                title: `${name} removed from your shopping cart`,
+                isShowing: true,
+                message: "Item has been removed from your shopping cart successfully"
+            });
         } else {
             setShoppingCart([...shoppingCart, {
                 id,
                 name,
                 price,
                 image,
-                desc
+                desc,
+                quantity: 1
             }]);
             setInShoppingCart(true);
+            setShowingModal(true);
+            setModalMessage({
+                title: `${name} added to your shopping cart`,
+                isShowing: true,
+                message: "Item has been added to your shopping cart successfully"
+            });
         };
     };
     

@@ -6,6 +6,7 @@ import { globalContext } from '../../components/globalContext/GlobalContext';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { FiTruck } from 'react-icons/fi';
+import Modal from '../modals/Modal';
 
 export default function ProductDetails() {
         //* Context
@@ -14,6 +15,11 @@ export default function ProductDetails() {
         const {shoppingCart, setShoppingCart} = useContext(globalContext);
         const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
         const {history, setHistory} = useContext(globalContext);
+        const [showingModal, setShowingModal] = useState(false);
+        const [modalMessage, setModalMessage] = useState({
+            title: "",
+            message: ""
+        });
         
         //* State
         const [inWishlist, setInWishlist] = useState(false);
@@ -29,6 +35,12 @@ export default function ProductDetails() {
             if (wishlist.find(item => item.id === parseInt(idParams))) {
                 setWishlist(wishlist.filter(item => item.id !== parseInt(idParams)));
                 setInWishlist(false);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} removed from your wishlist`,
+                    isShowing: true,
+                    message: "Item has been removed from your wishlist successfully"
+                });
             } else {
                 setWishlist([...wishlist, {
                     id,
@@ -38,6 +50,12 @@ export default function ProductDetails() {
                     desc
                 }]);
                 setInWishlist(true);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} added to your wishlist`,
+                    isShowing: true,
+                    message: "Item has been added to your wishlist"
+                });
             };
         };
     
@@ -46,6 +64,12 @@ export default function ProductDetails() {
             if (shoppingCart.find(item => item.id === id)) {
                 setShoppingCart(shoppingCart.filter(item => item.id !== id));
                 setInShoppingCart(false);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} removed from your shopping cart`,
+                    isShowing: true,
+                    message: "Item has been removed from your shopping cart successfully"
+                });
             } else {
                 setShoppingCart([...shoppingCart, {
                     id,
@@ -56,8 +80,14 @@ export default function ProductDetails() {
                     quantity: buyNowQuantity
                 }]);
                 setInShoppingCart(true);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} added to your shopping cart`,
+                    isShowing: true,
+                    message: "Item has been added to your shopping cart successfully"
+                });
             };
-        }
+        };
     
         //* Add/Remove to history
         const addToHistory = () => {
@@ -125,6 +155,7 @@ export default function ProductDetails() {
                     </div>
                 </div>
             </div>
+            {showingModal && <Modal type={'success'} title={modalMessage.title} desc={modalMessage.message} setShowingModal={setShowingModal}/>}
         </>
     )
 }

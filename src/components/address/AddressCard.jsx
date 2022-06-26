@@ -1,15 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import { globalContext } from '../globalContext/GlobalContext';
 import { useNavigate } from 'react-router-dom';
-import InfoModal from '../modals/InfoModal';
 
-export default function AddressCard({currentAddress}) {
+export default function AddressCard({currentAddress, setShowingModal}) {
   //* Navigate
   const navigate = useNavigate();
-  
-  //* States
-  const [deleted, setDeleted] = useState(false);
-  
+    
   //* Global context
   const {shoppingAddress, setShoppingAddress} = useContext(globalContext);
   const {addresses, setAddresses} = useContext(globalContext);
@@ -17,7 +13,7 @@ export default function AddressCard({currentAddress}) {
   const deleteAddress = () => {
     const address = addresses.filter(address => address.id !== currentAddress.id);
     setAddresses(address);
-    setDeleted(true);
+    setShowingModal(true);
   }
 
   const setAddress = () => {
@@ -44,9 +40,6 @@ export default function AddressCard({currentAddress}) {
             <button onClick={deleteAddress} className='px-2 py-1 bg-red dark:bg-red text-white font-medium rounded border-2 border-red transition-all hover:bg-transparent hover:text-red  dark:border-red dark:hover:bg-transparent dark:hover:text-red'>Delete address</button>
           </div>
       </div>
-      {deleted && 
-        <InfoModal color={'green'} title={'Deleted succesfully!'} desc={'Address deleted succesfully'} btn={'Ok'} open={deleted}/>
-      }
     </>
   )
 }
