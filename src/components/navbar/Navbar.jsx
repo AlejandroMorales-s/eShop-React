@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
+
 //* Dropdowns
 import MyAccountDropdown from './MyAccountDropdown';
 import MyAccountDropdownPhone from './MyAccountDropdownPhone';
@@ -15,7 +16,11 @@ export default function Navbar() {
     const {setBuyNowQuantity} = useContext(globalContext);
     const {shoppingAddress} = useContext(globalContext);
 
+    //* States
     const [showNavbar, setShowNavbar] = useState(true);
+    const [charactersInInput, setCharactersInInput] = useState(0);
+
+    const inputRef = useRef();
 
     //* Show/Hide Navbar on scroll
     let currentPosition  = window.pageYOffset;
@@ -25,6 +30,12 @@ export default function Navbar() {
         currentPosition >= scrolling ? setShowNavbar(true) : setShowNavbar(false);
         currentPosition = scrolling;
     }
+
+    //* Clear input field 
+    const clearInput = () => {
+        inputRef.current.value = ""; 
+        setCharactersInInput(0);
+    };
 
     const resetBuyNowQuantity = () => setBuyNowQuantity(1);
 
@@ -55,8 +66,9 @@ export default function Navbar() {
                         </div>
                     </Link>
                     <div className='w-90 max-w-55 mx-2 h-fit relative'>
-                        <input className='relative px-1 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg dark:text-gray' type="search"/>
-                        <AiOutlineSearch className='absolute right-0 top-[0] cursor-pointer text-[35px] text-white dark:bg-primary-light dark:text-darkBg rounded bg-primary w-5 h-full'/>
+                        <input ref={inputRef} onChange={(e) => setCharactersInInput(e.target.value.length)} className='relative text-text dark:text-gray px-4 w-100 h-4 border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg' type="text" placeholder='What are you looking for today?'/>
+                        <AiOutlineSearch className='absolute left-[5px] top-[5px] text-[30px] text-text dark:text-gray'/>
+                        <AiOutlineClose onClick={clearInput} className={`${charactersInInput > 0 ? 'absolute' : 'hidden'} right-[5px] top-[10px] cursor-pointer text-[17.5px] text-text dark:text-gray`}/>
                     </div>
                     <div className='sm:flex hidden gap-5'>
                         <MyAccountDropdown auth={user}/>
