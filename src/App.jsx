@@ -34,8 +34,11 @@ import Orders from './views/Orders';
 import ShoppingCart from './views/ShoppingCart';
 //* Not Found
 import NotFound from './views/NotFound';
+import ProductsFiltered from './views/ProductsFiltered';
 
 function App() {
+
+  const {setUser} = useContext(globalContext);
 
   const [showBtn, setShowBtn] = useState(false);
 
@@ -49,6 +52,16 @@ function App() {
       });
     };
 
+    useEffect(() => {
+      get('/api/auth/validate')
+      .then(({user}) => {
+          setUser({type:'LOGIN', user: user});
+      })
+      .catch(err => {
+        //console.log(err);
+      })
+  }, [setUser]);
+
   return (
     <>
       <Routes>
@@ -58,6 +71,8 @@ function App() {
         <Route path="/signup" element={<SignUp/>} />
         {/* Feed */}
         <Route path="/feed" element={<Feed/>} />
+        {/* Products Filtered */}
+        <Route path="/search-products" element={<ProductsFiltered/>} />
         {/* Address */}
         <Route path="/account/my-addresses" element={<Addresses/>} />
         <Route path="/account/my-addresses/add-address" element={<AddAddress/>} />

@@ -1,6 +1,7 @@
 import React, {useContext, useRef, useState} from 'react'
 import { globalContext } from '../globalContext/GlobalContext';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchInput() {
     //* Context
@@ -15,6 +16,8 @@ export default function SearchInput() {
     const [query, setQuery] = useState('')
     
     const inputRef = useRef();
+
+    const navigate = useNavigate();
     
     //* Names of products filtered
     const filteredProductsName = query === '' ? productsName : productsName.filter((product) => {
@@ -25,7 +28,6 @@ export default function SearchInput() {
     const clearInput = () => {
         inputRef.current.value = ""; 
         setCharactersInInput(0);
-        setProductsFiltered(products);
     };
     
     //* Search products 
@@ -35,14 +37,16 @@ export default function SearchInput() {
         if (e.key === "Enter") {
             setProductsFiltered(products.filter(product => product.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
             setShowDropdown(false);
+            navigate('/search-products');
         };
     };
-
+    
     //* setDropdownValue
     const setDropdownValue = (e) => {
         inputRef.current.value = e.target.outerText;
         setShowDropdown(false);
         setProductsFiltered(products.filter(product => product.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
+        navigate('/search-products');
     };
 
     return (
