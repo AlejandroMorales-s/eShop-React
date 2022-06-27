@@ -17,7 +17,7 @@ export default function Login() {
             <div className='h-[90vh]'>
                 <div className=' border-gray border-2 rounded w-95 max-w-65 m-auto p-2 h-fit bg-white shadow-containersShadow dark:bg-darkBg dark:border-gray-grayDark'>
                     <div>
-                        <h1 className='text-center font-semibold text-primary text-logo dark:text-primary-light'>LOGO</h1>
+                        <h1 className='text-center font-semibold text-primary text-logo dark:text-primary-light'>eShop</h1>
                         <p className='text-center font-semibold my-1 text-bold dark:text-gray'>Login</p>
                         <Form setError={setError} setShowingModal={setShowingModal} />
                         <SocialMedia/>
