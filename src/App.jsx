@@ -1,5 +1,6 @@
-import React, {useEffect , useContext} from 'react';
+import React, {useEffect , useContext, useState} from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import {FaArrowCircleUp} from 'react-icons/fa';
 //* Global Context
 import { globalContext } from './components/globalContext/GlobalContext';
 //* GET method
@@ -25,6 +26,10 @@ import Wishlist from './views/Wishlist';
 import Template from './components/buyProduct/Template';
 //* History
 import History from './views/History';
+//* Orders
+import Orders from './views/Orders';
+//* Shopping cart
+import ShoppingCart from './views/ShoppingCart';
 
 function App() {
 
@@ -42,7 +47,20 @@ function App() {
     })
   }, [setUser]);
 
+  const [showBtn, setShowBtn] = useState(false);
+
+  window.addEventListener('scroll', () => window.scrollY >= window.innerHeight / 2 ? setShowBtn(true) : setShowBtn(false));
+
+    const scroll = () => {
+      window.scrollTo({
+          top:0,
+          left:0,
+          behavior:"smooth"
+      });
+    };
+
   return (
+    <>
       <Routes>
         {/* Login - Sign Up */}
         <Route path="/login" element={<Login/>} />
@@ -62,11 +80,19 @@ function App() {
         <Route path="/account/my-wishlist" element={<Wishlist/>} />
         {/* History */}
         <Route path="/account/history" element={<History/>} />
+        {/* Orders */}
+        <Route path="/account/orders" element={<Orders/>} />
+        {/* Shopping cart */}
+        <Route path="/account/shopping-cart" element={<ShoppingCart/>} />
         {/* Product Details */}
         <Route path="/product-details/:idParams" element={<Product/>} />
         {/* Buy Product */}
         <Route path="/:id/buy-product" element={<Template/>} />
       </Routes>
+      {showBtn && 
+        <FaArrowCircleUp onClick={scroll} className='sticky shadow-shadow rounded-full text-primary dark:text-primary-light h-[50px] w-[50px] bottom-2 left-[95.5%] cursor-pointer' />
+      }
+    </>
   );
 }
 
