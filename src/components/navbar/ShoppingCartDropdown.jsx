@@ -39,7 +39,7 @@ export default function ShoppingCartDropdown() {
                             {({ active }) => (
                                 <div className='flex gap-1.5 hover:cursor-pointer justify-center items-center max-w-100 border-b-gray dark:border-b-gray-grayDark border-b-2 py-1'>
                                     <div className=' border-2 border-gray dark:border-gray-grayDark w-[50px] overflow-hidden h-[50px] rounded'>
-                                        <img src={item.image} alt="" />
+                                        <img src={item.images[0]} alt="Product" className='object-cover rounded' />
                                     </div>
                                     <div className='max-w-[150px]'>
                                         <p className='font-semibold dark:text-white'>{item.name}</p>
