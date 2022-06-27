@@ -28,12 +28,12 @@ export default function ProductDetails() {
         const {idParams} = useParams();
         
         const product = products.filter(product => product._id === idParams);
-        const {name, price, images, desc, _id} = product[0];
+        const {name, price, images, description, _id} = product[0];
     
         //* Add/Remove to wishlist
         const addToWishlist = () => {
-            if (wishlist.find(item => item._id === parseInt(idParams))) {
-                setWishlist(wishlist.filter(item => item._id !== parseInt(idParams)));
+            if (wishlist.find(item => item._id === _id)) {
+                setWishlist(wishlist.filter(item => item._id !== _id));
                 setInWishlist(false);
                 setShowingModal(true);
                 setModalMessage({
@@ -47,7 +47,7 @@ export default function ProductDetails() {
                     name,
                     price,
                     images,
-                    desc
+                    description
                 }]);
                 setInWishlist(true);
                 setShowingModal(true);
@@ -76,7 +76,7 @@ export default function ProductDetails() {
                     name,
                     price,
                     images,
-                    desc,
+                    description,
                     quantity: buyNowQuantity
                 }]);
                 setInShoppingCart(true);
@@ -89,6 +89,7 @@ export default function ProductDetails() {
             };
         };
     
+        console.log(product); 
         //* Add/Remove to history
         const addToHistory = () => {
             history.some(item => item._id === parseInt(idParams)) === false && setHistory([...history, {
@@ -96,7 +97,7 @@ export default function ProductDetails() {
                     name,
                     price,
                     images,
-                    desc
+                    description
             }]);
         };
         
@@ -150,7 +151,7 @@ export default function ProductDetails() {
                         </div>
                         <div>
                             <h3 className='text-subtitle font-medium dark:text-white'>Description</h3>
-                            <p className='text-text dark:text-gray'>{product.desc}</p>
+                            <p className='text-text dark:text-gray'>{description}</p>
                         </div>
                     </div>
                 </div>
