@@ -13,23 +13,32 @@ body{
     padding-top: 62px;
 }
 
+#input-dropdown::-webkit-scrollbar, 
 body::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
+#input-dropdown::-webkit-scrollbar:vertical, 
 body::-webkit-scrollbar:vertical {
     width: 5px;
 }
 
+#input-dropdown::-webkit-scrollbar-button:increment,#input-dropdown::-webkit-scrollbar-button, 
 body::-webkit-scrollbar-button:increment,body::-webkit-scrollbar-button {
     display: none;
 } 
 
+#input-dropdown::-webkit-scrollbar-thumb, 
 body::-webkit-scrollbar-thumb {
     background-color: #9341dd;
     border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 
+#input-dropdown::-webkit-scrollbar-track, 
 body::-webkit-scrollbar-track {
     border-radius: 10px;  
 }
