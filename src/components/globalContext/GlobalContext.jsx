@@ -1,71 +1,7 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useState, useEffect} from 'react';
+import { get } from '../../api';
 
 export const globalContext = createContext();
-const prod = [
-    {
-        id: 1,
-        name: 'Product 1',
-        price: 90,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 2,
-        name: 'Product 2',
-        price: 150,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 3,
-        name: 'Product 3',
-        price: 100,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 4,
-        name: 'Product 4',
-        price: 100,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 5,
-        name: 'Product 5',
-        price: 100,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 6,
-        name: 'Product 6',
-        price: 100,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 7,
-        name: 'Product 7',
-        price: 100,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 8,
-        name: 'Product 8',
-        price: 50,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-    {
-        id: 9,
-        name: 'Product 9',
-        price: 100,
-        image: 'https://picsum.photos/200/300',
-        desc: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-    },
-]
 
 export default function GlobalContext({children}) {
 
@@ -87,7 +23,7 @@ export default function GlobalContext({children}) {
     //* Wishlist
     const [wishlist, setWishlist] = useState([]);
     //* Products
-    const [products, setProducts] = useState(prod);
+    const [products, setProducts] = useState([]);
     const [productsFiltered, setProductsFiltered] = useState(products);
     const [history, setHistory] = useState([]);
     //* Buy Product
@@ -98,6 +34,16 @@ export default function GlobalContext({children}) {
         payment: {},
         total: 0
     });
+
+    useEffect(() => {
+        get('/api/products')
+        .then(({data}) => {
+            setProducts(data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [setUser]);
 
     return (
         <globalContext.Provider value={{

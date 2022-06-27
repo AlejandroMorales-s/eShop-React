@@ -13,6 +13,11 @@ body{
     padding-top: 62px;
 }
 
+img{
+    width: 100%;
+    height: 100%;
+}
+
 #input-dropdown::-webkit-scrollbar, 
 body::-webkit-scrollbar {
     -webkit-appearance: none;

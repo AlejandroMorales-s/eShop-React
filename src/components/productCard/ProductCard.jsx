@@ -6,7 +6,8 @@ import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useEffect } from 'react';
 
-export default function ProductCard({setShowingModal, setModalMessage, name, price, image, desc, id}) {
+export default function ProductCard({setShowingModal, setModalMessage, product}) {
+    const {name, price, images, desc, _id} = product;
     //* States
     const [inWishlist, setInWishlist] = useState(false);
     const [inShoppingCart, setInShoppingCart] = useState(false);
@@ -20,8 +21,8 @@ export default function ProductCard({setShowingModal, setModalMessage, name, pri
     //* Add/Remove to wishlist
     const addToWishlist = (e) => {
         e.stopPropagation();
-        if (wishlist.find(item => item.id === id)) {
-            setWishlist(wishlist.filter(item => item.id !== id));
+        if (wishlist.find(item => item._id === _id)) {
+            setWishlist(wishlist.filter(item => item._id !== _id));
             setInWishlist(false);
             setShowingModal(true);
             setModalMessage({
@@ -31,10 +32,10 @@ export default function ProductCard({setShowingModal, setModalMessage, name, pri
             });
         } else {
             setWishlist([...wishlist, {
-                id,
+                _id,
                 name,
                 price,
-                image,
+                images,
                 desc
             }]);
             setInWishlist(true);
@@ -50,8 +51,8 @@ export default function ProductCard({setShowingModal, setModalMessage, name, pri
     //* Add/Remove to cart
     const addToCart = (e) => {
         e.stopPropagation();
-        if (shoppingCart.find(item => item.id === id)) {
-            setShoppingCart(shoppingCart.filter(item => item.id !== id));
+        if (shoppingCart.find(item => item._id === _id)) {
+            setShoppingCart(shoppingCart.filter(item => item._id !== _id));
             setInShoppingCart(false);
             setShowingModal(true);
             setModalMessage({
@@ -61,10 +62,10 @@ export default function ProductCard({setShowingModal, setModalMessage, name, pri
             });
         } else {
             setShoppingCart([...shoppingCart, {
-                id,
+                _id,
                 name,
                 price,
-                image,
+                images,
                 desc,
                 quantity: 1
             }]);
@@ -81,25 +82,25 @@ export default function ProductCard({setShowingModal, setModalMessage, name, pri
     //* Buy now
     const buyProduct = (e) => {
         e.stopPropagation();
-        navigate(`/${id}/buy-product`);
+        navigate(`/${_id}/buy-product`);
     };
 
     //* Product details
-    const product = () => {
-        navigate(`/product-details/${id}`);
+    const productDetailsShow = () => {
+        navigate(`/product-details/${_id}`);
     };
     
     useEffect(() => {
-        setInWishlist(wishlist.find(item => item.id === id));
-        setInShoppingCart(shoppingCart.find(item => item.id === id));
+        setInWishlist(wishlist.find(item => item._id === _id));
+        setInShoppingCart(shoppingCart.find(item => item._id === _id));
     }, [inWishlist, inShoppingCart]);
     
 
     return (
         <>
-            <div onClick={product} className='bg-white relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
+            <div onClick={productDetailsShow} className='bg-white relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
                 <div className='h-[250px] overflow-hidden rounded'>
-                    <img className='w-100 object-cover h-100' srcSet={image} alt={name}/>
+                    <img className='w-100 object-cover h-100' srcSet={images[0]} alt={name}/>
                 </div>
                 <h3 className='text-bold text-boldText dark:text-white font-semibold'>{name}</h3>
                 <p className='text-bold text-green font-semibold'>${price} MXN</p>

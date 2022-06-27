@@ -65,7 +65,7 @@ export default function SearchInput() {
                     {filteredProductsName.length > 0 ? 
                         <>
                             {filteredProductsName.map((product) => (
-                                <div onClick={setDropdownValue} key={product.id} className='flex p-1 justify-between items-center cursor-pointer hover:bg-primary dark:hover:bg-primary-light rounded hover:text-white dark:hover:text-boldText font-medium text-text dark:text-gray transition-all ease-in-out delay-50'>
+                                <div onClick={setDropdownValue} key={product._id} className='flex p-1 justify-between items-center cursor-pointer hover:bg-primary dark:hover:bg-primary-light rounded hover:text-white dark:hover:text-boldText font-medium text-text dark:text-gray transition-all ease-in-out delay-50'>
                                     <p>{product.name}</p>
                                 </div>
                             ))}

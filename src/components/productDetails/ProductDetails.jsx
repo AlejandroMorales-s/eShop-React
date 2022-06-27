@@ -27,13 +27,13 @@ export default function ProductDetails() {
         
         const {idParams} = useParams();
         
-        const product = products.find(product => product.id === parseInt(idParams));
-        const {name, price, image, desc, id} = product;
+        const product = products.filter(product => product._id === idParams);
+        const {name, price, images, desc, _id} = product[0];
     
         //* Add/Remove to wishlist
         const addToWishlist = () => {
-            if (wishlist.find(item => item.id === parseInt(idParams))) {
-                setWishlist(wishlist.filter(item => item.id !== parseInt(idParams)));
+            if (wishlist.find(item => item._id === parseInt(idParams))) {
+                setWishlist(wishlist.filter(item => item._id !== parseInt(idParams)));
                 setInWishlist(false);
                 setShowingModal(true);
                 setModalMessage({
@@ -43,10 +43,10 @@ export default function ProductDetails() {
                 });
             } else {
                 setWishlist([...wishlist, {
-                    id,
+                    _id,
                     name,
                     price,
-                    image,
+                    images,
                     desc
                 }]);
                 setInWishlist(true);
@@ -61,8 +61,8 @@ export default function ProductDetails() {
     
         //* Add/Remove to cart
         const addToCart = () => {
-            if (shoppingCart.find(item => item.id === id)) {
-                setShoppingCart(shoppingCart.filter(item => item.id !== id));
+            if (shoppingCart.find(item => item._id === _id)) {
+                setShoppingCart(shoppingCart.filter(item => item._id !== _id));
                 setInShoppingCart(false);
                 setShowingModal(true);
                 setModalMessage({
@@ -72,10 +72,10 @@ export default function ProductDetails() {
                 });
             } else {
                 setShoppingCart([...shoppingCart, {
-                    id,
+                    _id,
                     name,
                     price,
-                    image,
+                    images,
                     desc,
                     quantity: buyNowQuantity
                 }]);
@@ -91,19 +91,19 @@ export default function ProductDetails() {
     
         //* Add/Remove to history
         const addToHistory = () => {
-            history.some(item => item.id === parseInt(idParams)) === false && setHistory([...history, {
-                    id,
+            history.some(item => item._id === parseInt(idParams)) === false && setHistory([...history, {
+                    _id,
                     name,
                     price,
-                    image,
+                    images,
                     desc
             }]);
         };
         
         useEffect(() => {
             addToHistory();
-            setInWishlist(wishlist.find(item => item.id === parseInt(idParams)));
-            setInShoppingCart(shoppingCart.find(item => item.id === parseInt(idParams)));
+            setInWishlist(wishlist.find(item => item._id === parseInt(idParams)));
+            setInShoppingCart(shoppingCart.find(item => item._id === parseInt(idParams)));
              // eslint-disable-next-line
         }, [inWishlist, idParams]);
     return (
@@ -113,7 +113,7 @@ export default function ProductDetails() {
                 <div className='bg-white p-2 flex flex-col sm:grid sm:grid-cols-product w-full shadow-containersShadow rounded gap-2 dark:bg-darkBg'>
                     <div className='flex flex-col gap-1.5 overflow-auto'>
                         <div className='sm:h-[625px] h-[300px] rounded w-full overflow-hidden'>
-                            <img src={image} className=' w-full h-full object-cover' alt='Product '/>
+                            <img src={images[0]} className=' w-full h-full object-cover' alt='Product '/>
                         </div>
                     </div>
 
@@ -143,7 +143,7 @@ export default function ProductDetails() {
                             onInput={(e)=>{setBuyNowQuantity(e.target.value)}} type="number" min='1' max='50' defaultValue={buyNowQuantity} />
                         </div>
                         <div className='flex flex-col gap-1'>
-                            <Link to={`/${id}/buy-product`}>
+                            <Link to={`/${_id}/buy-product`}>
                                 <button className={`shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light w-full`} type="submit">Buy now</button>
                             </Link>
                             <button onClick={addToCart} className='cursor-pointer bg-white rounded shadow-shadow border-2 border-primary dark:bg-darkBg dark:border-primary-light hover:bg-primary dark:hover:bg-primary-light transition-all ease-in-out delay-50 text-primary font-medium dark:text-primary-light p-1 text-center hover:text-white dark:hover:text-boldText delay-50 h-full w-full' type="submit">{inShoppingCart ? 'Remove from shopping cart' : 'Add to shopping cart'}</button>

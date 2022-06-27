@@ -10,13 +10,13 @@ export default function Products() {
         title: "",
         message: ""
     });
+
     return (
         <>
             <div className='grid relative grid-cols-1 sm:grid-cols-4 gap-2 w-95 max-w-[1000px] m-auto'>
-                {products.map(product => {
-                        return <ProductCard key={product.id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} name={product.name} price={product.price} image={product.image} desc={product.desc} id={product.id} />
-                    })
-                }
+                {products.map(prod => {
+                    return <ProductCard key={prod._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={prod} />
+                })}
             </div>
             {showingModal && <Modal type={'success'} title={modalMessage.title} desc={modalMessage.message} setShowingModal={setShowingModal}/>}
         </>
