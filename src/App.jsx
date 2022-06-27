@@ -5,6 +5,8 @@ import {FaArrowCircleUp} from 'react-icons/fa';
 import { globalContext } from './components/globalContext/GlobalContext';
 //* GET method
 import { get } from './api';
+//* Welcome
+import Welcome from './views/Welcome';
 //* Login - SignUp
 import Login from './views/Login';
 import SignUp from './views/SignUp';
@@ -30,22 +32,10 @@ import History from './views/History';
 import Orders from './views/Orders';
 //* Shopping cart
 import ShoppingCart from './views/ShoppingCart';
+//* Not Found
+import NotFound from './views/NotFound';
 
 function App() {
-
-  const navigate = useNavigate();
-  const {setUser} = useContext(globalContext);
-
-  useEffect(() => {
-    get('/api/auth/validate')
-    .then(({user}) => {
-      setUser({type:'LOGIN', user: user});
-      navigate("/feed");
-    })
-    .catch(err => {
-      //console.log(err);
-    })
-  }, [setUser]);
 
   const [showBtn, setShowBtn] = useState(false);
 
@@ -63,6 +53,7 @@ function App() {
     <>
       <Routes>
         {/* Login - Sign Up */}
+        <Route path="/" element={<Welcome/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<SignUp/>} />
         {/* Feed */}
@@ -88,6 +79,8 @@ function App() {
         <Route path="/product-details/:idParams" element={<Product/>} />
         {/* Buy Product */}
         <Route path="/:id/buy-product" element={<Template/>} />
+        {/* Not Found */}
+        <Route path="*" element={<NotFound/>} />
       </Routes>
       {showBtn && 
         <FaArrowCircleUp onClick={scroll} className='sticky shadow-shadow rounded-full text-primary dark:text-primary-light h-[50px] w-[50px] bottom-2 left-[95.5%] cursor-pointer' />
