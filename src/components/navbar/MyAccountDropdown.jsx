@@ -6,6 +6,7 @@ import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
 import { BiHistory } from 'react-icons/bi';
 import { BsBoxSeam } from 'react-icons/bs';
+import { IoMdAddCircleOutline } from 'react-icons/io';
 import { AiOutlineUser, AiOutlineHeart } from 'react-icons/ai';
 
 export default function MyAccountDropdown({auth}) {
@@ -29,6 +30,11 @@ export default function MyAccountDropdown({auth}) {
             title: 'History',
             link: '/account/history',
             icon: <BiHistory className='text-primary dark:text-primary-light text-[30px]'/>
+        },
+        {
+            title: 'Add product',
+            link: '/add-product',
+            icon: <IoMdAddCircleOutline className='text-primary dark:text-primary-light text-[30px]'/>
         }
     ]
 

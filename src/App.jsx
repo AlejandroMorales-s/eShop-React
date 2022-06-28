@@ -1,5 +1,5 @@
 import React, {useEffect , useContext, useState} from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import {FaArrowCircleUp} from 'react-icons/fa';
 //* Global Context
 import { globalContext } from './components/globalContext/GlobalContext';
@@ -35,10 +35,11 @@ import ShoppingCart from './views/ShoppingCart';
 //* Not Found
 import NotFound from './views/NotFound';
 import ProductsFiltered from './views/ProductsFiltered';
+import AddProduct from './views/AddProduct';
 
 function App() {
 
-  const {setUser} = useContext(globalContext);
+  const {user, setUser} = useContext(globalContext);
 
   const [showBtn, setShowBtn] = useState(false);
 
@@ -52,15 +53,16 @@ function App() {
       });
     };
 
-    useEffect(() => {
+    useEffect( () => {
       get('/api/auth/validate')
-      .then(({user}) => {
-          setUser({type:'LOGIN', user: user});
-      })
-      .catch(err => {
-        //console.log(err);
-      })
-  }, [setUser]);
+     .then(({user}) => {
+         setUser({type:'LOGIN', user: user});
+     })
+     .catch(err => {
+       //console.log(err);
+     });
+ }, []);
+
 
   return (
     <>
@@ -94,6 +96,8 @@ function App() {
         <Route path="/product-details/:idParams" element={<Product/>} />
         {/* Buy Product */}
         <Route path="/:id/buy-product" element={<Template/>} />
+        {/* Add Product */}
+        <Route path="/add-product" element={<AddProduct/>} />
         {/* Not Found */}
         <Route path="*" element={<NotFound/>} />
       </Routes>
