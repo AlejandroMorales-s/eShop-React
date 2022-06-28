@@ -22,11 +22,11 @@ export default function Products() {
                     </>
                 :   
                     <div className='absolute flex items-center justify-center w-full top-[200px]'>
-                        <div class="dot-wave">
-                            <div class="dot-wave__dot"></div>
-                            <div class="dot-wave__dot"></div>
-                            <div class="dot-wave__dot"></div>
-                            <div class="dot-wave__dot"></div>
+                        <div className="dot-wave">
+                            <div className="dot-wave__dot"></div>
+                            <div className="dot-wave__dot"></div>
+                            <div className="dot-wave__dot"></div>
+                            <div className="dot-wave__dot"></div>
                         </div>
                     </div>
                 }
