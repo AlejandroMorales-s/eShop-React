@@ -5,6 +5,7 @@ import { globalContext } from '../globalContext/GlobalContext';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useEffect } from 'react';
+//import { post } from '../../api';
 
 export default function ProductCard({setShowingModal, setModalMessage, product}) {
     const {name, price, images, desc, _id} = product;
@@ -52,6 +53,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     const addToCart = (e) => {
         e.stopPropagation();
         if (shoppingCart.find(item => item._id === _id)) {
+
             setShoppingCart(shoppingCart.filter(item => item._id !== _id));
             setInShoppingCart(false);
             setShowingModal(true);
@@ -61,6 +63,16 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
                 message: "Item has been removed from your shopping cart successfully"
             });
         } else {
+            /*
+            post('/api/cart/add', {
+                _id,
+                amount: 1
+            }).then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            });
+            */
             setShoppingCart([...shoppingCart, {
                 _id,
                 name,
@@ -93,7 +105,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     useEffect(() => {
         setInWishlist(wishlist.find(item => item._id === _id));
         setInShoppingCart(shoppingCart.find(item => item._id === _id));
-    }, [inWishlist, inShoppingCart]);
+    }, [inWishlist, inShoppingCart, wishlist, shoppingCart, _id]);
     
 
     return (
