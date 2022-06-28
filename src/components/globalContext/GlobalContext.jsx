@@ -36,18 +36,16 @@ export default function GlobalContext({children}) {
     });
 
     useEffect( () => {
-        if (user.logged === undefined) {
+        if (user.type === 'LOGIN') {
             get(`/api/products/${user.user.id}`)
             .then(({data}) => {
                 setProducts(data);
             })
-            .catch(err => {
-                console.log(err);
-            })
-        }
+            .catch(error => {
+                console.log(error);
+            });
+        };
     }, [user]);
-    
-    console.log(user); 
 
     return (
         <globalContext.Provider value={{
