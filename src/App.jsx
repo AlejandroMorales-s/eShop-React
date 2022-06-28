@@ -39,7 +39,7 @@ import AddProduct from './views/AddProduct';
 
 function App() {
 
-  const {user, setUser} = useContext(globalContext);
+  const {setUser} = useContext(globalContext);
 
   const [showBtn, setShowBtn] = useState(false);
 
@@ -61,7 +61,7 @@ function App() {
       .catch(err => {
         //console.log(err);
       });
-    }, []);
+    }, [setUser]);
 
 
   return (
