@@ -35,15 +35,19 @@ export default function GlobalContext({children}) {
         total: 0
     });
 
-    useEffect(() => {
-        get('/api/products')
-        .then(({data}) => {
-            setProducts(data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }, [setUser]);
+    useEffect( () => {
+        if (user.logged === undefined) {
+            get(`/api/products/${user.user.id}`)
+            .then(({data}) => {
+                setProducts(data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    }, [user]);
+    
+    console.log(user); 
 
     return (
         <globalContext.Provider value={{
