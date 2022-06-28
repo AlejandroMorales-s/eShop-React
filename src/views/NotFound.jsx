@@ -7,8 +7,8 @@ export default function NotFound() {
     <>
       <Navbar/>
       <div className='h-[90vh] w-screen flex flex-col items-center justify-center'>
-        <img src={image} alt="" />
-        <p className='text-[100px] text-text dark:text-gray'>Page not found</p>
+        <img className='w-fit' src={image} alt="Not Found" />
+        <p className='text-[110px] text-text dark:text-gray'>Page not found</p>
       </div>
     </>
   )
