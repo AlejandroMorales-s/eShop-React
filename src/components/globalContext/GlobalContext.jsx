@@ -37,9 +37,17 @@ export default function GlobalContext({children}) {
 
     useEffect( () => {
         if (user.type === 'LOGIN') {
-            get(`/api/products/${user.user.id}`)
+            get(`/api/products/62ba13090a98147777f380c2`)
             .then(({data}) => {
                 setProducts(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+            get(`/api/cart`)
+            .then((data) => {
+                setShoppingCart(data);
             })
             .catch(error => {
                 console.log(error);

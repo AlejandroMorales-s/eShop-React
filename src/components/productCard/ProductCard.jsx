@@ -5,7 +5,8 @@ import { globalContext } from '../globalContext/GlobalContext';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useEffect } from 'react';
-//import { post } from '../../api';
+import { post } from '../../api';
+import { del } from '../../api';
 
 export default function ProductCard({setShowingModal, setModalMessage, product}) {
     const {name, price, images, desc, _id} = product;
@@ -52,9 +53,15 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     //* Add/Remove to cart
     const addToCart = (e) => {
         e.stopPropagation();
-        if (shoppingCart.find(item => item._id === _id)) {
+        if (shoppingCart.some(item => item._id === _id)) {
+            del('/api/cart/remove', {
+                idProduct: _id,
+            }).then(res => {
+                setShoppingCart(res)
+            }).catch(error => {
+                console.log(error);
+            });
 
-            setShoppingCart(shoppingCart.filter(item => item._id !== _id));
             setInShoppingCart(false);
             setShowingModal(true);
             setModalMessage({
@@ -63,24 +70,16 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
                 message: "Item has been removed from your shopping cart successfully"
             });
         } else {
-            /*
+
             post('/api/cart/add', {
-                _id,
+                idProduct: _id,
                 amount: 1
             }).then(res => {
-                console.log(res);
-            }).catch(err => {
-                console.log(err);
+                setShoppingCart(res)
+            }).catch(error => {
+                console.log(error);
             });
-            */
-            setShoppingCart([...shoppingCart, {
-                _id,
-                name,
-                price,
-                images,
-                desc,
-                quantity: 1
-            }]);
+
             setInShoppingCart(true);
             setShowingModal(true);
             setModalMessage({
@@ -104,7 +103,9 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     
     useEffect(() => {
         setInWishlist(wishlist.find(item => item._id === _id));
-        setInShoppingCart(shoppingCart.find(item => item._id === _id));
+        if (shoppingCart !== undefined) {
+            setInShoppingCart(shoppingCart.find(item => item._id === _id));
+        }
     }, [inWishlist, inShoppingCart, wishlist, shoppingCart, _id]);
     
 

@@ -13,8 +13,8 @@ async function get(url) {
     } catch (error) {
         throw error.response.data;
         
-    }
-}
+    };
+};
 
 const post = async (url, data) => {
     try {
@@ -24,10 +24,22 @@ const post = async (url, data) => {
         return response.data;
     } catch (error) {
         throw error.response.data;
-    }
-}
+    };
+};
+
+const del = async (url, data) => {
+    try {
+        const response = await instance.delete(url, data, {
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    };
+};
 
 export {
     post,
-    get
+    get,
+    del
 }
