@@ -49,9 +49,9 @@ export default function ShoppingCartDropdown() {
                                     <div className='max-w-100 flex flex-col items-center'>
                                         <p className='text-sm dark:text-white font-semibold'>Quantity:</p>
                                         <input onClick={(e) => e.stopPropagation()} className='border-2 rounded pl-0.5 w-[40px] border-gray dark:border-gray-grayDark dark:bg-darkBg dark:text-gray' 
-                                        type="number" min='1' max='50' onInput={(e) => item.quantity = e.target.value} defaultValue={item.quantity}/>
+                                        type="number" min='1' max='50' onInput={(e) => item.amount = e.target.value} defaultValue={item.amount}/>
                                         <p className='text-sm dark:text-white font-semibold'>Total:</p>
-                                        <p className='text-text dark:text-gray'>{`$${item.price * item.quantity}.00`}</p>
+                                        <p className='text-text dark:text-gray'>{`$${item.price * item.amount}.00`}</p>
                                     </div>
                                 </div>
                             )}
