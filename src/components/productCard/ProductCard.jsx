@@ -20,6 +20,27 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
 
     const navigate = useNavigate();
 
+    //* Img Lazy Load
+    const lazyLoadingCallback = (entries)=>{
+        for(let entry of entries){
+            if(entry.isIntersecting){
+                entry.target.src = entry.target.dataset.src
+    
+                lazyLoadingObserver.unobserve(entry.target)
+            };
+        };
+    };
+
+    let lazyLoadingObserver = new IntersectionObserver(lazyLoadingCallback,{
+        rootMargin:"0px 0px 50px 0px",
+    });
+    
+    const cardImage = document.getElementsByTagName("img");
+    
+    for(let image of cardImage){
+        lazyLoadingObserver.observe(image);
+    };
+
     //* Add/Remove to wishlist
     const addToWishlist = (e) => {
         e.stopPropagation();
@@ -113,7 +134,10 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
         <>
             <div onClick={productDetailsShow} className='bg-white relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
                 <div className='h-[250px] overflow-hidden rounded'>
-                    <img className='w-100 object-cover h-100' srcSet={images[0]} alt={name}/>
+                    <img className='w-100 object-cover h-100' 
+                        src='https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640'  
+                        data-src={images[0]} alt={name}
+                    />
                 </div>
                 <h3 className='text-bold text-boldText dark:text-white font-semibold'>{name}</h3>
                 <p className='text-bold text-green font-semibold'>${price} MXN</p>
