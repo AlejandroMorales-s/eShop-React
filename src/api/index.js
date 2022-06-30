@@ -29,7 +29,8 @@ const post = async (url, data) => {
 
 const del = async (url, data) => {
     try {
-        const response = await instance.delete(url, data, {
+        const response = await instance.delete(url, {
+            data,
             withCredentials: true
         });
         return response.data;

@@ -121,6 +121,14 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     const productDetailsShow = () => {
         navigate(`/product-details/${_id}`);
     };
+
+    //* Delete product
+    const deleteProduct = (e) => {
+        e.stopPropagation();
+        del(`/api/products/${_id}`)
+        .then(res => console.log(res))
+        .catch(error => console.log(error)); 
+    };
     
     useEffect(() => {
         setInWishlist(wishlist.find(item => item._id === _id));
@@ -142,19 +150,33 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
                 <h3 className='text-bold text-boldText dark:text-white font-semibold'>{name}</h3>
                 <p className='text-bold text-green font-semibold'>${price} MXN</p>
                 <p className='text-text dark:text-gray line-clamp-2'>{desc}</p>
-                <div className='absolute w-full h-full top-0 left-0 rounded pt-1.5 px-1.5 opacity-0 hover:opacity-100 transition-all ease-in-out delay-50'>
+                <div className='absolute w-full h-full top-0 left-0 rounded pt-1.5 flex flex-col justify-between items-center px-1.5 opacity-0 hover:opacity-100 transition-all ease-in-out delay-50'>
                     <div className='flex gap-1 justify-center'>
-                        <button onClick={buyProduct}
-                        className='px-1 py-0.5 bg-primary dark:bg-primary-light rounded border-2 border-primary dark:border-primary-light hover:bg-primary-light hover:border-primary-light hover:text-boldText font-medium text-white dark:text-boldText transition-all ease-in-out delay-50'>
+                        <button 
+                            onClick={buyProduct}
+                            className='px-1 py-0.5 bg-primary dark:bg-primary-light rounded border-2 border-primary dark:border-primary-light hover:bg-primary-light hover:border-primary-light hover:text-boldText font-medium text-white dark:text-boldText transition-all ease-in-out delay-50'
+                        >
                             Buy now
                         </button>
-                        <button onClick={addToCart} className='p-1 border-2 border-white hover:border-primary dark:hover:border-primary-light rounded-full bg-white dark:bg-darkBg dark:border-gray-grayDark shadow-containersShadow'>
+                        <button 
+                            onClick={addToCart} 
+                            className='p-1 border-2 border-white hover:border-primary dark:hover:border-primary-light rounded-full bg-white dark:bg-darkBg dark:border-gray-grayDark shadow-containersShadow'
+                        >
                             <MdOutlineShoppingCart className={`${inShoppingCart && 'text-primary dark:text-primary-light'} hover:text-primary dark:hover:text-primary-light dark:text-gray text-[20px]`}/>
                         </button>
-                        <button onClick={addToWishlist} className='p-1 border-2 border-white hover:border-primary dark:hover:border-primary-light rounded-full bg-white dark:bg-darkBg dark:border-gray-grayDark shadow-containersShadow'>
+                        <button 
+                            onClick={addToWishlist} 
+                            className='p-1 border-2 border-white hover:border-primary dark:hover:border-primary-light rounded-full bg-white dark:bg-darkBg dark:border-gray-grayDark shadow-containersShadow'
+                        >
                             <AiOutlineHeart className={`${inWishlist && 'text-primary dark:text-primary-light'} hover:text-primary dark:hover:text-primary-light dark:text-gray text-[20px]`}/>
                         </button>
                     </div>
+                    <button 
+                        onClick={deleteProduct}
+                        className='px-1 py-0.5 bg-red rounded border-2 border-red text-white font-medium self-end mb-[10px]'
+                    >
+                        Delete
+                    </button>
                 </div>
             </div>
         </>
