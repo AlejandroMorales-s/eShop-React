@@ -14,7 +14,7 @@ export default function Aside({product, setBuyNowQuantity, buyNowQuantity, setSh
         <>
             <div className='flex flex-col items-center p-2 gap-2 border-l-2 border-l-gray dark:border-l-gray-grayDark'>
                 <div className='rounded-full h-[150px] overflow-hidden w-[150px]'>
-                    <img src={product.image} alt="" srcSet="" className='object-cover w-full h-full'/>
+                    <img src={product.images[0]} className='object-cover w-full h-full'/>
                 </div>
                 <div>
                     <p className='text-boldText font-medium text-subtitle text-center dark:text-white'>{product.name}</p>

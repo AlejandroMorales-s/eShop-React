@@ -25,7 +25,7 @@ import Product from './views/Product';
 //* Wishlist
 import Wishlist from './views/Wishlist';
 //* Buy Product
-import Template from './components/buyProduct/Template';
+import BuyNowTemplate from './components/buyProduct/BuyNowTemplate';
 //* History
 import History from './views/History';
 //* Orders
@@ -95,7 +95,7 @@ function App() {
         {/* Product Details */}
         <Route path="/product-details/:idParams" element={<Product/>} />
         {/* Buy Product */}
-        <Route path="/:id/buy-product" element={<Template/>} />
+        <Route path="/:id/buy-product" element={<BuyNowTemplate/>} />
         {/* Add Product */}
         <Route path="/add-product" element={<AddProduct/>} />
         {/* Not Found */}

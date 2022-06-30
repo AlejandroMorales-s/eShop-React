@@ -19,8 +19,10 @@ export default function Template() {
     const {id} = useParams();
     
     useEffect(() => {
-        setProduct(products.find(product => product.id === parseInt(id)));
+        setProduct(products.find(product => product._id === id));
     }, [id, products]);
+
+    console.log(id); 
     
     return (
         <>

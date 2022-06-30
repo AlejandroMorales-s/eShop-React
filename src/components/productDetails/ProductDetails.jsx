@@ -89,7 +89,6 @@ export default function ProductDetails() {
             };
         };
     
-        console.log(product); 
         //* Add/Remove to history
         const addToHistory = () => {
             history.some(item => item._id === parseInt(idParams)) === false && setHistory([...history, {
