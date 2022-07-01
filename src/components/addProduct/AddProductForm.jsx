@@ -12,11 +12,11 @@ export default function AddProductForm() {
     });
 
     //* Refs
-    const name = useRef();
-    const images = useRef();
-    const stock = useRef();
-    const price = useRef();
-    const description = useRef();
+    let name = useRef();
+    let images = useRef();
+    let stock = useRef();
+    let price = useRef();
+    let description = useRef();
 
     const addProduct = (e) => {
         e.preventDefault();
@@ -33,6 +33,11 @@ export default function AddProductForm() {
                 title: `${name.current.value} added successfully`,
                 message: "Product has been added successfully"
             });
+            name.current.value = '';
+            images.current.value = '';
+            stock.current.value = '';
+            price.current.value = '';
+            description.current.value = '';
         })
         .catch(err => console.log(err)); 
     }
