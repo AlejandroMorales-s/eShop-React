@@ -8,13 +8,13 @@ export default function Aside({product, setBuyNowQuantity, buyNowQuantity, setSh
         } else {
             setShipping(0);
         }
-    }, [buyNowQuantity]);
+    }, [buyNowQuantity, price, setShipping]);
     
     return (
         <>
             <div className='flex flex-col items-center p-2 gap-2 border-l-2 border-l-gray dark:border-l-gray-grayDark'>
                 <div className='rounded-full h-[150px] overflow-hidden w-[150px]'>
-                    <img src={product.images[0]} className='object-cover w-full h-full'/>
+                    <img src={product.images[0]} alt='Product' className='object-cover w-full h-full'/>
                 </div>
                 <div>
                     <p className='text-boldText font-medium text-subtitle text-center dark:text-white'>{product.name}</p>

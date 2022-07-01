@@ -21,8 +21,6 @@ export default function Template() {
     useEffect(() => {
         setProduct(products.find(product => product._id === id));
     }, [id, products]);
-
-    console.log(id); 
     
     return (
         <>
