@@ -126,7 +126,14 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     const deleteProduct = (e) => {
         e.stopPropagation();
         del(`/api/products/${_id}`)
-        .then(res => console.log(res))
+        .then(res => {
+            setShowingModal(true);
+            setModalMessage({
+                title: `${name} deleted`,
+                isShowing: true,
+                message: "Item has been deleted successfully"
+            });
+        })
         .catch(error => console.log(error)); 
     };
     
