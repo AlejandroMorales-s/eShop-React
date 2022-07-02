@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { globalContext } from '../globalContext/GlobalContext';
+import Loader from '../loader/Loader';
 import Modal from '../modals/Modal';
 import ProductCard from '../productCard/ProductCard';
 
@@ -21,14 +22,7 @@ export default function Products() {
                         })}
                     </>
                 :   
-                    <div className='absolute flex items-center justify-center w-full top-[200px]'>
-                        <div className="dot-wave">
-                            <div className="dot-wave__dot"></div>
-                            <div className="dot-wave__dot"></div>
-                            <div className="dot-wave__dot"></div>
-                            <div className="dot-wave__dot"></div>
-                        </div>
-                    </div>
+                    <Loader/>
                 }
             </div>
             {showingModal && <Modal type={'success'} title={modalMessage.title} desc={modalMessage.message} setShowingModal={setShowingModal}/>}
