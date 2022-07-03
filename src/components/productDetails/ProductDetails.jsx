@@ -1,10 +1,11 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import ReactDocumentTitle from 'react-document-title';
 import { Link, useParams } from 'react-router-dom';
 import { globalContext } from '../../components/globalContext/GlobalContext';
 //* Icons
 import { AiOutlineHeart } from 'react-icons/ai';
 import { TbTruckDelivery } from 'react-icons/tb';
+import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { FiTruck } from 'react-icons/fi';
 import Modal from '../modals/Modal';
 
@@ -20,6 +21,10 @@ export default function ProductDetails() {
             title: "",
             message: ""
         });
+
+        //* Refs
+        const imagesContainer = useRef();
+        const img = useRef();
         
         //* State
         const [inWishlist, setInWishlist] = useState(false);
@@ -29,7 +34,31 @@ export default function ProductDetails() {
         
         const product = products.filter(product => product._id === idParams);
         const {name, price, images, description, _id} = product[0];
-    
+        
+        const [imagesTotal] = useState(images.length - 1);
+        const [imagesPosition, setImagesPosition] = useState(0);
+
+        //* Image Slider
+        const previousImageClick = () => {
+            if(imagesPosition === 0) {
+                img.current.src = images[imagesTotal];
+                setImagesPosition(imagesTotal);
+            }else {
+                img.current.src = images[imagesPosition - 1];
+                setImagesPosition(imagesPosition - 1);
+            };
+        };
+
+        const nextImageClick = () => {
+            if(imagesPosition === imagesTotal) {
+                img.current.src = images[0];
+                setImagesPosition(0);
+            }else {
+                img.current.src = images[imagesPosition + 1];
+                setImagesPosition(imagesPosition + 1);
+            };
+        };
+
         //* Add/Remove to wishlist
         const addToWishlist = () => {
             if (wishlist.find(item => item._id === _id)) {
@@ -111,10 +140,10 @@ export default function ProductDetails() {
             <ReactDocumentTitle title={name}/>
             <div className='w-95 max-w-130 mx-auto flex justify-center items-center my-5'>
                 <div className='bg-white p-2 flex flex-col sm:grid sm:grid-cols-product w-full shadow-containersShadow rounded gap-2 dark:bg-darkBg'>
-                    <div className='flex flex-col gap-1.5 overflow-auto'>
-                        <div className='sm:h-[625px] h-[300px] rounded w-full overflow-hidden'>
-                            <img src={images[0]} className=' w-full h-full object-cover' alt='Product '/>
-                        </div>
+                    <div ref={imagesContainer} className='sm:h-[625px] h-[300px] rounded w-full overflow-hidden relative'>
+                        <img ref={img} src={images[0]} className=' w-full h-full object-cover' alt='Product'/>
+                        <BsFillArrowRightCircleFill onClick={nextImageClick} className='cursor-pointer text-[55px] absolute top-[50%] text-primary right-1'/>
+                        <BsFillArrowRightCircleFill onClick={previousImageClick} className='cursor-pointer rotate-180 text-[55px] absolute top-[50%] text-primary left-1'/>
                     </div>
 
                     <div className='flex flex-col gap-2 overflow-auto'>
