@@ -3,11 +3,23 @@ import { Menu, Transition } from '@headlessui/react';
 import { IoMdCart } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
+import { put } from '../../api';
 
 export default function ShoppingCartDropdown() {
     const {shoppingCart} = useContext(globalContext);
 
     const [isOpen, setIsOpen] = React.useState(false);
+
+    const modifyAmount = (e) => {
+        e.stopPropagation();
+        let id = e.target.id;
+        put('/api/cart/changeAmount', {
+            "idProduct": id,
+            "amount": e.target.value
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err)); 
+    }
 
     const rotateIcon = () => setIsOpen(!isOpen);
     return (
@@ -44,14 +56,20 @@ export default function ShoppingCartDropdown() {
                                     <div className='max-w-[150px]'>
                                         <p className='font-semibold dark:text-white'>{item.name}</p>
                                         <p className='text-text dark:text-gray line-clamp-2'>{item.desc}</p>
-                                        <p className='text-sm dark:text-gray'>{`$${item.price}.00`}</p>
+                                        <p className='text-sm dark:text-gray'>{`$${item.price}`}</p>
                                     </div>
                                     <div className='max-w-100 flex flex-col items-center'>
                                         <p className='text-sm dark:text-white font-semibold'>Quantity:</p>
-                                        <input onClick={(e) => e.stopPropagation()} className='border-2 rounded pl-0.5 w-[40px] border-gray dark:border-gray-grayDark dark:bg-darkBg dark:text-gray' 
-                                        type="number" min='1' max='50' onInput={(e) => item.amount = e.target.value} defaultValue={item.amount}/>
+                                        <input 
+                                            id={item._id}
+                                            onClick={(e) => modifyAmount(e)} 
+                                            className='border-2 rounded pl-0.5 w-[40px] border-gray dark:border-gray-grayDark dark:bg-darkBg dark:text-gray' 
+                                            type="number" min='1' max='50' 
+                                            onInput={(e) => item.amount = e.target.value} 
+                                            defaultValue={item.amount}
+                                        />
                                         <p className='text-sm dark:text-white font-semibold'>Total:</p>
-                                        <p className='text-text dark:text-gray'>{`$${item.price * item.amount}.00`}</p>
+                                        <p className='text-text dark:text-gray'>{`$${item.price * item.amount}`}</p>
                                     </div>
                                 </div>
                             )}
