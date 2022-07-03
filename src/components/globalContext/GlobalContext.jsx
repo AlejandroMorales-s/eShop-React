@@ -37,7 +37,7 @@ export default function GlobalContext({children}) {
 
     useEffect( () => {
         if (user.type === 'LOGIN') {
-            get(`/api/products/62ba13090a98147777f380c2`)
+            get(`/api/products/62ba13090a98147777f380c2?limit=35`)
             .then(({data}) => {
                 setProducts(data);
             })

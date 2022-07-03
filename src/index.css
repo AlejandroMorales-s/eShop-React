@@ -19,21 +19,27 @@ img{
 }
 
 #input-dropdown::-webkit-scrollbar, 
+.horizontal-dropdown::-webkit-scrollbar, 
 body::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
 #input-dropdown::-webkit-scrollbar:vertical, 
 body::-webkit-scrollbar:vertical {
-    width: 5px;
+  width: 5px;
+}
+.horizontal-dropdown::-webkit-scrollbar:horizontal{
+  height: 5px;
 }
 
 #input-dropdown::-webkit-scrollbar-button:increment,#input-dropdown::-webkit-scrollbar-button, 
+.horizontal-dropdown::-webkit-scrollbar-button:increment,.horizontal-dropdown::-webkit-scrollbar-button, 
 body::-webkit-scrollbar-button:increment,body::-webkit-scrollbar-button {
     display: none;
 } 
 
 #input-dropdown::-webkit-scrollbar-thumb, 
+.horizontal-dropdown::-webkit-scrollbar-thumb, 
 body::-webkit-scrollbar-thumb {
     background-color: #9341dd;
     border-radius: 20px;
@@ -44,6 +50,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #input-dropdown::-webkit-scrollbar-track, 
+.horizontal-dropdown::-webkit-scrollbar-track, 
 body::-webkit-scrollbar-track {
     border-radius: 10px;  
 }

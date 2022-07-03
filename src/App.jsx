@@ -102,7 +102,7 @@ function App() {
         <Route path="*" element={<NotFound/>} />
       </Routes>
       {showBtn && 
-        <FaArrowCircleUp onClick={scroll} className='sticky shadow-shadow rounded-full text-primary dark:text-primary-light h-[50px] w-[50px] bottom-2 left-[95.5%] cursor-pointer' />
+        <FaArrowCircleUp onClick={scroll} className='sticky z-50 shadow-shadow rounded-full text-primary dark:text-primary-light h-[50px] w-[50px] bottom-2 left-[95.5%] cursor-pointer' />
       }
     </>
   );

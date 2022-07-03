@@ -14,12 +14,59 @@ export default function Products() {
 
     return (
         <>
-            <div className='grid relative grid-cols-1 sm:grid-cols-4 gap-2 w-95 max-w-[1000px] m-auto'>
+            <div>
                 {products.length > 0 ?
                     <>
-                        {products.map(prod => {
-                            return <ProductCard key={prod._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={prod} />
-                        })}
+                        <div className='w-95 max-w-[1000px] m-auto'> 
+                            {/* Living Room */}
+                            <div >
+                                <h2 className='text-center font-semibold text-title dark:text-gray m-3'>Living Room</h2>
+                                <div className='flex relative gap-2 w-full m-auto overflow-x-auto py-1 horizontal-dropdown'>
+                                    {products.map(prod => 
+                                        prod.name.includes('Curtains') || prod.name.includes('Pillow') ? 
+                                        <ProductCard key={prod._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={prod} /> 
+                                        : 
+                                        null
+                                        )}
+                                </div>
+                            </div>
+                            {/* Bedroom */}
+                            <div>
+                                <h2 className='text-center font-semibold text-title dark:text-gray m-3'>Bedroom</h2>
+                                <div className='flex relative gap-2 w-full m-auto overflow-x-auto py-1 horizontal-dropdown'>
+                                    {products.map(prod => 
+                                        prod.name.includes('Bed') ? 
+                                            <ProductCard key={prod._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={prod} /> 
+                                        : 
+                                            null
+                                    )}
+                                </div>
+                            </div>
+                            {/* Bathroom */}
+                            <div>
+                                <h2 className='text-center font-semibold text-title dark:text-gray m-3'>Bathroom</h2>
+                                <div className='flex relative gap-2 w-full m-auto overflow-x-auto py-1 horizontal-dropdown'>
+                                    {products.map(prod => 
+                                        prod.name.includes('Bath') || prod.name.includes('Mirror') ? 
+                                            <ProductCard key={prod._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={prod} /> 
+                                        : 
+                                            null
+                                    )}
+                                </div>
+                            </div>
+                            {/* Kitchen */}
+                            <div>
+                                <h2 className='text-center font-semibold text-title dark:text-gray m-3'>Kitchen</h2>
+                                <div className='flex relative gap-2 w-full m-auto overflow-x-auto py-1 horizontal-dropdown'>
+                                    {products.map(prod => 
+                                        prod.name.includes('Kitchen') ? 
+                                            <ProductCard key={prod._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={prod} /> 
+                                        : 
+                                            null
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </>
                 :   
                     <Loader/>
