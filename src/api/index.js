@@ -27,6 +27,17 @@ const post = async (url, data) => {
     };
 };
 
+const put = async (url, data) => {
+    try {
+        const response = await instance.put(url, data, {
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    };
+};
+
 const del = async (url, data) => {
     try {
         const response = await instance.delete(url, {
@@ -42,5 +53,6 @@ const del = async (url, data) => {
 export {
     post,
     get,
-    del
+    del,
+    put
 }
