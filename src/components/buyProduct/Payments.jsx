@@ -5,6 +5,7 @@ import Card from '../myCards/Card';
 
 export default function Payments({setView}) {
     const [inactiveButton, setInactiveButton] = useState(true);
+    const [isOtherPaymentMethod, setIsOtherPaymentMethod] = useState(true);
 
     const {cards} = useContext(globalContext);
     const {buyDetails} = useContext(globalContext);
@@ -15,6 +16,16 @@ export default function Payments({setView}) {
 
     const modifyView = () => {
         setView('confirmDetails');
+    };
+
+    const otherPaymentMethod = () => {
+        if (isOtherPaymentMethod) {
+            setIsOtherPaymentMethod(!isOtherPaymentMethod);
+            setInactiveButton(false);
+        } else {
+            setIsOtherPaymentMethod(!isOtherPaymentMethod);
+            setInactiveButton(true);
+        };
     };
 
     return (
@@ -30,6 +41,9 @@ export default function Payments({setView}) {
                             component={'Payments'}
                         />
                     ))}
+                    <div onClick={otherPaymentMethod} className={`${!isOtherPaymentMethod && 'border-green hover:border-green dark:border-green hover:dark:border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
+                        <p className='text-text dark:text-gray text-center font-medium'>Use other payment method </p>
+                    </div>
                 </div>
                 <button disabled={inactiveButton} onClick={modifyView} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} w-fit shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`}>Continue</button>
             </div>

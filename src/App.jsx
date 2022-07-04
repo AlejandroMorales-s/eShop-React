@@ -36,6 +36,7 @@ import ShoppingCart from './views/ShoppingCart';
 import NotFound from './views/NotFound';
 import ProductsFiltered from './views/ProductsFiltered';
 import AddProduct from './views/AddProduct';
+import BuyCartTemplate from './components/buyCart/BuyCartTemplate';
 
 function App() {
 
@@ -96,6 +97,8 @@ function App() {
         <Route path="/product-details/:idParams" element={<Product/>} />
         {/* Buy Product */}
         <Route path="/:id/buy-product" element={<BuyNowTemplate/>} />
+        {/* Buy Product */}
+        <Route path="/buy-cart" element={<BuyCartTemplate/>} />
         {/* Add Product */}
         <Route path="/add-product" element={<AddProduct/>} />
         {/* Not Found */}

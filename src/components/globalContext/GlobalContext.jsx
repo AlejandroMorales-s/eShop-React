@@ -40,14 +40,15 @@ export default function GlobalContext({children}) {
             get(`/api/products/62ba13090a98147777f380c2?limit=35`)
             .then(({data}) => {
                 setProducts(data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
 
-            get(`/api/cart`)
-            .then((data) => {
-                setShoppingCart(data);
+                get(`/api/cart`)
+                .then((data) => {
+                    setShoppingCart(data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+                
             })
             .catch(error => {
                 console.log(error);

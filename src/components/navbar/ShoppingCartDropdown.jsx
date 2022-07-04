@@ -15,7 +15,7 @@ export default function ShoppingCartDropdown() {
         let id = e.target.id;
         put('/api/cart/changeAmount', {
             "idProduct": id,
-            "amount": e.target.value
+            "amount": Number(e.target.value)
         })
         .then(res => console.log(res))
         .catch(err => console.log(err)); 
