@@ -8,26 +8,33 @@ import { useContext } from 'react';
 import {useNavigate} from 'react-router-dom'
 import { globalContext } from './globalContext/GlobalContext';
 import { useState } from 'react';
+import Loader from './loader/Loader';
 
-export default function PaymentForm() {
+export default function PaymentForm({orderDetails}) {
 
     const stripe = useStripe();
     const elements = useElements();
     const {setShoppingCart} = useContext(globalContext);
+    const {orders, setOrders} = useContext(globalContext);
+    const {setBuyDetails} = useContext(globalContext);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
     const pay = async (e)=>{
         e.preventDefault();
+        setIsLoading(true);
+        setOrders([
+            ...orders,
+            orderDetails
+        ]);
         const result = await stripe.confirmPayment({
             elements,
             redirect:"if_required"
         });
-        setIsLoading(true);
-
         console.log(result);
-
-        if(result.paymentIntent.status==="succeeded"){
+        
+        if(result.paymentIntent.status === "succeeded"){
+            setBuyDetails({});
             setShoppingCart([]);
             navigate("/account/orders");
         };
@@ -44,6 +51,7 @@ export default function PaymentForm() {
                 </button>
 
             </form>
+            {isLoading && <Loader/>}
         </div>
     )
 }

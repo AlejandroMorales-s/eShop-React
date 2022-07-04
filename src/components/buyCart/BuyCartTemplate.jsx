@@ -18,6 +18,7 @@ export default function BuyCartTemplate() {
 
     //* States
     const [view, setView] = useState('shipping');
+    const [total, setTotal] = useState(0);
     const [shipping, setShipping] = useState(0);
     
     return (
@@ -27,10 +28,10 @@ export default function BuyCartTemplate() {
                 <Loader/>
             :
                 <div className='flex flex-col-reverse gap-2 sm:grid sm:grid-cols-product m-auto w-95 max-w-[1000px] my-5 bg-white dark:bg-darkBg border-2 border-white dark:border-gray-grayDark shadow-containersShadow rounded'>
-                    {view === 'shipping' && <Shipping setView={setView} product={shoppingCart} shipping={shipping} quantity={buyNowQuantity}/>}
+                    {view === 'shipping' && <Shipping setView={setView} product={shoppingCart} shipping={shipping} quantity={buyNowQuantity} total={total}/>}
                     {view === 'payments' && <Payments setView={setView}/>}
                     {view === 'confirmDetails' && <ConfirmDetails setView={setView}/>}
-                    <AsideCart product={shoppingCart} setBuyNowQuantity={setBuyNowQuantity} buyNowQuantity={buyNowQuantity} setShipping={setShipping} shipping={shipping}/>
+                    <AsideCart product={shoppingCart} setTotal={setTotal} />
                 </div>
             }
         </>

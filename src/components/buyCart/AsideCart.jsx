@@ -1,15 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
-export default function AsideCart({product, setBuyNowQuantity, buyNowQuantity, setShipping, shipping}) {
-    console.log(product); 
+export default function AsideCart({product, setTotal}) {
     let price = 0 ;
     let amount = 0;
     product.forEach(item => {
-        console.log(item); 
         price += item.price * Number(item.amount);
         amount += Number(item.amount);
+        setTotal(price);
     });
-
 
     
     return (
@@ -34,7 +32,7 @@ export default function AsideCart({product, setBuyNowQuantity, buyNowQuantity, s
                 <div className='border-y-2 border-gray w-full p-2 flex flex-col gap-2'>
                     <div className='flex justify-between'>
                         <h3 className='dark:text-white'>Products({amount}):</h3>
-                        <p className='font-semibold dark:text-gray'>${price}</p>
+                        <p className='font-semibold dark:text-gray'>${price.toFixed(2)}</p>
                     </div>
                     <div className='flex justify-between'>
                         <h3 className='dark:text-white'>Shipping</h3>
@@ -43,7 +41,7 @@ export default function AsideCart({product, setBuyNowQuantity, buyNowQuantity, s
                 </div>
                     <div className='flex justify-between items-center w-full px-2'>
                         <h3 className='text-boldText dark:text-white text-bold font-medium'>Total:</h3>
-                        <p className='dark:text-gray font-semibold'>${price}</p>
+                        <p className='dark:text-gray font-semibold'>${price.toFixed(2)}</p>
                     </div>
             </div>
         </>

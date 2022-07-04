@@ -25,7 +25,6 @@ export default function ConfirmDetails() {
     const {buyDetails} = useContext(globalContext);
     const {shoppingAddress} = useContext(globalContext);
     const {orders, setOrders} = useContext(globalContext);
-
     
     let card = cards.find(card => card.id === buyDetails.payment.id);
         
@@ -82,7 +81,7 @@ export default function ConfirmDetails() {
                         <h3 className='font-semibold text-bold dark:text-gray'>Payment detail</h3>
                         {card === undefined && clientSecret && 
                             <Elements options={options} stripe={stripe}>
-                                <PaymentForm/>
+                                <PaymentForm orderDetails={buyDetails}/>
                             </Elements>
                         }   
                         {card !== undefined && 

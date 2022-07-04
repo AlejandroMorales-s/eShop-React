@@ -19,7 +19,6 @@ export default function GlobalContext({children}) {
     const [orders, setOrders] = useState([]);
     //* Shopping cart
     const [shoppingCart, setShoppingCart] = useState([]);
-    //const [state, dispatch] = cartReducer(cartReducer, initialState);
     //* Wishlist
     const [wishlist, setWishlist] = useState([]);
     //* Products
@@ -48,7 +47,7 @@ export default function GlobalContext({children}) {
                 .catch(error => {
                     console.log(error);
                 });
-                
+
             })
             .catch(error => {
                 console.log(error);

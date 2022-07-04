@@ -3,7 +3,7 @@ import DocumentTitle from 'react-document-title';
 import { globalContext } from '../globalContext/GlobalContext';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 
-export default function Shipping({setView, product, shipping, quantity}) {
+export default function Shipping({setView, product, shipping, quantity, total}) {
     const {shoppingAddress} = useContext(globalContext);
     const {buyDetails, setBuyDetails} = useContext(globalContext);
 
@@ -24,6 +24,7 @@ export default function Shipping({setView, product, shipping, quantity}) {
                 ...product,
                 quantity: quantity
             }],
+            total: total
         });
         setView('payments');
     };
