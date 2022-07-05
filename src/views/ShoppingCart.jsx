@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import DocumentTitle from 'react-document-title';
 import { globalContext } from '../components/globalContext/GlobalContext';
 //* Components
 import Navbar from '../components/navbar/Navbar';
 import OrderCard from '../components/orders/OrderCard';
-import PaymentForm from '../components/PaymentForm';
 
 import Modal from '../components/modals/Modal';
 import { Link } from 'react-router-dom';

@@ -1,6 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
-import { get } from '../../api';
+import React, {useState, useContext} from 'react';
 import { globalContext } from '../globalContext/GlobalContext';
 import Loader from '../loader/Loader';
 //* Components
@@ -13,13 +11,13 @@ import Shipping from '../buyProduct/Shipping';
 export default function BuyCartTemplate() {
 
     //* Context
-    const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
+    const {buyNowQuantity,} = useContext(globalContext);
     const {shoppingCart} = useContext(globalContext);
 
     //* States
     const [view, setView] = useState('shipping');
     const [total, setTotal] = useState(0);
-    const [shipping, setShipping] = useState(0);
+    const [shipping] = useState(0);
     
     return (
         <>
