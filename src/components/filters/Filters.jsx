@@ -1,5 +1,6 @@
 import React from 'react'
 import PriceFilter from './PriceFilter';
+import CategoryFilter from './CategoryFilter';
 
 export default function MyAccountDropdown() {
 
@@ -8,7 +9,7 @@ export default function MyAccountDropdown() {
         <>
             <div className='w-95 max-w-[1000px] mt-5 m-auto'>
                 <PriceFilter/>
-
+                <CategoryFilter/>
             </div>
         </>
     )
