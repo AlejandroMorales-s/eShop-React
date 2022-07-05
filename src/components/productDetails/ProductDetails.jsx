@@ -120,7 +120,7 @@ export default function ProductDetails() {
     
         //* Add/Remove to history
         const addToHistory = () => {
-            history.some(item => item._id === parseInt(idParams)) === false && setHistory([...history, {
+            history.some(item => item._id === idParams) === false && setHistory([...history, {
                     _id,
                     name,
                     price,
@@ -134,7 +134,7 @@ export default function ProductDetails() {
             setInWishlist(wishlist.find(item => item._id === parseInt(idParams)));
             setInShoppingCart(shoppingCart.find(item => item._id === parseInt(idParams)));
              // eslint-disable-next-line
-        }, [inWishlist, idParams]);
+        }, []);
     return (
         <>
             <ReactDocumentTitle title={name}/>
