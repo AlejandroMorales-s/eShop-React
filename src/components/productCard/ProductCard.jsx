@@ -147,7 +147,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
 
     return (
         <>
-            <div onClick={productDetailsShow} className='bg-white min-w-[235px] max-w-[235px] relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
+            <div onClick={productDetailsShow} className='bg-white w-full min-w-[235px] sm:max-w-[235px] relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50'>
                 <div className='h-[250px] overflow-hidden rounded'>
                     <img className='w-100 object-cover h-100' 
                         src='https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640'  
