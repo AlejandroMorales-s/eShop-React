@@ -20,10 +20,9 @@ export default function Shipping({setView, product, shipping, quantity, total}) 
             ...buyDetails,
             shippingAddress: shoppingAddress,
             shipping: arrives,
-            products: [{
+            products: [
                 ...product,
-                quantity: quantity
-            }],
+            ],
             total: total
         });
         setView('payments');

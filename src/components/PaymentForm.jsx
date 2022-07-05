@@ -34,7 +34,12 @@ export default function PaymentForm({orderDetails}) {
         console.log(result);
         
         if(result.paymentIntent.status === "succeeded"){
-            setBuyDetails({});
+            setBuyDetails({
+                products: [],
+                shipping: '',
+                payment: {},
+                total: 0
+            });
             setShoppingCart([]);
             navigate("/account/orders");
         };

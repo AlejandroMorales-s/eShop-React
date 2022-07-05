@@ -23,7 +23,7 @@ export default function MyAccountDropdown({auth}) {
         },
         {
             title: 'Orders',
-            link: '/account/my-orders',
+            link: '/account/orders',
             icon: <BsBoxSeam className='text-primary dark:text-primary-light text-[30px]'/>
         },
         {
