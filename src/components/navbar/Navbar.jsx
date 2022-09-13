@@ -61,7 +61,7 @@ export default function Navbar() {
                         <ShoppingCartDropdown/>
                     </div>
                     <div className='sm:hidden block'>
-                        <MyAccountDropdownPhone auth={user}/>
+                        <MyAccountDropdownPhone user={user}/>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { get } from '../../api';
+import { auth } from '../../libs/firebase';
+import { signOut } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
@@ -9,7 +10,7 @@ import { BsBoxSeam } from 'react-icons/bs';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { AiOutlineMenu, AiOutlineUser, AiOutlineHeart } from 'react-icons/ai';
 
-export default function MyAccountDropdownPhone({auth}) {
+export default function MyAccountDropdownPhone({user}) {
 
     const options = [
         {
@@ -55,11 +56,11 @@ export default function MyAccountDropdownPhone({auth}) {
         document.getElementById('html').classList.contains('bg-darkBody') ? setDark(true) : setDark(false); 
     }
     const logout = () => {
-        get("/api/auth/logout")
-        .then( res => {
-            setUser({type: 'LOGOUT', user: null});
-            navigate("/login");
-        });
+        signOut(auth)
+        setUser({
+            logout: true
+        })
+        navigate('/login')
     };
 
     return (
@@ -83,7 +84,7 @@ export default function MyAccountDropdownPhone({auth}) {
                     <Menu.Item className='bg-white flex justify-between items-center gap-2 p-0.5 rounded w-100 dark:bg-darkBg border-2 border-white hover:border-gray dark:border-darkBg dark:hover:border-gray-grayDark hover:shadow-containersShadow transition-all ease-in-out delay-50'>
                         {({ active }) => (
                             <div>
-                                <p className='text-center text-bold font-semibold dark:text-white'>Hello<br/>{`${auth.name}!`}</p>
+                                <p className='text-center text-bold font-semibold dark:text-white'>Hello<br/>{`${user.name}!`}</p>
                             </div>
                         )}
                     </Menu.Item>

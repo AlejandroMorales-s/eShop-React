@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react'
 import { signOut } from 'firebase/auth'
 import { Menu, Transition } from '@headlessui/react'
 import { auth } from '../../libs/firebase';
-import { get } from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 //* Icons
