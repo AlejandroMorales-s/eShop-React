@@ -1,4 +1,5 @@
 import React, {useContext, useState} from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
 import CardPreview from './CardPreview';
@@ -94,14 +95,14 @@ export default function CardForm() {
                 valid: false,
             });
             number = number.slice(0, 19);
-        } else if (numberCopy.toString().slice(0,1) == 4) {
+        } else if (numberCopy.toString().slice(0,1) === 4) {
             number = number.slice(0, 19);
             type = 'Visa';
             setValidNumber({
                 ...validNumber,
                 valid: true,
             });
-        } else if (numberCopy.toString().slice(0,1) == 5) {
+        } else if (numberCopy.toString().slice(0,1) === 5) {
             number = number.slice(0, 19);
             type = 'Mastercard';
             setValidNumber({

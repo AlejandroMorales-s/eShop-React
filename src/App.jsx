@@ -54,16 +54,6 @@ function App() {
       });
     };
 
-    useEffect( () => {
-        get('/api/auth/validate')
-      .then(({user}) => {
-          setUser({type:'LOGIN', user: user});
-      })
-      .catch(err => {
-        //console.log(err);
-      });
-    }, [setUser]);
-
 
   return (
     <>

@@ -57,7 +57,7 @@ export default function Navbar() {
                     </Link>
                     <SearchInput/>
                     <div className='sm:flex hidden gap-5'>
-                        <MyAccountDropdown auth={user}/>
+                        <MyAccountDropdown user={user}/>
                         <ShoppingCartDropdown/>
                     </div>
                     <div className='sm:hidden block'>

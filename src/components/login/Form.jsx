@@ -1,6 +1,9 @@
 import React, {useRef, useState, useEffect, useContext} from 'react';
+import {
+    signInWithEmailAndPassword
+} from "firebase/auth";
+import { auth } from '../../libs/firebase';
 import {Link, useNavigate} from 'react-router-dom';
-import { post } from '../../api';
 import { globalContext } from '../globalContext/GlobalContext';
 
 export default function Form({setShowingModal, setError}) {
@@ -26,26 +29,23 @@ export default function Form({setShowingModal, setError}) {
         isPasswordVisible ? password.current.type = "text" : password.current.type = "password";
     }
 
-    //* Open/Close Modal
+    //* Login
     const login = (e) => {
-        e.preventDefault();
-        
-        //* API authtentication
-        post('api/auth/login', {
-            email: email.current.value,
-            password: password.current.value
-        })
-        .then(({user}) => {
-            setUser({type: 'LOGIN', user: user});
-            navigate("/feed");
+        e.preventDefault()
+        signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then(res => {
+            setUser({
+                user:{
+                    name: res.user.displayName,
+                    email: res.user.email,
+                },
+                logout: false
+            })
+            navigate('/feed')
         })
         .catch(error => {
-            setError({
-                isError: true,
-                error: error.errors.map(error => error)
-            });
-            setShowingModal(true);
-        }); 
+            console.log(error);
+        })
     }
 
     //* Enable/Disable Button

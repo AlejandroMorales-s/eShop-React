@@ -1,5 +1,7 @@
 import React, {useContext, useState} from 'react'
+import { signOut } from 'firebase/auth'
 import { Menu, Transition } from '@headlessui/react'
+import { auth } from '../../libs/firebase';
 import { get } from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
@@ -9,7 +11,7 @@ import { BsBoxSeam } from 'react-icons/bs';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { AiOutlineUser, AiOutlineHeart } from 'react-icons/ai';
 
-export default function MyAccountDropdown({auth}) {
+export default function MyAccountDropdown({user}) {
     const options = [
         {
             title: 'My account',
@@ -53,19 +55,20 @@ export default function MyAccountDropdown({auth}) {
         document.getElementById('html').classList.toggle('bg-lightBg');
         document.getElementById('html').classList.contains('bg-darkBody') ? setDark(true) : setDark(false); 
     }
+    
     const logout = () => {
-        get("/api/auth/logout")
-        .then( res => {
-            setUser({type: 'LOGOUT', user: null});
-            navigate("/login");
+        signOut(auth)
+        setUser({
+            logout: true
         })
+        navigate('/login')
     }
     return (
         <>
             <Menu>
                 <Menu.Button>
                     <div onClick={rotateIcon}>
-                        <p className='text-text dark:text-gray'>{`Hello ${auth.name}!`}</p>
+                        <p className='text-text dark:text-gray'>{`Hello ${user.name}!`}</p>
                         <div className='flex gap-0.5'>
                             <p className={`${isOpen ? 'text-primary dark:text-primary-light' : 'dark:text-white text-boldText'} transition-all ease-in-out delay-100 font-semibold text-center`}>My account</p>
                             <svg xmlns="http://www.w3.org/2000/svg" className={`${isOpen ? 'rotate-180 dark:text-primary-light text-primary' : 'dark:text-primary-light text-primary rotate-0'} transition-all ease-in-out delay-100 h-6 w-6`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

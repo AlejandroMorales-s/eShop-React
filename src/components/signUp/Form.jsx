@@ -1,6 +1,11 @@
 import React, {useRef, useEffect, useState, useContext} from 'react';
+import {
+    createUserWithEmailAndPassword,
+    updateProfile
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, database } from '../../libs/firebase';
 import {Link} from 'react-router-dom';
-import { post } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import {globalContext} from '../globalContext/GlobalContext';
 
@@ -61,21 +66,35 @@ export default function Form({setShowingModal, setError}) {
 
     //* Open/Close Modal
     const accountCreated = (e) => {
-        e.preventDefault();
-        post('/api/auth/signup', {
-            name: name.current.value,
-            email: email.current.value,
-            password: password.current.value
-        }).then(({user}) => {
-            setUser({type: 'SIGNUP', user: user});
-            navigate("/feed");
-        }).catch((error) => {
-            setError({
-                isError: true,
-                error: error.errors.map(error => error.message)
-            });
-            setShowingModal(true);
-        });
+        e.preventDefault()
+
+        createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then(async (result)=>{
+            await updateProfile(result.user,{
+                displayName:name.current.value
+            })
+            await setDoc(doc(database, "users", result.user.uid),{
+                role:"REGULAR"
+            })
+
+            return {
+                id: result.user.uid
+            }
+        })
+        .then(({id})=>{
+            setUser({
+                user:{
+                    name: name.current.value,
+                    email: email.current.value,
+                    id,
+                },
+                logged: true
+            })
+            navigate('/feed')
+        })
+        .catch(error=>{
+            console.log(error)
+        })
     }
 
     const clicked = () => setInputClicked(true);

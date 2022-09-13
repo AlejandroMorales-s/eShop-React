@@ -1,9 +1,13 @@
 import React, {createContext, useState, useEffect} from 'react';
-import { get } from '../../api';
+import {onAuthStateChanged} from 'firebase/auth'
+import { auth } from '../../libs/firebase';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const globalContext = createContext();
 
 export default function GlobalContext({children}) {
+
+    const navigate = useNavigate();
 
     //* User
     const [user, setUser] = useState({
@@ -33,27 +37,27 @@ export default function GlobalContext({children}) {
         payment: {},
         total: 0
     });
+    const location = useLocation()
 
     useEffect( () => {
-        if (user.type === 'LOGIN') {
-            get(`/api/products/62ba13090a98147777f380c2?limit=35`)
-            .then(({data}) => {
-                setProducts(data);
-
-                get(`/api/cart`)
-                .then((data) => {
-                    setShoppingCart(data);
+        onAuthStateChanged(auth, (res) => {
+            if(res !== null){
+                const {uid, displayName, email, photoURL} = res
+                setUser({
+                    user:{
+                        name: displayName,
+                        email: email,
+                        photo: photoURL,
+                        id: uid,
+                    },
+                    logged: true
                 })
-                .catch(error => {
-                    console.log(error);
-                });
-
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        };
-    }, [user]);
+                navigate('/feed')
+            } else if (location.pathname !== '/login' && location.pathname !== '/signup'){
+                navigate('/')
+            }
+        })
+    }, []);
 
     return (
         <globalContext.Provider value={{

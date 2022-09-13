@@ -1,26 +1,10 @@
-import React, {useContext, useEffect} from 'react'
 import DocumentTitle from 'react-document-title';
-import { Link, useNavigate } from 'react-router-dom';
-import { get } from '../api';
-import { globalContext } from '../components/globalContext/GlobalContext';
+import { Link } from 'react-router-dom';
 import DarkModeToggle from '../components/login/DarkModeToggle';
 const happy = require('../assets/happy.png');
 const sad = require('../assets/sad.png');
 
 export default function Welcome() {
-    const navigate = useNavigate();
-    const {setUser} = useContext(globalContext);
-    useEffect(() => {
-        get('/api/auth/validate')
-        .then(({user}) => {
-            setUser({type:'LOGIN', user: user});
-            navigate("/feed");
-        })
-        .catch(err => {
-          //console.log(err);
-        })
-    }, [setUser]);
-
     return (
         <>
             <DocumentTitle title='eShop'/>
