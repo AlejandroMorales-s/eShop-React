@@ -9,7 +9,7 @@ import { post } from '../../api';
 import { del } from '../../api';
 
 export default function ProductCard({setShowingModal, setModalMessage, product}) {
-    const {name, price, images, desc, _id} = product;
+    const {name, price, images, desc, _id} = product.data;
     //* States
     const [inWishlist, setInWishlist] = useState(false);
     const [inShoppingCart, setInShoppingCart] = useState(false);

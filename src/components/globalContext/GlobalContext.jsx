@@ -1,4 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
+import { collection, getDocs } from 'firebase/firestore'
+import { database } from '../../libs/firebase';
 import {onAuthStateChanged} from 'firebase/auth'
 import { auth } from '../../libs/firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -39,6 +41,22 @@ export default function GlobalContext({children}) {
     });
     const location = useLocation()
 
+    const getProducts = async () => {
+        const col = collection(database, "products")
+        const querySnapshot = await getDocs(col)
+        const prods = []
+    
+        querySnapshot.forEach(doc => {
+            prods.push(
+                {
+                    id: doc.id,
+                    data: doc.data()
+                }
+            )
+        })
+        setProducts(prods)
+    }
+
     useEffect( () => {
         onAuthStateChanged(auth, (res) => {
             if(res !== null){
@@ -57,6 +75,8 @@ export default function GlobalContext({children}) {
                 navigate('/')
             }
         })
+
+        getProducts()
     }, []);
 
     return (
