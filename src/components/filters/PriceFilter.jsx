@@ -22,23 +22,23 @@ export default function PriceFilter() {
         switch(Number(event.target.id)){
             case 1:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.price < 1000));
+                setProductsFiltered(products.filter(product => product.data.price < 1000));
                 break;
             case 2:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.price > 1000 && product.price < 1500));
+                setProductsFiltered(products.filter(product => product.data.price > 1000 && product.data.price < 1500));
                 break;
             case 3:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.price > 1500 && product.price < 2000));
+                setProductsFiltered(products.filter(product => product.data.price > 1500 && product.data.price < 2000));
                 break;
             case 4:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.price > 2000 && product.price < 3000));
+                setProductsFiltered(products.filter(product => product.data.price > 2000 && product.data.price < 3000));
                 break;
             case 5:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.price > 3000));
+                setProductsFiltered(products.filter(product => product.data.price > 3000));
                 break;
             default:
                 setProductsFiltered(products);

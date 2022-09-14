@@ -21,19 +21,19 @@ export default function CategoryFilter() {
         switch(Number(event.target.id)){
             case 1:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.name.includes('Curtains') || product.name.includes('Pillow')));
+                setProductsFiltered(products.filter(product => product.data.category.toLowerCase() === 'living room'));
                 break;
             case 2:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.name.includes('Bed')));
+                setProductsFiltered(products.filter(product => product.data.category.toLowerCase() === 'bedroom'));
                 break;
             case 3:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.name.includes('Bath') || product.name.includes('Mirror')));
+                setProductsFiltered(products.filter(product => product.data.category.toLowerCase() === 'bathroom'));
                 break;
             case 4:
                 setProductsFiltered(products);
-                setProductsFiltered(products.filter(product => product.name.includes('Kitchen')));
+                setProductsFiltered(products.filter(product => product.data.category.toLowerCase() === 'kitchen'));
                 break;
             default:
                 setProductsFiltered(products);

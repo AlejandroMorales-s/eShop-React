@@ -39,9 +39,7 @@ import AddProduct from './views/AddProduct';
 import BuyCartTemplate from './components/buyCart/BuyCartTemplate';
 
 function App() {
-
-  const {setUser} = useContext(globalContext);
-
+  
   const [showBtn, setShowBtn] = useState(false);
 
   window.addEventListener('scroll', () => window.scrollY >= window.innerHeight / 2 ? setShowBtn(true) : setShowBtn(false));

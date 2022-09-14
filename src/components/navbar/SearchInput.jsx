@@ -20,9 +20,7 @@ export default function SearchInput() {
     const navigate = useNavigate();
     
     //* Names of products filtered
-    const filteredProductsName = query === '' ? productsName : productsName.filter((product) => {
-        return product.name.toLowerCase().includes(query.toLowerCase().trim());
-    });
+    const filteredProductsName = query === '' ? productsName : productsName.filter((product) => product.data.name.toLowerCase().includes(query.toLowerCase().trim()));
 
     //* Clear input field 
     const clearInput = () => {
@@ -35,7 +33,7 @@ export default function SearchInput() {
         setQuery(inputRef.current.value);
         setShowDropdown(true);
         if (e.key === "Enter") {
-            setProductsFiltered(products.filter(product => product.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
+            setProductsFiltered(products.filter(product => product.data.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
             setShowDropdown(false);
             navigate('/search-products');
         };
@@ -45,7 +43,7 @@ export default function SearchInput() {
     const setDropdownValue = (e) => {
         inputRef.current.value = e.target.outerText;
         setShowDropdown(false);
-        setProductsFiltered(products.filter(product => product.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
+        setProductsFiltered(products.filter(product => product.data.name.toLowerCase().includes(inputRef.current.value.toLowerCase().trim())));
         navigate('/search-products');
     };
 
@@ -65,8 +63,8 @@ export default function SearchInput() {
                     {filteredProductsName.length > 0 ? 
                         <>
                             {filteredProductsName.map((product) => (
-                                <div onClick={setDropdownValue} key={product._id} className='flex p-1 justify-between items-center cursor-pointer hover:bg-primary dark:hover:bg-primary-light rounded hover:text-white dark:hover:text-boldText font-medium text-text dark:text-gray transition-all ease-in-out delay-50'>
-                                    <p>{product.name}</p>
+                                <div onClick={setDropdownValue} key={product.id} className='flex p-1 justify-between items-center cursor-pointer hover:bg-primary dark:hover:bg-primary-light rounded hover:text-white dark:hover:text-boldText font-medium text-text dark:text-gray transition-all ease-in-out delay-50'>
+                                    <p>{product.data.name}</p>
                                 </div>
                             ))}
                         </>
