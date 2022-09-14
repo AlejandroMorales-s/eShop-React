@@ -23,7 +23,7 @@ Las dependencias usadas en el proyecto son:
 * Tailwind
 * Axios
 * Stripe
-*Firebase
+* Firebase
 
 **Tailwind** es un framework de CSS basado en clases.
 
