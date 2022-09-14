@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePK } from '../../config';
-import { get } from '../../api';
 import PaymentForm from '../PaymentForm';
 
 const stripe = loadStripe(stripePK);
@@ -34,7 +33,7 @@ export default function ConfirmDetails() {
             buyDetails
         ]);
     };
-
+    
     const appearance = {
         theme: 'stripe',
         variables: {
@@ -50,9 +49,7 @@ export default function ConfirmDetails() {
     };
 
     useEffect(() => {
-        get('/api/cart/pay')
-        .then((data) => setClientSecret(data.clientSecret))
-        .catch(error => console.log(error)); 
+        setClientSecret(clientSecret) 
     }, []);
     
     return (

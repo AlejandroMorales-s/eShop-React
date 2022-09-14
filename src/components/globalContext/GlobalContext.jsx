@@ -32,12 +32,13 @@ export default function GlobalContext({children}) {
     const [productsFiltered, setProductsFiltered] = useState(products);
     const [history, setHistory] = useState([]);
     //* Buy Product
-    const [buyNowQuantity, setBuyNowQuantity] = useState(1);
     const [buyDetails, setBuyDetails] = useState({
         products: [],
-        shipping: '',
+        shipping: {},
+        shippingCost: 0,
         payment: {},
-        total: 0
+        total: 0,
+        amount: 1,
     });
     const location = useLocation()
 
@@ -102,8 +103,6 @@ export default function GlobalContext({children}) {
             setCards,
             orders,
             setOrders,
-            buyNowQuantity,
-            setBuyNowQuantity,
             history,
             setHistory
         }}>

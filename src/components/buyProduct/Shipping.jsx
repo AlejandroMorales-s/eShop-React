@@ -3,9 +3,10 @@ import DocumentTitle from 'react-document-title';
 import { globalContext } from '../globalContext/GlobalContext';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 
-export default function Shipping({setView, product, shipping, quantity, total}) {
+export default function Shipping({setView, product}) {
     const {shoppingAddress} = useContext(globalContext);
     const {buyDetails, setBuyDetails} = useContext(globalContext);
+    const {shippingCost} = buyDetails
 
     const [arrives, setArrives] = useState('');
     const [inactiveButton, setInactiveButton] = useState(true);
@@ -21,9 +22,8 @@ export default function Shipping({setView, product, shipping, quantity, total}) 
             shippingAddress: shoppingAddress,
             shipping: arrives,
             products: [
-                ...product,
-            ],
-            total: total
+                {...product},
+            ]
         });
         setView('payments');
     };
@@ -74,11 +74,11 @@ export default function Shipping({setView, product, shipping, quantity, total}) 
                     <p className='text-boldText font-medium text-bold dark:text-white'>Receive purchase</p>
                     <div onClick={arrivesTomorrow} className={`${arrives.tomorrow && 'border-green hover:border-green dark:border-green hover:dark:border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
                         <p className='text-text dark:text-gray'>Arrives tomorrow</p>
-                        <p className={`${arrives.tomorrow ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
+                        <p className={`${arrives.tomorrow ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shippingCost === 0 ? 'FREE' : `$${shippingCost} MXN`}</p>
                     </div>
                     <div onClick={arrivesLater} className={`${!arrives.tomorrow && 'border-green hover:border-green dark:border-green hover:dark:border-green'} hover:border-primary dark:hover:border-primary-light transition-all ease-in-out delay-50 cursor-pointer p-1 bg-white rounded dark:bg-darkBg flex justify-between border-2 border-gray dark:border-gray-grayDark`}>
                         <p className='text-text dark:text-gray'>Arrives {day + 2}/{month}/{year} </p>
-                        <p className={`${!arrives.tomorrow ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shipping === 0 ? 'FREE' : `$${shipping} MXN`}</p>
+                        <p className={`${!arrives.tomorrow ? 'text-green' : 'text-boldText'} text-bold font-semibold`}>{shippingCost === 0 ? 'FREE' : `$${shippingCost} MXN`}</p>
                     </div>
                 </div>
                 <button disabled={inactiveButton} onClick={modifyView} className={`${inactiveButton ? 'opacity-50' : 'opacity-100'} w-fit shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`}>Continue</button>

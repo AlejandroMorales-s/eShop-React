@@ -114,13 +114,11 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     //* Buy now
     const buyProduct = (e) => {
         e.stopPropagation();
-        navigate(`/${_id}/buy-product`);
+        navigate(`/${product.id}/buy-product`);
     };
 
     //* Product details
-    const productDetailsShow = () => {
-        navigate(`/product-details/${product.id}`);
-    };
+    const productDetailsShow = () => navigate(`/product-details/${product.id}`)
 
     //* Delete product
     const deleteProduct = (e) => {
