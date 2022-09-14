@@ -32,8 +32,8 @@ export default function ProductDetails() {
         
         const {idParams} = useParams();
         
-        const product = products.filter(product => product._id === idParams);
-        const {name, price, images, description, _id} = product[0];
+        const product = products.find(product => product.id === idParams);
+        const {name, price, images, desc, _id} = product.data;
         
         const [imagesTotal] = useState(images.length - 1);
         const [imagesPosition, setImagesPosition] = useState(0);
@@ -76,7 +76,7 @@ export default function ProductDetails() {
                     name,
                     price,
                     images,
-                    description
+                    desc
                 }]);
                 setInWishlist(true);
                 setShowingModal(true);
@@ -105,7 +105,7 @@ export default function ProductDetails() {
                     name,
                     price,
                     images,
-                    description,
+                    desc,
                     quantity: buyNowQuantity
                 }]);
                 setInShoppingCart(true);
@@ -125,7 +125,7 @@ export default function ProductDetails() {
                     name,
                     price,
                     images,
-                    description
+                    desc
             }]);
         };
         
@@ -179,7 +179,7 @@ export default function ProductDetails() {
                         </div>
                         <div>
                             <h3 className='text-subtitle font-medium dark:text-white'>Description</h3>
-                            <p className='text-text dark:text-gray'>{description}</p>
+                            <p className='text-text dark:text-gray'>{desc}</p>
                         </div>
                     </div>
                 </div>

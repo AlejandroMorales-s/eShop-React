@@ -119,7 +119,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
 
     //* Product details
     const productDetailsShow = () => {
-        navigate(`/product-details/${_id}`);
+        navigate(`/product-details/${product.id}`);
     };
 
     //* Delete product
