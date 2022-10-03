@@ -21,14 +21,8 @@ Este comando habilitará la aplicacion para que puedas verla en la sig url: [loc
 Las dependencias usadas en el proyecto son:
 
 * Tailwind
-* Axios
-* Stripe
 * Firebase
 
 **Tailwind** es un framework de CSS basado en clases.
-
-**Axios** es una librería de JavaScript basada en promesas utilizada para hacer peticiones a un servidor de manera más cómoda.
-
-**Stripe** es una plataforma de pagos.
 
 **Firebase** fué utilizado como backend, gestionando desde ahí inicios de sesión con email y contraseña o por medio de redes sociales, como base de datos para productos y usuarios, además de gestionar permisos de diferentes funcionalidades basado en el rol del usuario.
