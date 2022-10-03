@@ -3,7 +3,9 @@ import {AiOutlineClose, AiFillCheckCircle, AiFillInfoCircle, AiFillCloseCircle} 
 import {MdError} from 'react-icons/md';
 
 export default function Modal({type, title, desc, setShowingModal}) {
-    const closeModal = () => setShowingModal(false);
+    setTimeout(() => {
+        setShowingModal(false)
+    }, 5000);
 
     return (
         <>
@@ -16,7 +18,7 @@ export default function Modal({type, title, desc, setShowingModal}) {
                     <h2 className=' dark:text-white text-bold font-semibold'>{title}</h2>
                     <p className='dark:text-gray'>{desc}</p>
                 </div>
-                <AiOutlineClose onClick={() => closeModal()} className='text-[15px] w-[15px] h-[15px] dark:text-white cursor-pointer' />
+                <AiOutlineClose onClick={() => setShowingModal(false)} className='text-[15px] w-[15px] h-[15px] dark:text-white cursor-pointer' />
             </div>
         </>
     )
