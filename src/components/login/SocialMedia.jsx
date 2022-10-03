@@ -14,7 +14,11 @@ export default function SocialMedia() {
         .then(async (res) => {
             const docRef = doc(database, 'users', res.user.uid)
             await setDoc(docRef, {
-                role: 'REGULAR'
+                role: 'REGULAR',
+                shoppingCart:[],
+                wishlist: [],
+                paymentMethods: [],
+                addresses:[]
             })
             navigate('/feed') 
         })

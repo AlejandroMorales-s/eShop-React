@@ -1,11 +1,12 @@
 import React, {useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
+import { doc, setDoc,getDoc } from "firebase/firestore";
+import { database } from '../../libs/firebase';
 //* Icons
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useEffect } from 'react';
-import { post } from '../../api';
 import { del } from '../../api';
 
 export default function ProductCard({setShowingModal, setModalMessage, product}) {
@@ -15,8 +16,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     const [inShoppingCart, setInShoppingCart] = useState(false);
     
     //* Context
-    const {wishlist, setWishlist} = useContext(globalContext);
-    const {shoppingCart, setShoppingCart} = useContext(globalContext);
+    const {user} = useContext(globalContext);
 
     const navigate = useNavigate();
 
@@ -41,74 +41,66 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
         lazyLoadingObserver.observe(image);
     };
 
-    //* Add/Remove to wishlist
-    const addToWishlist = (e) => {
-        e.stopPropagation();
-        if (wishlist.find(item => item._id === _id)) {
-            setWishlist(wishlist.filter(item => item._id !== _id));
-            setInWishlist(false);
-            setShowingModal(true);
-            setModalMessage({
-                title: `${name} removed from your wishlist`,
-                isShowing: true,
-                message: "Item has been removed from your wishlist successfully"
-            });
-        } else {
-            setWishlist([...wishlist, {
-                _id,
-                name,
-                price,
-                images,
-                desc
-            }]);
-            setInWishlist(true);
-            setShowingModal(true);
-            setModalMessage({
-                title: `${name} added to your wishlist`,
-                isShowing: true,
-                message: "Item has been added to your wishlist"
-            });
-        };
-    };
-
+    const docRef = doc(database, "users", user.id) 
     //* Add/Remove to cart
     const addToCart = (e) => {
         e.stopPropagation();
-        if (shoppingCart.some(item => item._id === _id)) {
-            del('/api/cart/remove', {
-                idProduct: _id,
-            }).then(res => {
-                setShoppingCart(res)
-            }).catch(error => {
-                console.log(error);
-            });
+        getDoc(docRef)
+        .then(res => {
+            let shoppingCart = res.get('shoppingCart')
+            if(!shoppingCart.find(item => item.id === product.id)){
+                setDoc(docRef,{shoppingCart:[...shoppingCart, product]}, {merge: true})
+                setInWishlist(true);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} added to your shopping cart`,
+                    isShowing: true,
+                    message: "Item has been added to your shopping cart"
+                });
+            } else if(shoppingCart.find(item => item.id === product.id)){
+                let cartFilter = shoppingCart.filter(item => item.id !== product.id)
+                setDoc(docRef,{shoppingCart:cartFilter}, {merge: true})
+                setInWishlist(false);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} removed from your shopping cart`,
+                    isShowing: true,
+                    message: "Item has been removed from your shopping cart successfully"
+                });
+            }
+        })
+        .catch(error => console.log(error))
+    };
 
-            setInShoppingCart(false);
-            setShowingModal(true);
-            setModalMessage({
-                title: `${name} removed from your shopping cart`,
-                isShowing: true,
-                message: "Item has been removed from your shopping cart successfully"
-            });
-        } else {
-
-            post('/api/cart/add', {
-                idProduct: _id,
-                amount: 1
-            }).then(res => {
-                setShoppingCart(res)
-            }).catch(error => {
-                console.log(error);
-            });
-
-            setInShoppingCart(true);
-            setShowingModal(true);
-            setModalMessage({
-                title: `${name} added to your shopping cart`,
-                isShowing: true,
-                message: "Item has been added to your shopping cart successfully"
-            });
-        };
+    //* Add/Remove to wishlist
+    const addToWishlist = (e) => {
+        e.stopPropagation();
+        getDoc(docRef)
+        .then(res => {
+            let wishlist = res.get('wishlist')
+            console.log(wishlist) 
+            if(!wishlist?.find(item => item.id === product.id)){
+                setDoc(docRef,{wishlist:[...wishlist, product]}, {merge: true})
+                setInWishlist(true);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} added to your wishlist`,
+                    isShowing: true,
+                    message: "Item has been added to your wishlist"
+                });
+            } else if(wishlist.find(item => item.id === product.id)){
+                let wishlistFilter = wishlist.filter(item => item.id !== product.id)
+                setDoc(docRef,{wishlist:wishlistFilter}, {merge: true})
+                setInWishlist(false);
+                setShowingModal(true);
+                setModalMessage({
+                    title: `${name} removed from your wishlist`,
+                    isShowing: true,
+                    message: "Item has been removed from your wishlist successfully"
+                });
+            }
+        })
+        .catch(error => console.log(error))
     };
     
     //* Buy now
@@ -125,7 +117,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
         e.stopPropagation();
         del(`/api/products/${_id}`)
         .then(res => {
-            setShowingModal(true);
+            setShowingModal(true)
             setModalMessage({
                 title: `${name} deleted`,
                 isShowing: true,
@@ -136,11 +128,16 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     };
     
     useEffect(() => {
-        setInWishlist(wishlist.find(item => item._id === _id));
-        if (shoppingCart !== undefined) {
-            setInShoppingCart(shoppingCart.find(item => item._id === _id));
-        }
-    }, [inWishlist, inShoppingCart, wishlist, shoppingCart, _id]);
+        getDoc(docRef)
+        .then(res => {
+            let wishlist = res.get('wishlist')
+            let shoppingCart = res.get('shoppingCart')
+
+            setInWishlist(wishlist?.find(item => item.id === product.id));
+            setInShoppingCart(shoppingCart?.find(item => item.id === product.id));
+        })
+        .catch(error => console.log(error))
+    }, [inWishlist, inShoppingCart, product.id]);
     
 
     return (

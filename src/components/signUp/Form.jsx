@@ -74,7 +74,11 @@ export default function Form({setShowingModal, setError}) {
                 displayName:name.current.value
             })
             await setDoc(doc(database, "users", result.user.uid),{
-                role:"REGULAR"
+                role:"REGULAR",
+                shoppingCart:[],
+                wishlist: [],
+                paymentMethods: [],
+                addresses:[]
             })
 
             return {
