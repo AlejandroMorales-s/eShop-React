@@ -59,8 +59,8 @@ export default function MyAccount() {
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>My Profile</h2>
             <div className='m-auto w-95 max-w-[1000px] flex flex-col gap-2 '>
                 <div className='bg-white flex items-center gap-2 p-2 rounded shadow-containersShadow w-100 dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark'>
-                    <div className='h-7.5 w-7.5 bg-darkBg rounded-full border-2 border-primary dark:border-primary-light'>
-                        <img src="" alt="" />
+                    <div className='h-7.5 w-7.5 bg-darkBg rounded-full border-2 border-primary dark:border-primary-light overflow-hidden'>
+                        <img src={user.photo} alt="" />
                     </div>
                     <h3 className='text-subtitle font-medium dark:text-gray'>{user.name}</h3>
                 </div>
@@ -68,12 +68,9 @@ export default function MyAccount() {
                     {cards.map((card, index) => (
                         <AccountOptionsCard
                             key={index}
-                            title={card.title}
-                            icon={card.icon}
-                            link={card.link}
-                            desc={card.desc}
+                            card={card}
                         />
-                        ))}
+                    ))}
                 </div>
             </div>
         </>
