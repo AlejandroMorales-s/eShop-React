@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext} from 'react';
 import { globalContext } from '../globalContext/GlobalContext';
 import ReactDocumentTitle from 'react-document-title';
 //* Icons
@@ -8,18 +8,9 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import VisaLogo from '../../assets/logo-visa.png';
 import MastercardLogo from '../../assets/logo-mastercard.png';
 import { Link } from 'react-router-dom';
-//* Stripe
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import { stripePK } from '../../config';
-import PaymentForm from '../PaymentForm';
-
-const stripe = loadStripe(stripePK);
 
 export default function ConfirmDetails() {
     
-    const [clientSecret, setClientSecret] = useState();
-
     const {cards} = useContext(globalContext);
     const {buyDetails} = useContext(globalContext);
     const {shoppingAddress} = useContext(globalContext);
@@ -33,24 +24,7 @@ export default function ConfirmDetails() {
             buyDetails
         ]);
     };
-    
-    const appearance = {
-        theme: 'stripe',
-        variables: {
-            colorPrimary: '#9341dd',
-            colorBackground: '#ffffff',
-            colorText: '#000000',
-        },
-    };
 
-    const options = {
-        clientSecret,
-        appearance,
-    };
-
-    useEffect(() => {
-        setClientSecret(clientSecret) 
-    }, []);
     
     return (
         <>
@@ -75,12 +49,7 @@ export default function ConfirmDetails() {
                         </div>
                     </div>
                     <div className='flex flex-col gap-4'>
-                        <h3 className='font-semibold text-bold dark:text-gray'>Payment detail</h3>
-                        {card === undefined && clientSecret && 
-                            <Elements options={options} stripe={stripe}>
-                                <PaymentForm orderDetails={buyDetails}/>
-                            </Elements>
-                        }   
+                        <h3 className='font-semibold text-bold dark:text-gray'>Payment detail</h3> 
                         {card !== undefined && 
                             <div className={`border-2 h-[100px] w-full rounded flex gap-2 items-center border-gray p-2 bg-white dark:bg-darkBg dark:border-gray-grayDark`}>
                                 <div className='bg-white h-[65px] min-w-[65px] border-2 border-gray dark:border-gray-grayDark rounded-full overflow-hidden flex justify-center items-center'>
