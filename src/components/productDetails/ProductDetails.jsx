@@ -16,7 +16,6 @@ import { FiTruck } from 'react-icons/fi';
 export default function ProductDetails() {
         //* Context
         const {buyNowQuantity, setBuyNowQuantity} = useContext(globalContext);
-        const {history, setHistory} = useContext(globalContext);
         const {user} = useContext(globalContext)
         
         //* State
@@ -28,6 +27,8 @@ export default function ProductDetails() {
         });
         const [inWishlist, setInWishlist] = useState(false);
         const [inShoppingCart, setInShoppingCart] = useState(false);
+        const [imagesTotal, setImagesTotal] = useState();
+        const [imagesPosition, setImagesPosition] = useState(0);
         
         const {idParams} = useParams();
 
@@ -42,13 +43,12 @@ export default function ProductDetails() {
                     data
                 })
                 setImagesTotal(data.images.length - 1)
+                activeIcons()
             } catch (error) {
                 console.log(error) 
             }
         }
         
-        const [imagesTotal, setImagesTotal] = useState();
-        const [imagesPosition, setImagesPosition] = useState(0);
 
         //* Image Slider
         const previousImageClick = () => {
@@ -68,26 +68,13 @@ export default function ProductDetails() {
             getDoc(docRef)
             .then(res => {
                 let wishlist = res.get('wishlist')
-                console.log(wishlist) 
-                if(!wishlist?.find(item => item.id === idParams)){
+                if(!inWishlist){
                     setDoc(docRef,{wishlist:[...wishlist, product]}, {merge: true})
-                    setInWishlist(true);
-                    setShowingModal(true);
-                    setModalMessage({
-                        title: `${product?.data.name} added to your wishlist`,
-                        isShowing: true,
-                        message: "Item has been added to your wishlist"
-                    });
-                } else if(wishlist.find(item => item.id === idParams)){
+                    updateProductStatus('added', 'wishlist', setInWishlist, inWishlist)
+                } else{
                     let wishlistFilter = wishlist.filter(item => item.id !== idParams)
                     setDoc(docRef,{wishlist:wishlistFilter}, {merge: true})
-                    setInWishlist(false);
-                    setShowingModal(true);
-                    setModalMessage({
-                        title: `${product?.data.name} removed from your wishlist`,
-                        isShowing: true,
-                        message: "Item has been removed from your wishlist successfully"
-                    });
+                    updateProductStatus('removed', 'wishlist', setInWishlist, inWishlist)
                 }
             })
             .catch(error => console.log(error))
@@ -99,57 +86,43 @@ export default function ProductDetails() {
             getDoc(docRef)
             .then(res => {
                 let shoppingCart = res.get('shoppingCart')
-                if(!shoppingCart.find(item => item.id === idParams)){
+                if(!inShoppingCart){
                     setDoc(docRef,{shoppingCart:[...shoppingCart, product]}, {merge: true})
-                    setInWishlist(true);
-                    setShowingModal(true);
-                    setModalMessage({
-                        title: `${product?.data.name} added to your shopping cart`,
-                        isShowing: true,
-                        message: "Item has been added to your shopping cart"
-                    });
-                } else if(shoppingCart.find(item => item.id === idParams)){
+                    updateProductStatus('added', 'shopping cart', setInShoppingCart, inShoppingCart)
+                } else{
                     let cartFilter = shoppingCart.filter(item => item.id !== idParams)
                     setDoc(docRef,{shoppingCart:cartFilter}, {merge: true})
-                    setInWishlist(false);
-                    setShowingModal(true);
-                    setModalMessage({
-                        title: `${product?.data.name} removed from your shopping cart`,
-                        isShowing: true,
-                        message: "Item has been removed from your shopping cart successfully"
-                    });
+                    updateProductStatus('removed', 'shopping cart', setInShoppingCart, inShoppingCart)
                 }
             })
             .catch(error => console.log(error))
         };
-    
-        /*
-        //* Add/Remove to history
-        const addToHistory = () => {
-            history.some(item => item._id === idParams) === false && setHistory([...history, {
-                    _id,
-                    name,
-                    price,
-                    images,
-                    desc
-            }]);
-        };
-        */
-        
-        useEffect(() => {
-            //addToHistory();
-            getProduct()
 
+        //* Product Status
+        const updateProductStatus = async (action, place, state, boolean) => {
+            state(!boolean)
+            setShowingModal(true)
+            setModalMessage({
+                title: `${product.data.name} ${action} from your ${place}`,
+                message: `Item has been ${action} from your ${place}`
+            })
+        } 
+
+        //* Active icons
+        const activeIcons = () => {
             const docRef = doc(database, "users", user.id) 
             getDoc(docRef)
             .then(res => {
                 let wishlist = res.get('wishlist')
                 let shoppingCart = res.get('shoppingCart')
-    
-                setInWishlist(wishlist?.find(item => item.id === idParams));
-                setInShoppingCart(shoppingCart?.find(item => item.id === idParams));
+                setInWishlist(wishlist?.some(item => item.id === idParams));
+                setInShoppingCart(shoppingCart?.some(item => item.id === idParams));
             })
             .catch(error => console.log(error))
+        }
+        
+        useEffect(() => {
+            getProduct()
         }, []);
 
     return (
