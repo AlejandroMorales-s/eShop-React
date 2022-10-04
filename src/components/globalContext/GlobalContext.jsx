@@ -1,5 +1,5 @@
 import React, {createContext, useState, useEffect} from 'react';
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { database } from '../../libs/firebase';
 import {onAuthStateChanged} from 'firebase/auth'
 import { auth } from '../../libs/firebase';
@@ -57,6 +57,19 @@ export default function GlobalContext({children}) {
         })
         setProducts(prods)
     }
+    
+    const getItems = (id) => {
+        const docRef = doc(database, "users", id)
+        getDoc(docRef)
+        .then(res => {
+            const wishlist = res.get('wishlist')
+            const shoppingCart = res.get('shoppingCart')
+
+            setWishlist(wishlist)
+            setShoppingCart(shoppingCart)
+        })
+        .catch(error => console.log(error))
+    }
 
     useEffect( () => {
         onAuthStateChanged(auth, (res) => {
@@ -71,6 +84,7 @@ export default function GlobalContext({children}) {
                     },
                     logged: true
                 })
+                getItems(uid)
                 navigate('/feed')
             } else if (location.pathname !== '/login' && location.pathname !== '/signup'){
                 navigate('/')

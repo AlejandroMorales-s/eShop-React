@@ -31,7 +31,7 @@ export default function Wishlist() {
             <h2 className='text-center font-semibold text-title dark:text-gray m-3'>My wishlist</h2>
             <div className='flex flex-col sm:grid sm:grid-cols-4 gap-2 w-95 max-w-[1000px] m-auto'>
                 {wishlist.map(product => {
-                        return <ProductCard key={product._id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={product} />
+                        return <ProductCard key={product.id} setShowingModal={setShowingModal} setModalMessage={setModalMessage} product={product} />
                     })
                 }
             </div>
