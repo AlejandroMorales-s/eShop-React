@@ -45,6 +45,7 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
     //* Add/Remove to cart
     const addToCart = (e) => {
         e.stopPropagation();
+        product.data.amount = 1;
         getDoc(docRef)
         .then(res => {
             let shoppingCart = res.get('shoppingCart')
@@ -78,7 +79,6 @@ export default function ProductCard({setShowingModal, setModalMessage, product})
         getDoc(docRef)
         .then(res => {
             let wishlist = res.get('wishlist')
-            console.log(wishlist) 
             if(!wishlist?.find(item => item.id === product.id)){
                 setDoc(docRef,{wishlist:[...wishlist, product]}, {merge: true})
                 setInWishlist(true);

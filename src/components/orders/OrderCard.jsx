@@ -1,34 +1,46 @@
-import React from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { del, put } from '../../api';
+import { database } from '../../libs/firebase';
+import { globalContext } from '../globalContext/GlobalContext';
 
 export default function OrderCard({item, setShowingModal, setModalMessage}) {
-    let {_id, name, price, amount, images} = item;
+    const {user} = useContext(globalContext) 
+    const {shoppingCart} = useContext(globalContext)
+    let {name, price, amount, images} = item.data;
 
     const modifyAmount = (e) => {
-        put('/api/cart/changeAmount', {
-            "idProduct": _id,
-            "amount": e.target.value
+        const docRef = doc(database, "users", user.id);
+        getDoc(docRef)
+        .then(res => {
+            const shoppingCart = res.get('shoppingCart');
+
+            const product = shoppingCart.find(prod => prod.id === item.id);
+            product.data.amount = Number(e.target.value);
+
+            const shoppingCartFiltered = shoppingCart.filter(prod => prod.id !== item.id);
+            shoppingCartFiltered.push(product);
+
+            setDoc(docRef, {shoppingCart:shoppingCartFiltered}, {merge: true})
         })
-        .then(res => console.log(res))
-        .catch(err => console.log(err)); 
+        .catch(error => console.log(error))
     };
 
-    const deleteItem = () => {
-        del('/api/cart/remove', {
-            "idProduct": _id,
-        })
+    const removeFromCart = () => {
+        const docRef = doc(database, "users", user.id)
+        getDoc(docRef)
         .then(res => {
-            setShowingModal(true);
+            const cartFilter = shoppingCart.filter(product => product.id !== item.id);
+            setDoc(docRef, {shoppingCart: cartFilter}, {merge:true});
+            setShowingModal(true)
             setModalMessage({
-                title: `${name} deleted`,
-                isShowing: true,
-                message: "Item has been deleted from shopping cart successfully"
-            });
+                title: "Removed from shopping cart",
+                message: `${name} removed from shopping cart successfully`
+            })
         })
-        .catch(error => console.log(error)); 
+        .catch(error => console.log(error))
     }
-    //let price = item.price * item.quantity;
+
     return (
         <div className='h-[150px] border-2 p-2 flex gap-2 border-gray rounded dark:border-gray-grayDark dark:bg-darkBg'>
             <div className='overflow-hidden w-[12.5%] rounded'>
@@ -37,8 +49,8 @@ export default function OrderCard({item, setShowingModal, setModalMessage}) {
             <div className='w-[57.5%] h-full flex flex-col justify-evenly'>
                 <h2 className='font-semibold text-title dark:text-gray'>{name}</h2>
                 <div className='flex gap-2'>
-                    <p onClick={deleteItem} className='text-bold font-medium text-red cursor-pointer'>Delete</p>
-                    <Link to={`/${_id}/buy-product`}>
+                    <p onClick={() => removeFromCart()} className='text-bold font-medium text-red cursor-pointer'>Delete</p>
+                    <Link to={`/${item.id}/buy-product`}>
                         <p className='text-bold font-medium text-primary'>Buy now</p>
                     </Link>
                 </div>

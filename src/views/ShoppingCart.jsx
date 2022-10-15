@@ -23,7 +23,7 @@ export default function ShoppingCart() {
             <DocumentTitle title='Shopping Cart'/>
             <Navbar/>
             <div className='w-95 max-w-[1000px] my-5 m-auto bg-white rounded shadow-containersShadow p-2 flex flex-col gap-2 dark:bg-darkBg'>
-                {shoppingCart.map(item => <OrderCard key={item._id} item={item} setModalMessage={setModalMessage} setShowingModal={setShowingModal}/>)}
+                {shoppingCart.map(item => <OrderCard key={item.id} item={item} setModalMessage={setModalMessage} setShowingModal={setShowingModal}/>)}
                 <Link to='/buy-cart'>
                     <button 
                         className={` shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`} 

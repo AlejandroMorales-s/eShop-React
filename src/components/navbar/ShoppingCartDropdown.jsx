@@ -1,24 +1,34 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { IoMdCart } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { globalContext } from '../globalContext/GlobalContext';
-import { put } from '../../api';
+import { database } from '../../libs/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export default function ShoppingCartDropdown() {
     const {shoppingCart} = useContext(globalContext);
+    const {user} = useContext(globalContext);
 
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const modifyAmount = (e) => {
         e.stopPropagation();
-        let id = e.target.id;
-        put('/api/cart/changeAmount', {
-            "idProduct": id,
-            "amount": Number(e.target.value)
+        const productId = e.target.id;
+        const docRef = doc(database, "users", user.id);
+        getDoc(docRef)
+        .then(res => {
+            const shoppingCart = res.get('shoppingCart');
+
+            const product = shoppingCart.find(item => item.id === productId);
+            product.data.amount = Number(e.target.value);
+
+            const shoppingCartFiltered = shoppingCart.filter(item => item.id !== productId);
+            shoppingCartFiltered.push(product);
+
+            setDoc(docRef, {shoppingCart:shoppingCartFiltered}, {merge: true})
         })
-        .then(res => console.log(res))
-        .catch(err => console.log(err)); 
+        .catch(error => console.log(error))
     }
 
     const rotateIcon = () => setIsOpen(!isOpen);
@@ -51,25 +61,25 @@ export default function ShoppingCartDropdown() {
                             {({ active }) => (
                                 <div className='flex gap-1.5 hover:cursor-pointer justify-around items-center min-w-full border-b-gray dark:border-b-gray-grayDark border-b-2 py-1'>
                                     <div className=' border-2 border-gray dark:border-gray-grayDark w-[50px] overflow-hidden h-[50px] rounded'>
-                                        <img src={item.images[0]} alt="Product" className='object-cover rounded' />
+                                        <img src={item.data.images[0]} alt="Product" className='object-cover rounded' />
                                     </div>
                                     <div className='max-w-[150px]'>
-                                        <p className='font-semibold dark:text-white'>{item.name}</p>
-                                        <p className='text-text dark:text-gray line-clamp-2'>{item.desc}</p>
-                                        <p className='text-sm dark:text-gray'>{`$${item.price}`}</p>
+                                        <p className='font-semibold dark:text-white'>{item.data.name}</p>
+                                        <p className='text-text dark:text-gray line-clamp-2'>{item.data.desc}</p>
+                                        <p className='text-sm dark:text-gray'>{`$${item.data.price}`}</p>
                                     </div>
                                     <div className='max-w-100 flex flex-col items-center'>
                                         <p className='text-sm dark:text-white font-semibold'>Quantity:</p>
                                         <input 
-                                            id={item._id}
+                                            id={item.id}
                                             onClick={(e) => modifyAmount(e)} 
                                             className='border-2 rounded pl-0.5 w-[40px] border-gray dark:border-gray-grayDark dark:bg-darkBg dark:text-gray' 
                                             type="number" min='1' max='50' 
-                                            onInput={(e) => item.amount = e.target.value} 
-                                            defaultValue={item.amount}
+                                            onInput={(e) => item.data.amount = e.target.value} 
+                                            defaultValue={item.data.amount}
                                         />
                                         <p className='text-sm dark:text-white font-semibold'>Total:</p>
-                                        <p className='text-text dark:text-gray'>{`$${item.price * item.amount}`}</p>
+                                        <p className='text-text dark:text-gray'>{`$${item.data.price * item.data.amount}`}</p>
                                     </div>
                                 </div>
                             )}
