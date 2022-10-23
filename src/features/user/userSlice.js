@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
+import { providerLogin } from "../../libs/auth";
 
 //* Async thunks
 export const loginWithEmail = createAsyncThunk(
@@ -74,6 +75,38 @@ export const createAccountWithEmail = createAsyncThunk(
   }
 );
 
+export const loginWithSocialMedia = createAsyncThunk(
+  "user/loginWithProvider",
+  async (providerId, thunkAPI) => {
+    let userData = {};
+
+    await providerLogin(providerId)
+      .then(async (res) => {
+        const { displayName, email, photoURL, uid } = res.user;
+        const docRef = doc(database, "users", res.user.uid);
+        await setDoc(docRef, {
+          role: "REGULAR",
+          shoppingCart: [],
+          wishlist: [],
+          paymentMethods: [],
+          addresses: [],
+        });
+        userData = {
+          displayName,
+          email,
+          password: null,
+          uid,
+          photoURL,
+        };
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    return userData;
+  }
+);
+
 //* Creating store
 const initialState = {
   userData: {},
@@ -111,16 +144,29 @@ const options = {
     },
     [createAccountWithEmail.fulfilled]: (state, action) => {
       state.userData = action.payload;
-      console.log(action);
       state.logged = true;
       state.isSubmitting = false;
     },
     [createAccountWithEmail.rejected]: (state, action) => {
       state.isSubmitting = false;
-      console.log(action);
       state.error.message = action.error.message;
       state.error.isError = true;
       state.isSubmitting = false;
+      state.logged = false;
+    },
+    [loginWithSocialMedia.pending]: (state, action) => {
+      state.isSubmitting = true;
+      state.logged = false;
+    },
+    [loginWithSocialMedia.fulfilled]: (state, action) => {
+      state.userData = action.payload;
+      state.logged = true;
+      state.isSubmitting = false;
+    },
+    [loginWithSocialMedia.rejected]: (state, action) => {
+      state.isSubmitting = false;
+      state.error.message = action.error.message;
+      state.error.isError = true;
       state.logged = false;
     },
   },
