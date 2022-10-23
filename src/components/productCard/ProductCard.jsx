@@ -7,8 +7,6 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { database } from "../../libs/firebase";
 import { globalContext } from "../globalContext/GlobalContext";
 
-import { del } from "../../api";
-
 export default function ProductCard({ setShowingModal, setModalMessage, product }) {
   const {
     name, price, images, desc, _id,
