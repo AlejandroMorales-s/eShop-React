@@ -1,14 +1,12 @@
-import React, {
-  useRef, useState, useEffect, useContext,
-} from "react";
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import React, { useRef, useState } from "react";
+import { loginWithEmail, selectLoggedStatus } from "../../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../libs/firebase";
-import { globalContext } from "../globalContext/GlobalContext";
 
 export default function Form({ setShowingModal, setError }) {
+  const dispatch = useDispatch()
+  const logged = useSelector(selectLoggedStatus)
   //* States
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
@@ -21,9 +19,6 @@ export default function Form({ setShowingModal, setError }) {
   //* Navigate
   const navigate = useNavigate();
 
-  //* Global Context
-  const { setUser } = useContext(globalContext);
-
   //* Show/Hide Password
   const showPassword = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -34,25 +29,14 @@ export default function Form({ setShowingModal, setError }) {
   //* Login
   const login = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-      .then((res) => {
-        setUser({
-          user: {
-            name: res.user.displayName,
-            email: res.user.email,
-          },
-          logout: false,
-        });
-        navigate("/feed");
-      })
-      .catch((error) => {
-        setShowingModal(true);
-        setError({
-          isError: true,
-          error,
-        });
-      });
+    dispatch(loginWithEmail({
+      auth, 
+      password: password.current.value,
+      email: email.current.value
+    }))    
   };
+
+  if (logged) navigate('/feed')
 
   //* Enable/Disable Button
   const validation = () => {
@@ -63,24 +47,32 @@ export default function Form({ setShowingModal, setError }) {
     }
   };
 
-  //* Effect
-  useEffect(() => {
-    password.current.oninput = validation;
-    email.current.oninput = validation;
-  }, [password, email]);
-
   return (
     <form onSubmit={login} className="flex flex-col w-100 max-w-45 m-auto">
       <div className="flex flex-col gap-y-0.5 mb-1.5">
         <label htmlFor="email" className="text-bold font-medium dark:text-gray text-boldText">
           Email
-          <input ref={email} id="email" type="email" placeholder="Email" className="border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" />
+          <input 
+            ref={email} 
+            onInput={validation} 
+            id="email" 
+            type="email" 
+            placeholder="example@example.com" 
+            className="border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" 
+          />
         </label>
       </div>
       <div className="flex flex-col gap-y-0.5 mb-1.5">
         <label htmlFor="password" className="text-bold font-medium dark:text-gray text-boldText">
           Password
-          <input ref={password} id="password" type="password" placeholder="Password" className="w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" />
+          <input 
+          ref={password} 
+          onInput={validation} 
+          id="password" 
+          type="password" 
+          placeholder="********" 
+          className="w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" 
+        />
           <div className="relative w-100">
             {isPasswordVisible
               ? (
@@ -100,7 +92,7 @@ export default function Form({ setShowingModal, setError }) {
       </div>
       <div className="mt-1 flex justify-between items-center">
         <Link to="/signup">
-          <p className="text-primary font-medium dark:text-primary-light">You dot&apos;t have account? Sign Up</p>
+          <p className="text-primary font-medium dark:text-primary-light">You don&apos;t have account? Sign Up</p>
         </Link>
         <button disabled={inactiveButton} className={`${inactiveButton ? "opacity-50" : "opacity-100"} shadow-shadow px-2 py-1 bg-primary text-white font-semibold rounded border-2 border-primary transition-all hover:bg-transparent hover:text-primary dark:bg-primary-light dark:text-darkBg dark:border-primary-light dark:hover:bg-transparent dark:hover:text-primary-light`} type="submit">Login</button>
       </div>

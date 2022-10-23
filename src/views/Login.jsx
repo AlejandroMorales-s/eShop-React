@@ -9,7 +9,7 @@ export default function Login() {
   const [showingModal, setShowingModal] = useState(false);
   const [error, setError] = useState({
     isError: false,
-    error: [],
+    error: '',
   });
   return (
     <>
