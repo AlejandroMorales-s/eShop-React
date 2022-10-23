@@ -1,17 +1,13 @@
-import React, {
-  useRef, useEffect, useState, useContext,
-} from "react";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { createAccountWithEmail, selectLoggedStatus } from "../../features/user/userSlice";
 
-import { auth, database } from "../../libs/firebase";
-import { globalContext } from "../globalContext/GlobalContext";
+import { auth } from "../../libs/firebase";
 
 export default function Form({ setShowingModal, setError }) {
+  const dispatch = useDispatch();
+  const loggedStatus = useSelector(selectLoggedStatus);
   //* States
   const [validPassword, setValidPassword] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
@@ -19,9 +15,6 @@ export default function Form({ setShowingModal, setError }) {
   const [inactiveButton, setInactiveButton] = useState(true);
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   const [inputClicked, setInputClicked] = useState(false);
-
-  //* Global Context
-  const { setUser } = useContext(globalContext);
 
   //* Refs
   const password = useRef();
@@ -77,72 +70,63 @@ export default function Form({ setShowingModal, setError }) {
     else password.current.type = "password";
   };
 
-  //* Open/Close Modal
+  //* Sign Up
   const accountCreated = (e) => {
-    e.preventDefault();
+    e.preventDefault() ;
 
-    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-      .then(async (result) => {
-        await updateProfile(result.user, {
-          displayName: name.current.value,
-        });
-        await setDoc(doc(database, "users", result.user.uid), {
-          role: "REGULAR",
-          shoppingCart: [],
-          wishlist: [],
-          paymentMethods: [],
-          addresses: [],
-        });
-
-        return {
-          id: result.user.uid,
-        };
-      })
-      .then(({ id }) => {
-        setUser({
-          user: {
-            name: name.current.value,
-            email: email.current.value,
-            id,
-          },
-          logged: true,
-        });
-        navigate("/feed");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(createAccountWithEmail({
+      auth,
+      email: email.current.value,
+      password: password.current.value,
+      name: name.current.value
+    }))
   };
 
-  const clicked = () => setInputClicked(true);
+  if (loggedStatus) navigate('/feed');
 
-  //* Effect
-  useEffect(() => {
-    password.current.oninput = validation;
-    confirmPassword.current.oninput = validation;
-    name.current.oninput = validation;
-    email.current.oninput = validation;
-  }, [password, confirmPassword, name, email]);
+  const clicked = () => setInputClicked(true);
 
   return (
     <form onSubmit={accountCreated} className="flex flex-col w-100 max-w-45 m-auto">
       <div className="flex flex-col gap-y-0.5 mb-1.5">
         <label htmlFor="name" className="text-bold font-medium dark:text-gray text-boldText">
           Name
-          <input ref={name} id="name" type="text" placeholder="Name" className="border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" />
+          <input
+            onInput={validation} 
+            ref={name} 
+            id="name" 
+            type="text" 
+            placeholder="Name" 
+            className="border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" 
+          />
         </label>
       </div>
       <div className="flex flex-col gap-y-0.5 mb-1.5">
         <label htmlFor="email" className="text-bold font-medium dark:text-gray text-boldText">
           Email
-          <input ref={email} id="email" type="email" placeholder="example@gmail.com" className="border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" />
+          <input 
+            onInput={validation} 
+            ref={email} 
+            id="email" 
+            type="email" 
+            placeholder="example@gmail.com" 
+            className="border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary" 
+          />
         </label>
       </div>
       <div className="flex flex-col gap-y-0.5 mb-1.5">
         <label htmlFor="password" className="text-bold font-medium dark:text-gray text-boldText">
           Password
           <div className="relative w-100">
-            <input onClick={clicked} ref={password} id="password" type="password" placeholder="********" className={`w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none ${validPassword ? "focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green" : "focus:border-yellow focus:ring-yellow dark:focus:border-yellow dark:focus:ring-yellow"}`} />
+            <input 
+              onInput={validation} 
+              onClick={clicked} 
+              ref={password} 
+              id="password" 
+              type="password" 
+              placeholder="********" 
+              className={`w-100 border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none ${validPassword ? "focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green" : "focus:border-yellow focus:ring-yellow dark:focus:border-yellow dark:focus:ring-yellow"}`} 
+            />
             {isPasswordVisible
               ? (
                 <svg onClick={showPassword} xmlns="http://www.w3.org/2000/svg" className=" font-semibold text-darkBg dark:text-gray h-6 w-6 absolute -translate-y-2/4 top-2/4 right-0.5" viewBox="0 0 20 20" fill="currentColor">
@@ -171,7 +155,14 @@ export default function Form({ setShowingModal, setError }) {
       <div className="flex flex-col gap-y-0.5 mb-1.5">
         <label htmlFor="confirmPassword" className="text-bold font-medium dark:text-gray text-boldText">
           Confirm password
-          <input ref={confirmPassword} id="confirmPassword" type="password" placeholder="Confirm password" className={` border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none ${passwordsMatch ? "focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green" : "focus:border-red focus:ring-red dark:focus:border-red dark:focus:ring-red"}`} />
+          <input 
+            onInput={validation} 
+            ref={confirmPassword} 
+            id="confirmPassword" 
+            type="password" 
+            placeholder="Confirm password" 
+            className={` border-primary border-2 rounded px-0.5 h-4.5 shadow-shadow dark:bg-darkBg dark:border-primary-light dark:text-gray focus:ring-1 focus:outline-none ${passwordsMatch ? "focus:border-green focus:ring-green dark:focus:border-green dark:focus:ring-green" : "focus:border-red focus:ring-red dark:focus:border-red dark:focus:ring-red"}`} 
+          />
           <div className={`${passwordsMatch ? "bg-green" : "bg-red"} transition-all delay-100 ease-out h-fit -translate-y-0.5 px-1 py-0.5 ${inputClicked ? "relative opacity-100" : "absolute opacity-0"} rounded rounded-bl-xl`}>
             {passwordsMatch ? <p>Passwords match! 🥳</p> : <p>Passwords not match 😞</p>}
           </div>
