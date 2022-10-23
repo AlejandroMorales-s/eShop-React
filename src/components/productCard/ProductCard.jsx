@@ -118,16 +118,7 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
   //* Delete product
   const deleteProduct = (e) => {
     e.stopPropagation();
-    del(`/api/products/${_id}`)
-      .then(() => {
-        setShowingModal(true);
-        setModalMessage({
-          title: `${name} deleted`,
-          isShowing: true,
-          message: "Item has been deleted successfully",
-        });
-      })
-      .catch((error) => console.log(error));
+    //TODO delete product code
   };
 
   useEffect(() => {

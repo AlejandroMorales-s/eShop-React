@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { post } from "../../api";
 import Modal from "../modals/Modal";
 
 export default function AddProductForm() {
@@ -19,26 +18,7 @@ export default function AddProductForm() {
 
   const addProduct = (e) => {
     e.preventDefault();
-    post("/api/products", {
-      name: name.current.value,
-      images: images.current.value.split(", "),
-      stock: stock.current.value,
-      price: price.current.value,
-      description: description.current.value,
-    })
-      .then(() => {
-        setShowingModal(true);
-        setModalMessage({
-          title: `${name.current.value} added successfully`,
-          message: "Product has been added successfully",
-        });
-        name.current.value = "";
-        images.current.value = "";
-        stock.current.value = "";
-        price.current.value = "";
-        description.current.value = "";
-      })
-      .catch((err) => console.log(err));
+    //TODO code to add product
   };
   return (
     <>
