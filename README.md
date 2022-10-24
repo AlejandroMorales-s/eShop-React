@@ -22,7 +22,10 @@ Las dependencias usadas en el proyecto son:
 
 * Tailwind
 * Firebase
+* Redux Toolkit
 
 **Tailwind** es un framework de CSS basado en clases.
 
 **Firebase** fué utilizado como backend, gestionando desde ahí inicios de sesión con email y contraseña o por medio de redes sociales, como base de datos para productos y usuarios, además de gestionar permisos de diferentes funcionalidades basado en el rol del usuario.
+
+**Redux Toolkit** fué utilizado para manejar el estado global de la aplicación.
