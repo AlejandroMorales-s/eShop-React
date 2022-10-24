@@ -203,8 +203,6 @@ const options = {
       state.isSubmitting = true;
     },
     [authChangeHandler.fulfilled]: (state, action) => {
-      console.log(action.payload);
-
       state.userData = action.payload;
 
       state.logged = true;
