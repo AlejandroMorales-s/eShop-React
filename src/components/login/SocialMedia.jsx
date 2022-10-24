@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { signInMethods } from "../../libs/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedStatus, loginWithSocialMedia } from "../../features/user/userSlice";
+import { useEffect } from "react";
 
 export default function SocialMedia() {
   const dispatch = useDispatch();
@@ -14,7 +15,9 @@ export default function SocialMedia() {
 
   const loginWithProvider = (id) => dispatch(loginWithSocialMedia(id))
 
-  if (loggedStatus) navigate('/feed')
+  useEffect(() => {
+    if (loggedStatus) navigate('/feed')
+  }, [loggedStatus])
   
   return (
     <div>

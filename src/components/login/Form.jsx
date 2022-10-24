@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { loginWithEmail, selectLoggedStatus } from "../../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../libs/firebase";
 
-export default function Form({ setShowingModal, setError }) {
+export default function Form() {
   const dispatch = useDispatch()
   const logged = useSelector(selectLoggedStatus)
   //* States
@@ -36,8 +36,7 @@ export default function Form({ setShowingModal, setError }) {
     }))    
   };
 
-  if (logged) navigate('/feed')
-
+  
   //* Enable/Disable Button
   const validation = () => {
     if (password.current.value.length >= 6 && email.current.value !== "") {
@@ -46,6 +45,10 @@ export default function Form({ setShowingModal, setError }) {
       setInactiveButton(true);
     }
   };
+  
+  useEffect(() => {
+    if (logged) navigate('/feed')
+  }, [logged])
 
   return (
     <form onSubmit={login} className="flex flex-col w-100 max-w-45 m-auto">

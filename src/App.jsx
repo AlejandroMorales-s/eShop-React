@@ -54,11 +54,11 @@ function App() {
     });
   };
 
-  if (loggedStatus) navigate('/feed')
-
+  
   useEffect(() => {
     dispatch(authChangeHandler(auth));
-  }, [])
+    if (loggedStatus) navigate('/feed')
+  }, [loggedStatus])
 
   return (
     <>

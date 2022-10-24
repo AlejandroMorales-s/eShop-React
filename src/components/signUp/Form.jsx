@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createAccountWithEmail, selectLoggedStatus } from "../../features/user/userSlice";
@@ -82,9 +82,12 @@ export default function Form({ setShowingModal, setError }) {
     }))
   };
 
-  if (loggedStatus) navigate('/feed');
-
+  
   const clicked = () => setInputClicked(true);
+  
+  useEffect(() => {
+    if (loggedStatus) navigate('/feed');
+  }, [loggedStatus])
 
   return (
     <form onSubmit={accountCreated} className="flex flex-col w-100 max-w-45 m-auto">

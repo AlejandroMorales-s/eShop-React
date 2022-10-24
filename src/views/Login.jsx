@@ -19,7 +19,7 @@ export default function Login() {
           <div>
             <h1 className="text-center font-semibold text-primary text-logo dark:text-primary-light">eShop</h1>
             <p className="text-center font-semibold my-1 text-bold dark:text-gray">Login</p>
-            <Form setError={setError} setShowingModal={setShowingModal} />
+            <Form />
             <SocialMedia />
           </div>
         </div>
