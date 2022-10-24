@@ -113,9 +113,7 @@ export const authChangeHandler = createAsyncThunk(
         onAuthStateChanged(auth, (res) => {
           if (res === undefined || res === null) {
             reject("Session closed");
-            console.log("closed");
           }
-          console.log(res);
           const { uid, displayName, email, photoURL } = res;
 
           resolve({
