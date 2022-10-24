@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
-import { globalContext } from "../globalContext/GlobalContext";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectAllProducts } from "../../features/products/productsSlice";
 import Loader from "../loader/Loader";
 import Modal from "../modals/Modal";
 import ProductCard from "../productCard/ProductCard";
 
 export default function Products() {
-  const { products } = useContext(globalContext);
+  const products = useSelector(selectAllProducts)
   const [showingModal, setShowingModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({
     title: "",
@@ -43,7 +44,7 @@ export default function Products() {
                   <div key={name}>
                     <h2 className="text-center font-semibold text-title dark:text-gray m-3">{name}</h2>
                     <div className="flex relative gap-2 w-full m-auto overflow-x-auto py-1 horizontal-dropdown">
-                      {products.map((prod) => prod.data.category.toLowerCase() === category
+                      {products?.map((prod) => prod.data.category.toLowerCase() === category
                         && (
                           <ProductCard
                             key={prod.id}

@@ -1,22 +1,23 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 //* Icons
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import { database } from "../../libs/firebase";
-import { globalContext } from "../globalContext/GlobalContext";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../features/user/userSlice";
 
 export default function ProductCard({ setShowingModal, setModalMessage, product }) {
   const {
-    name, price, images, desc, _id,
+    name, price, images, desc
   } = product.data;
   //* States
   const [inWishlist, setInWishlist] = useState(false);
   const [inShoppingCart, setInShoppingCart] = useState(false);
 
   //* Context
-  const { user } = useContext(globalContext);
+  const user = useSelector(selectUserData)
 
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
     lazyLoadingObserver.observe(image);
   }
 
-  const docRef = doc(database, "users", user.id);
+  const docRef = doc(database, "users", user.uid);
   //* Add/Remove to cart
   const addToCart = (e) => {
     e.stopPropagation();

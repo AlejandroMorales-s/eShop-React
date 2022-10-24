@@ -36,6 +36,7 @@ import ProductsFiltered from "./views/ProductsFiltered";
 import AddProduct from "./views/AddProduct";
 import BuyCartTemplate from "./components/buyCart/BuyCartTemplate";
 import { auth } from "./libs/firebase";
+import { getProducts } from "./features/products/productsSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
   
   useEffect(() => {
     dispatch(authChangeHandler(auth));
+    dispatch(getProducts())
     if (loggedStatus) navigate('/feed')
   }, [loggedStatus])
 
