@@ -1,12 +1,15 @@
-import React, { useContext, useRef } from "react";
-import { globalContext } from "../globalContext/GlobalContext";
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../features/user/userSlice";
 
 export default function PersonalData() {
-  const { user } = useContext(globalContext);
+  const user = useSelector(selectUserData)
   const phoneInput = useRef();
+
   const addPhone = () => {
     phoneInput.position = "absolute";
   };
+
   return (
     <>
       <h2 className="text-center font-semibold text-title dark:text-gray m-3">Personal data</h2>
@@ -14,7 +17,7 @@ export default function PersonalData() {
         <div className="border-2 border-gray dark:border-gray-grayDark rounded bg-white w-100 shadow-containersShadow p-2 dark:bg-darkBg">
           <p className="text-text dark:text-gray">
             <span className="font-semibold text-bold text-boldText dark:text-white">Name: </span>
-            {user.name}
+            {user.displayName}
           </p>
         </div>
         <div className="border-2 border-gray dark:border-gray-grayDark rounded bg-white w-100 shadow-containersShadow p-2 dark:bg-darkBg">
