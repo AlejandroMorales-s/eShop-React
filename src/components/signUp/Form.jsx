@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createAccountWithEmail, selectLoggedStatus } from "../../features/user/userSlice";
+import { createAccountWithEmail, selectIsSubmitting, selectLoggedStatus } from "../../features/user/userSlice";
 
 import { auth } from "../../libs/firebase";
 
 export default function Form({ setShowingModal, setError }) {
   const dispatch = useDispatch();
   const loggedStatus = useSelector(selectLoggedStatus);
+  const isSubmitting = useSelector(selectIsSubmitting)
   //* States
   const [validPassword, setValidPassword] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
@@ -87,7 +88,9 @@ export default function Form({ setShowingModal, setError }) {
   
   useEffect(() => {
     if (loggedStatus) navigate('/feed');
-  }, [loggedStatus])
+
+    if (isSubmitting) setInactiveButton(true)
+  }, [loggedStatus, isSubmitting])
 
   return (
     <form onSubmit={accountCreated} className="flex flex-col w-100 max-w-45 m-auto">

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { loginWithEmail, selectLoggedStatus } from "../../features/user/userSlice";
+import { loginWithEmail, selectIsSubmitting, selectLoggedStatus } from "../../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../libs/firebase";
@@ -7,10 +7,11 @@ import { auth } from "../../libs/firebase";
 export default function Form() {
   const dispatch = useDispatch()
   const logged = useSelector(selectLoggedStatus)
+  const isSubmitting = useSelector(selectIsSubmitting)
   //* States
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
-  const [inactiveButton, setInactiveButton] = useState(true);
+  const [inactiveButton, setInactiveButton] = useState(false);
 
   //* Refs
   const password = useRef();
@@ -48,7 +49,9 @@ export default function Form() {
   
   useEffect(() => {
     if (logged) navigate('/feed')
-  }, [logged])
+
+    if (isSubmitting) setInactiveButton(true)
+  }, [logged, isSubmitting])
 
   return (
     <form onSubmit={login} className="flex flex-col w-100 max-w-45 m-auto">

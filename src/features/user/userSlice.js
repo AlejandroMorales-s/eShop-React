@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
 import { providerLogin } from "../../libs/auth";
 
@@ -18,13 +18,22 @@ export const loginWithEmail = createAsyncThunk(
     let userData = {};
 
     await signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
+      .then(async (res) => {
         const { displayName, email, uid, photoURL } = res.user;
+        let role = "";
+
+        const docRef = doc(database, "users", uid);
+
+        await getDoc(docRef)
+          .then((data) => (role = data.get("role")))
+          .catch((error) => console.log(error));
+
         userData = {
           displayName,
           email,
           uid,
           photoURL,
+          role,
         };
       })
       .catch((error) => {
@@ -53,20 +62,21 @@ export const createAccountWithEmail = createAsyncThunk(
         });
         return {
           uid: result.user.uid,
+          role: "REGULAR",
         };
       })
-      .then(({ uid }) => {
+      .then(({ uid, role }) => {
         userData = {
           displayName: name,
           email,
           uid,
           photoURL: null,
+          role,
         };
       })
       .catch((error) => {
         throw error;
       });
-    console.log(userData);
 
     return userData;
   }
@@ -80,7 +90,8 @@ export const loginWithSocialMedia = createAsyncThunk(
     await providerLogin(providerId)
       .then(async (res) => {
         const { displayName, email, photoURL, uid } = res.user;
-        const docRef = doc(database, "users", res.user.uid);
+        let role = "";
+        const docRef = doc(database, "users", uid);
         await setDoc(docRef, {
           role: "REGULAR",
           shoppingCart: [],
@@ -88,11 +99,17 @@ export const loginWithSocialMedia = createAsyncThunk(
           paymentMethods: [],
           addresses: [],
         });
+
+        await getDoc(docRef)
+          .then((data) => (role = data.get("role")))
+          .catch((error) => console.log(error));
+
         userData = {
           displayName,
           email,
           uid,
           photoURL,
+          role,
         };
       })
       .catch((error) => {
@@ -110,17 +127,25 @@ export const authChangeHandler = createAsyncThunk(
 
     const authHandler = async (auth) => {
       return new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, (res) => {
+        onAuthStateChanged(auth, async (res) => {
           if (res === undefined || res === null) {
             reject("Session closed");
           }
           const { uid, displayName, email, photoURL } = res;
+          let role = "";
+
+          const docRef = doc(database, "users", uid);
+
+          await getDoc(docRef)
+            .then((data) => (role = data.get("role")))
+            .catch((error) => console.log(error));
 
           resolve({
             displayName,
             email,
             uid,
             photoURL,
+            role,
           });
         });
       });
@@ -254,5 +279,7 @@ export const selectErrorStatus = (state) => state.user.error.isError;
 export const selectErrorMessage = (state) => state.user.error.message;
 
 export const selectUserData = (state) => state.user.userData;
+
+export const selectIsSubmitting = (state) => state.user.isSubmitting;
 
 export default userSlice.reducer;
