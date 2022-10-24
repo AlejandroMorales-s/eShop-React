@@ -8,11 +8,13 @@ import MyAccountDropdown from "./MyAccountDropdown";
 import MyAccountDropdownPhone from "./MyAccountDropdownPhone";
 import ShoppingCartDropdown from "./ShoppingCartDropdown";
 import SearchInput from "./SearchInput";
+import { selectUserData } from "../../features/user/userSlice";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
-  //* Global Context
-  const { user } = useContext(globalContext);
-  const { shoppingAddress } = useContext(globalContext);
+  //* Selectors
+  const user = useSelector(selectUserData)
+  const shoppingAddress = {}
 
   //* States
   const [showNavbar, setShowNavbar] = useState(true);
@@ -46,7 +48,7 @@ export default function Navbar() {
                 )
                 : (
                   <>
-                    <p className="text-text dark:text-gray">{`Send to ${user.name}`}</p>
+                    <p className="text-text dark:text-gray">{`Send to ${user.displayName}`}</p>
                     <p className=" text-boldText font-semibold dark:text-white">Add direction...</p>
                   </>
                 )}

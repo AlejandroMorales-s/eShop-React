@@ -1,16 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 //* Icons
 import { BiHistory } from "react-icons/bi";
 import { BsBoxSeam } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { AiOutlineMenu, AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { globalContext } from "../globalContext/GlobalContext";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoggedStatus, logout } from "../../features/user/userSlice";
 import { auth } from "../../libs/firebase";
 
 export default function MyAccountDropdownPhone({ user }) {
+  const dispatch = useDispatch()
+  const loggedStatus = useSelector(selectLoggedStatus)
+
   const options = [
     {
       title: "My account",
@@ -42,8 +45,6 @@ export default function MyAccountDropdownPhone({ user }) {
   const [isOpen, setIsOpen] = useState(false);
   const [dark, setDark] = useState(false);
 
-  const { setUser } = useContext(globalContext);
-
   const navigate = useNavigate();
 
   const menuOpen = () => setIsOpen(!isOpen);
@@ -55,13 +56,12 @@ export default function MyAccountDropdownPhone({ user }) {
     if (document.getElementById("html").classList.contains("bg-darkBody")) setDark(true);
     else setDark(false);
   };
-  const logout = () => {
-    signOut(auth);
-    setUser({
-      logout: true,
-    });
-    navigate("/login");
-  };
+
+  const logoutHandler = () => dispatch(logout(auth))
+
+  useEffect(() => {
+    if (!loggedStatus) navigate('/')
+  }, [loggedStatus])
 
   return (
     <Menu>
@@ -91,7 +91,7 @@ export default function MyAccountDropdownPhone({ user }) {
                 <p className="text-center text-bold font-semibold dark:text-white">
                   Hello
                   <br />
-                  {`${user.name}!`}
+                  {`${user.displayName}!`}
                 </p>
               </div>
             )}
@@ -121,7 +121,7 @@ export default function MyAccountDropdownPhone({ user }) {
               </div>
             )}
           </Menu.Item>
-          <Menu.Item onClick={logout} className="cursor-pointer bg-red rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50">
+          <Menu.Item onClick={logoutHandler} className="cursor-pointer bg-red rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50">
             {({ active }) => (
               <div className="">
                 <p className="p-1 text-white font-medium text-center hover:text-red transition-all ease-in-out delay-50 h-full w-full">Log Out</p>

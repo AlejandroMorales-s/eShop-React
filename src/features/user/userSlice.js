@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
@@ -110,7 +111,11 @@ export const authChangeHandler = createAsyncThunk(
     const authHandler = async (auth) => {
       return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, (res) => {
-          if (res === undefined) reject("Session closed");
+          if (res === undefined || res === null) {
+            reject("Session closed");
+            console.log("closed");
+          }
+          console.log(res);
           const { uid, displayName, email, photoURL } = res;
 
           resolve({
@@ -132,6 +137,15 @@ export const authChangeHandler = createAsyncThunk(
       });
 
     return userData;
+  }
+);
+
+export const logout = createAsyncThunk(
+  "user/logout",
+  async (auth, thunkAPI) => {
+    await signOut(auth);
+
+    return initialState;
   }
 );
 
@@ -214,6 +228,21 @@ const options = {
       state.isSubmitting = false;
       state.error.isError = true;
     },
+    //* logout
+    [logout.pending]: (state, action) => {
+      state.isSubmitting = true;
+    },
+    [logout.fulfilled]: (state, action) => {
+      state.isSubmitting = false;
+      state.userData = {};
+      state.logged = false;
+    },
+    [logout.rejected]: (state, action) => {
+      state.error.message = action.error.message;
+
+      state.isSubmitting = false;
+      state.error.isError = true;
+    },
   },
 };
 
@@ -225,5 +254,7 @@ export const selectLoggedStatus = (state) => state.user.logged;
 export const selectErrorStatus = (state) => state.user.error.isError;
 
 export const selectErrorMessage = (state) => state.user.error.message;
+
+export const selectUserData = (state) => state.user.userData;
 
 export default userSlice.reducer;

@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { signOut } from "firebase/auth";
+import React, { useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 //* Icons
@@ -7,8 +6,9 @@ import { BiHistory } from "react-icons/bi";
 import { BsBoxSeam } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { globalContext } from "../globalContext/GlobalContext";
 import { auth } from "../../libs/firebase";
+import { selectLoggedStatus, logout } from "../../features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function MyAccountDropdown({ user }) {
   const options = [
@@ -39,10 +39,11 @@ export default function MyAccountDropdown({ user }) {
     },
   ];
 
+  const loggedStatus = useSelector(selectLoggedStatus)
+  const dispatch = useDispatch()
+
   const [isOpen, setIsOpen] = useState(false);
   const [dark, setDark] = useState(false);
-
-  const { setUser } = useContext(globalContext);
 
   const navigate = useNavigate();
 
@@ -56,13 +57,12 @@ export default function MyAccountDropdown({ user }) {
     else setDark(false);
   };
 
-  const logout = () => {
-    signOut(auth);
-    setUser({
-      logout: true,
-    });
-    navigate("/login");
-  };
+  const logoutHandler = () => dispatch(logout(auth))
+
+  useEffect(() => {
+    if (!loggedStatus) navigate('/')
+  }, [loggedStatus])
+
   return (
     <Menu>
       <Menu.Button>
@@ -72,7 +72,7 @@ export default function MyAccountDropdown({ user }) {
           onKeyDown={rotateIcon}
           onClick={rotateIcon}
         >
-          <p className="text-text dark:text-gray">{`Hello ${user.name}!`}</p>
+          <p className="text-text dark:text-gray">{`Hello ${user.displayName}!`}</p>
           <div className="flex gap-0.5">
             <p className={`${isOpen ? "text-primary dark:text-primary-light" : "dark:text-white text-boldText"} transition-all ease-in-out delay-100 font-semibold text-center`}>My account</p>
             <svg xmlns="http://www.w3.org/2000/svg" className={`${isOpen ? "rotate-180 dark:text-primary-light text-primary" : "dark:text-primary-light text-primary rotate-0"} transition-all ease-in-out delay-100 h-6 w-6`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -117,7 +117,7 @@ export default function MyAccountDropdown({ user }) {
               </div>
             )}
           </Menu.Item>
-          <Menu.Item onClick={logout} className="cursor-pointer bg-red rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50">
+          <Menu.Item onClick={logoutHandler} className="cursor-pointer bg-red rounded shadow-containersShadow w-100 hover:bg-transparent border-2 border-red transition-all ease-in-out delay-50">
             {({ active }) => (
               <div className="">
                 <p className="p-1 text-white font-medium text-center hover:text-red transition-all ease-in-out delay-50 h-full w-full">Log Out</p>
