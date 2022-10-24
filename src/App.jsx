@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { FaArrowCircleUp } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { authChangeHandler, selectLoggedStatus } from "./features/user/userSlice";
 //* Welcome
 import Welcome from "./views/Welcome";
 //* Login - SignUp
@@ -33,8 +35,13 @@ import NotFound from "./views/NotFound";
 import ProductsFiltered from "./views/ProductsFiltered";
 import AddProduct from "./views/AddProduct";
 import BuyCartTemplate from "./components/buyCart/BuyCartTemplate";
+import { auth } from "./libs/firebase";
 
 function App() {
+  const dispatch = useDispatch();
+  const loggedStatus = useSelector(selectLoggedStatus);
+  const navigate = useNavigate();
+
   const [showBtn, setShowBtn] = useState(false);
 
   window.addEventListener("scroll", () => (window.scrollY >= window.innerHeight / 2 ? setShowBtn(true) : setShowBtn(false)));
@@ -46,6 +53,12 @@ function App() {
       behavior: "smooth",
     });
   };
+
+  if (loggedStatus) navigate('/feed')
+
+  useEffect(() => {
+    dispatch(authChangeHandler(auth));
+  }, [])
 
   return (
     <>

@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
@@ -14,6 +15,7 @@ export const loginWithEmail = createAsyncThunk(
   "user/login",
   async ({ auth, password, email }, thunkAPI) => {
     let userData = {};
+
     await signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         const { displayName, email, uid, photoURL } = res.user;
@@ -35,7 +37,6 @@ export const createAccountWithEmail = createAsyncThunk(
   "user/signup",
   async ({ auth, email, password, name }, thunkAPI) => {
     let userData = {};
-    console.log(email);
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then(async (result) => {
@@ -49,22 +50,17 @@ export const createAccountWithEmail = createAsyncThunk(
           paymentMethods: [],
           addresses: [],
         });
-
-        console.log("await");
         return {
           uid: result.user.uid,
         };
       })
       .then(({ uid }) => {
-        console.log("then");
         userData = {
           displayName: name,
           email,
-          password,
           uid,
           photoURL: null,
         };
-        console.log(userData);
       })
       .catch((error) => {
         throw error;
@@ -94,10 +90,42 @@ export const loginWithSocialMedia = createAsyncThunk(
         userData = {
           displayName,
           email,
-          password: null,
           uid,
           photoURL,
         };
+      })
+      .catch((error) => {
+        throw error;
+      });
+
+    return userData;
+  }
+);
+
+export const authChangeHandler = createAsyncThunk(
+  "user/handlerAuthChange",
+  async (auth, thunkAPI) => {
+    let userData = {};
+
+    const authHandler = async (auth) => {
+      return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, (res) => {
+          if (res === undefined) reject("Session closed");
+          const { uid, displayName, email, photoURL } = res;
+
+          resolve({
+            displayName,
+            email,
+            uid,
+            photoURL,
+          });
+        });
+      });
+    };
+
+    await authHandler(auth)
+      .then((res) => {
+        userData = res;
       })
       .catch((error) => {
         throw error;
@@ -122,9 +150,9 @@ const options = {
   name: "user",
   initialState,
   extraReducers: {
+    //* Login with email
     [loginWithEmail.pending]: (state, action) => {
       state.isSubmitting = true;
-      state.logged = false;
     },
     [loginWithEmail.fulfilled]: (state, action) => {
       state.userData = action.payload;
@@ -134,40 +162,59 @@ const options = {
     },
     [loginWithEmail.rejected]: (state, action) => {
       state.error.message = action.error.message;
+
       state.error.isError = true;
       state.isSubmitting = false;
-      state.logged = false;
     },
+    //* Create account with email
     [createAccountWithEmail.pending]: (state, action) => {
       state.isSubmitting = true;
-      state.logged = false;
     },
     [createAccountWithEmail.fulfilled]: (state, action) => {
       state.userData = action.payload;
+
       state.logged = true;
       state.isSubmitting = false;
     },
     [createAccountWithEmail.rejected]: (state, action) => {
-      state.isSubmitting = false;
       state.error.message = action.error.message;
+
       state.error.isError = true;
       state.isSubmitting = false;
-      state.logged = false;
     },
+    //* Login with provider
     [loginWithSocialMedia.pending]: (state, action) => {
       state.isSubmitting = true;
-      state.logged = false;
     },
     [loginWithSocialMedia.fulfilled]: (state, action) => {
       state.userData = action.payload;
+
       state.logged = true;
       state.isSubmitting = false;
     },
     [loginWithSocialMedia.rejected]: (state, action) => {
-      state.isSubmitting = false;
       state.error.message = action.error.message;
+
+      state.isSubmitting = false;
       state.error.isError = true;
-      state.logged = false;
+    },
+    //* Auth change handler
+    [authChangeHandler.pending]: (state, action) => {
+      state.isSubmitting = true;
+    },
+    [authChangeHandler.fulfilled]: (state, action) => {
+      console.log(action.payload);
+
+      state.userData = action.payload;
+
+      state.logged = true;
+      state.isSubmitting = false;
+    },
+    [authChangeHandler.rejected]: (state, action) => {
+      state.error.message = action.error.message;
+
+      state.isSubmitting = false;
+      state.error.isError = true;
     },
   },
 };
