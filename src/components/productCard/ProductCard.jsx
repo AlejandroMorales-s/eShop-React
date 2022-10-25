@@ -5,19 +5,22 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import { database } from "../../libs/firebase";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../features/user/userSlice";
+import { addOrRemoveFromShoppingCart } from "../../features/shoppingCart/shoppingCartSlice";
 
 export default function ProductCard({ setShowingModal, setModalMessage, product }) {
   const {
     name, price, images, desc
   } = product.data;
+
+  const dispatch = useDispatch()
   //* States
   const [inWishlist, setInWishlist] = useState(false);
   const [inShoppingCart, setInShoppingCart] = useState(false);
 
   //* Context
-  const user = useSelector(selectUserData)
+  const userData = useSelector(selectUserData)
 
   const navigate = useNavigate();
 
@@ -43,36 +46,12 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
     lazyLoadingObserver.observe(image);
   }
 
-  const docRef = doc(database, "users", user.uid);
+  const docRef = doc(database, "users", userData.uid);
   //* Add/Remove to cart
   const addToCart = (e) => {
     e.stopPropagation();
-    product.data.amount = 1;
-    getDoc(docRef)
-      .then((res) => {
-        const shoppingCart = res.get("shoppingCart");
-        if (!shoppingCart.find((item) => item.id === product.id)) {
-          setDoc(docRef, { shoppingCart: [...shoppingCart, product] }, { merge: true });
-          setInWishlist(true);
-          setShowingModal(true);
-          setModalMessage({
-            title: `${name} added to your shopping cart`,
-            isShowing: true,
-            message: "Item has been added to your shopping cart",
-          });
-        } else if (shoppingCart.find((item) => item.id === product.id)) {
-          const cartFilter = shoppingCart.filter((item) => item.id !== product.id);
-          setDoc(docRef, { shoppingCart: cartFilter }, { merge: true });
-          setInWishlist(false);
-          setShowingModal(true);
-          setModalMessage({
-            title: `${name} removed from your shopping cart`,
-            isShowing: true,
-            message: "Item has been removed from your shopping cart successfully",
-          });
-        }
-      })
-      .catch((error) => console.log(error));
+    const productCopy = JSON.parse(JSON.stringify(product))
+    dispatch(addOrRemoveFromShoppingCart({product: productCopy, uid: userData.uid}))
   };
 
   //* Add/Remove to wishlist
