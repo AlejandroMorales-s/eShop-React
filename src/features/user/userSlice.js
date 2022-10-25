@@ -92,16 +92,20 @@ export const loginWithSocialMedia = createAsyncThunk(
         const { displayName, email, photoURL, uid } = res.user;
         let role = "";
         const docRef = doc(database, "users", uid);
-        await setDoc(docRef, {
-          role: "REGULAR",
-          shoppingCart: [],
-          wishlist: [],
-          paymentMethods: [],
-          addresses: [],
-        });
 
         await getDoc(docRef)
-          .then((data) => (role = data.get("role")))
+          .then(async (data) => {
+            if (data.get("role") === undefined) {
+              await setDoc(docRef, {
+                role: "REGULAR",
+                shoppingCart: [],
+                wishlist: [],
+                paymentMethods: [],
+                addresses: [],
+              });
+            }
+            role = data.get("role");
+          })
           .catch((error) => console.log(error));
 
         userData = {
