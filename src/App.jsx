@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { authChangeHandler, selectLoggedStatus } from "./features/user/userSlice";
+import { authChangeHandler, selectLoggedStatus, selectUserData } from "./features/user/userSlice";
 //* Welcome
 import Welcome from "./views/Welcome";
 //* Login - SignUp
@@ -37,14 +37,20 @@ import AddProduct from "./views/AddProduct";
 import BuyCartTemplate from "./components/buyCart/BuyCartTemplate";
 import { auth } from "./libs/firebase";
 import { getProducts } from "./features/products/productsSlice";
+import { getShoppingCart } from "./features/shoppingCart/shoppingCartSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const loggedStatus = useSelector(selectLoggedStatus);
   const navigate = useNavigate();
 
+  //* Selectors
+  const userData = useSelector(selectUserData)
+  const loggedStatus = useSelector(selectLoggedStatus);
+
+  //* State
   const [showBtn, setShowBtn] = useState(false);
 
+  //* Return to top button
   window.addEventListener("scroll", () => (window.scrollY >= window.innerHeight / 2 ? setShowBtn(true) : setShowBtn(false)));
 
   const scroll = () => {
@@ -59,8 +65,9 @@ function App() {
   useEffect(() => {
     dispatch(authChangeHandler(auth));
     dispatch(getProducts())
+    dispatch(getShoppingCart(userData.uid))
     if (loggedStatus) navigate('/feed')
-  }, [loggedStatus])
+  }, [loggedStatus, userData.uid])
 
   return (
     <>
