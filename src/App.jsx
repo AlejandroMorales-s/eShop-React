@@ -38,6 +38,7 @@ import BuyCartTemplate from "./components/buyCart/BuyCartTemplate";
 import { auth } from "./libs/firebase";
 import { getProducts } from "./features/products/productsSlice";
 import { getShoppingCart } from "./features/shoppingCart/shoppingCartSlice";
+import { getWishlist } from "./features/wishlist/wishlistSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ function App() {
     dispatch(authChangeHandler(auth));
     dispatch(getProducts())
     dispatch(getShoppingCart(userData.uid))
+    dispatch(getWishlist(userData.uid))
     if (loggedStatus) navigate('/feed')
   }, [loggedStatus, userData.uid])
 

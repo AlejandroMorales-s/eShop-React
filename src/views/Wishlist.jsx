@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import DocumentTitle from "react-document-title";
+import { useSelector } from "react-redux";
 import Breadcrumb from "../components/breadcrumbTrail/Breadcrumb";
-import { globalContext } from "../components/globalContext/GlobalContext";
 import Modal from "../components/modals/Modal";
 import Navbar from "../components/navbar/Navbar";
 import ProductCard from "../components/productCard/ProductCard";
+import { selectWishlist } from "../features/wishlist/wishlistSlice";
 
 export default function Wishlist() {
   const [showingModal, setShowingModal] = useState(false);
@@ -22,7 +23,7 @@ export default function Wishlist() {
       text: "My wishlist",
     },
   ];
-  const { wishlist } = useContext(globalContext);
+  const wishlist = useSelector(selectWishlist);
   return (
     <>
       <DocumentTitle title="Wishlist" />
@@ -30,7 +31,7 @@ export default function Wishlist() {
       <Breadcrumb array={breadcrumb} />
       <h2 className="text-center font-semibold text-title dark:text-gray m-3">My wishlist</h2>
       <div className="flex flex-col sm:grid sm:grid-cols-4 gap-2 w-95 max-w-[1000px] m-auto">
-        {wishlist.map((product) => (
+        {wishlist?.map((product) => (
           <ProductCard
             key={product.id}
             setShowingModal={setShowingModal}
