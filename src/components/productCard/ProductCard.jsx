@@ -8,19 +8,22 @@ import { database } from "../../libs/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../features/user/userSlice";
 import { addOrRemoveFromShoppingCart } from "../../features/shoppingCart/shoppingCartSlice";
+import { addOrRemoveFromWishlist } from "../../features/wishlist/wishlistSlice";
 
-export default function ProductCard({ setShowingModal, setModalMessage, product }) {
-  const {
-    name, price, images, desc
-  } = product.data;
+export default function ProductCard({
+  setShowingModal,
+  setModalMessage,
+  product,
+}) {
+  const { name, price, images, desc } = product.data;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //* States
   const [inWishlist, setInWishlist] = useState(false);
   const [inShoppingCart, setInShoppingCart] = useState(false);
 
   //* Context
-  const userData = useSelector(selectUserData)
+  const userData = useSelector(selectUserData);
 
   const navigate = useNavigate();
 
@@ -46,42 +49,23 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
     lazyLoadingObserver.observe(image);
   }
 
-  const docRef = doc(database, "users", userData.uid);
+  const productCopy = JSON.parse(JSON.stringify(product));
   //* Add/Remove to cart
   const addToCart = (e) => {
     e.stopPropagation();
-    const productCopy = JSON.parse(JSON.stringify(product))
-    dispatch(addOrRemoveFromShoppingCart({product: productCopy, uid: userData.uid}))
+    console.log("addToCart");
+    dispatch(
+      addOrRemoveFromShoppingCart({ product: productCopy, uid: userData.uid })
+    );
   };
 
   //* Add/Remove to wishlist
   const addToWishlist = (e) => {
     e.stopPropagation();
-    getDoc(docRef)
-      .then((res) => {
-        const wishlist = res.get("wishlist");
-        if (!wishlist?.find((item) => item.id === product.id)) {
-          setDoc(docRef, { wishlist: [...wishlist, product] }, { merge: true });
-          setInWishlist(true);
-          setShowingModal(true);
-          setModalMessage({
-            title: `${name} added to your wishlist`,
-            isShowing: true,
-            message: "Item has been added to your wishlist",
-          });
-        } else if (wishlist.find((item) => item.id === product.id)) {
-          const wishlistFilter = wishlist.filter((item) => item.id !== product.id);
-          setDoc(docRef, { wishlist: wishlistFilter }, { merge: true });
-          setInWishlist(false);
-          setShowingModal(true);
-          setModalMessage({
-            title: `${name} removed from your wishlist`,
-            isShowing: true,
-            message: "Item has been removed from your wishlist successfully",
-          });
-        }
-      })
-      .catch((error) => console.log(error));
+    console.log("addToWishlist");
+    dispatch(
+      addOrRemoveFromWishlist({ product: productCopy, uid: userData.uid })
+    );
   };
 
   //* Buy now
@@ -100,6 +84,8 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
   };
 
   useEffect(() => {
+    const docRef = doc(database, "users", userData.uid);
+
     getDoc(docRef)
       .then((res) => {
         const wishlist = res.get("wishlist");
@@ -112,7 +98,10 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
   }, [inWishlist, inShoppingCart, product.id]);
 
   return (
-    <div onClick={productDetailsShow} className="bg-white w-full min-w-[235px] sm:max-w-[235px] relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50">
+    <div
+      onClick={productDetailsShow}
+      className="bg-white w-full min-w-[235px] sm:max-w-[235px] relative p-1 rounded shadow-containersShadow z-10 cursor-pointer flex flex-col gap-0.5 border-2 border-gray dark:border-gray-grayDark hover:border-primary dark:hover:border-primary-light  dark:bg-darkBg hover:-translate-y-0.5 transition-all ease-in-out delay-50"
+    >
       <div className="h-[250px] overflow-hidden rounded">
         <img
           className="w-100 object-cover h-100"
@@ -121,13 +110,10 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
           alt={name}
         />
       </div>
-      <h3 className="text-bold text-boldText dark:text-white font-semibold">{name}</h3>
-      <p className="text-bold text-green font-semibold">
-        $
-        {price}
-        {" "}
-        MXN
-      </p>
+      <h3 className="text-bold text-boldText dark:text-white font-semibold">
+        {name}
+      </h3>
+      <p className="text-bold text-green font-semibold">${price} MXN</p>
       <p className="text-text dark:text-gray line-clamp-2">{desc}</p>
       <div className="absolute bg-black bg-opacity-0 hover:bg-opacity-5 w-full h-full top-0 left-0 rounded pt-1.5 flex flex-col justify-between items-center px-1.5 opacity-0 hover:opacity-100 transition-all ease-in-out delay-50">
         <div className="flex gap-1 justify-center">
@@ -143,14 +129,22 @@ export default function ProductCard({ setShowingModal, setModalMessage, product 
             className="p-1 border-2 border-white hover:border-primary dark:hover:border-primary-light rounded-full bg-white dark:bg-darkBg dark:border-gray-grayDark shadow-containersShadow"
             type="button"
           >
-            <MdOutlineShoppingCart className={`${inShoppingCart && "text-primary dark:text-primary-light"} hover:text-primary dark:hover:text-primary-light dark:text-gray text-[20px]`} />
+            <MdOutlineShoppingCart
+              className={`${
+                inShoppingCart && "text-primary dark:text-primary-light"
+              } hover:text-primary dark:hover:text-primary-light dark:text-gray text-[20px]`}
+            />
           </button>
           <button
             onClick={addToWishlist}
             className="p-1 border-2 border-white hover:border-primary dark:hover:border-primary-light rounded-full bg-white dark:bg-darkBg dark:border-gray-grayDark shadow-containersShadow"
             type="button"
           >
-            <AiOutlineHeart className={`${inWishlist && "text-primary dark:text-primary-light"} hover:text-primary dark:hover:text-primary-light dark:text-gray text-[20px]`} />
+            <AiOutlineHeart
+              className={`${
+                inWishlist && "text-primary dark:text-primary-light"
+              } hover:text-primary dark:hover:text-primary-light dark:text-gray text-[20px]`}
+            />
           </button>
         </div>
         <button
