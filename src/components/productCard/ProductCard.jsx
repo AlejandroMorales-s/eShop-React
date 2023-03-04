@@ -84,8 +84,8 @@ export default function ProductCard({
   };
 
   useEffect(() => {
+    if (!userData.uid) return;
     const docRef = doc(database, "users", userData.uid);
-
     getDoc(docRef)
       .then((res) => {
         const wishlist = res.get("wishlist");
@@ -95,7 +95,7 @@ export default function ProductCard({
         setInShoppingCart(shoppingCart?.find((item) => item.id === product.id));
       })
       .catch((error) => console.log(error));
-  }, [inWishlist, inShoppingCart, product.id]);
+  }, [inWishlist, inShoppingCart, product.id, userData]);
 
   return (
     <div
