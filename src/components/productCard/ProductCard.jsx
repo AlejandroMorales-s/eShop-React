@@ -9,12 +9,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../features/user/userSlice";
 import { addOrRemoveFromShoppingCart } from "../../features/shoppingCart/shoppingCartSlice";
 import { addOrRemoveFromWishlist } from "../../features/wishlist/wishlistSlice";
+import { setModalInfo } from "../../features/modal/modalSlice";
 
-export default function ProductCard({
-  setShowingModal,
-  setModalMessage,
-  product,
-}) {
+export default function ProductCard({ product }) {
   const { name, price, images, desc } = product.data;
 
   const dispatch = useDispatch();
@@ -53,16 +50,21 @@ export default function ProductCard({
   //* Add/Remove to cart
   const addToCart = (e) => {
     e.stopPropagation();
-    console.log("addToCart");
     dispatch(
-      addOrRemoveFromShoppingCart({ product: productCopy, uid: userData.uid })
+      setModalInfo({
+        message: `${name} added to shopping cart successfully`,
+        type: "error",
+        title: "Add to cart",
+      })
     );
+    // dispatch(
+    //   addOrRemoveFromShoppingCart({ product: productCopy, uid: userData.uid })
+    // );
   };
 
   //* Add/Remove to wishlist
   const addToWishlist = (e) => {
     e.stopPropagation();
-    console.log("addToWishlist");
     dispatch(
       addOrRemoveFromWishlist({ product: productCopy, uid: userData.uid })
     );
