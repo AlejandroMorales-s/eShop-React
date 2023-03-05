@@ -19,44 +19,29 @@ export default function Modal() {
   }, 5000);
 
   const modalTypesIcons = {
-    info: {
-      icon: (
-        <AiFillInfoCircle className="text-[70px] text-blue w-[25px] h-[25px]" />
-      ),
-      color: "blue",
-    },
-    warning: {
-      icon: (
-        <MdError className="text-[70px] text-yellowModal w-[25px] h-[25px]" />
-      ),
-      color: "yellowModal",
-    },
-    success: {
-      icon: (
-        <AiFillCheckCircle className="text-[25px] text-greenModal w-[25px] h-[25px]" />
-      ),
-      color: "greenModal",
-    },
-    error: {
-      icon: (
-        <AiFillCloseCircle className="text-[25px] text-red w-[25px] h-[25px]" />
-      ),
-      color: "red",
-    },
+    info: (
+      <AiFillInfoCircle className="text-[70px] text-blue w-[25px] h-[25px]" />
+    ),
+    warning: (
+      <MdError className="text-[70px] text-yellowModal w-[25px] h-[25px]" />
+    ),
+    success: (
+      <AiFillCheckCircle className="text-[25px] text-greenModal w-[25px] h-[25px]" />
+    ),
+    error: (
+      <AiFillCloseCircle className="text-[25px] text-red w-[25px] h-[25px]" />
+    ),
   };
 
-  const getModalColors = () => {
-    const currentColor = modalTypesIcons[data.type].color;
-    return `border-${currentColor} bg-light${currentColor
-      .charAt(0)
-      .toUpperCase()}${currentColor.slice(1)}`;
-  };
   return (
     <div
-      className={`rounded z-30 p-2 h-fit items-start sticky bottom-2 left-2 sm:bottom-2 sm:left-2 w-fit flex gap-2 dark:bg-darkBg border-l-[5px] dark:border-y-2 dark:border-r-2 shadow-containersShadow dark:border-r-gray-grayDark dark:border-y-gray-grayDark $
-        ${getModalColors()}`}
+      className={`rounded z-30 p-2 h-fit items-start sticky bottom-2 left-2 sm:bottom-2 sm:left-2 w-fit flex gap-2 dark:bg-darkBg border-l-[5px] dark:border-y-2 dark:border-r-2 shadow-containersShadow dark:border-r-gray-grayDark dark:border-y-gray-grayDark ${
+        data.type === "info" && "border-blue bg-lightBlue"
+      } ${data.type === "error" && "border-red bg-lightRed"} ${
+        data.type === "success" && "border-greenModal bg-lightGreenModal"
+      } ${data.type === "warning" && "border-yellowModal bg-lightYellowModal"}`}
     >
-      {modalTypesIcons[data.type].icon}
+      {modalTypesIcons[data.type]}
       <div>
         <h2 className=" dark:text-white text-bold font-semibold">
           {data.title}
