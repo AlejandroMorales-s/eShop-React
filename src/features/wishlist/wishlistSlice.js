@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
+import { setModalInfo } from "../modal/modalSlice";
 
 //* Async thunk
 export const getWishlist = createAsyncThunk(
-  "shoppingCart/getShoppingCart",
+  "wishlist/getWishlist",
   async (userId, thunkAPI) => {
     const docRef = doc(database, "users", userId);
     let wishlist = [];
@@ -24,7 +25,7 @@ export const getWishlist = createAsyncThunk(
 );
 
 export const addOrRemoveFromWishlist = createAsyncThunk(
-  "shoppingCart/add-removeProduct",
+  "wishlist/addOrRemoveFromWishlist",
   async ({ product, uid }, thunkAPI) => {
     const { id } = product;
 
@@ -49,6 +50,13 @@ export const addOrRemoveFromWishlist = createAsyncThunk(
             productIsInWishlist: false,
             wishlistFiltered: [],
           };
+          thunkAPI.dispatch(
+            setModalInfo({
+              message: `${product.data.name} added to wishlist successfully`,
+              type: "success",
+              title: "Added to wishlist",
+            })
+          );
         } else {
           const wishlistFilter = wishlist.filter((item) => item.id !== id);
 
@@ -58,6 +66,14 @@ export const addOrRemoveFromWishlist = createAsyncThunk(
             productIsInWishlist: true,
             wishlistFiltered: wishlistFilter,
           };
+
+          thunkAPI.dispatch(
+            setModalInfo({
+              message: `${product.data.name} removed from wishlist successfully`,
+              type: "success",
+              title: "Removed from wishlist",
+            })
+          );
         }
       })
       .catch((error) => {
@@ -118,5 +134,6 @@ const wishlistReducer = createSlice(options);
 //* Selectors
 
 export const selectWishlist = (state) => state.wishlist.products;
+export const selectWishlistErrorStatus = (state) => state.wishlist.error;
 
 export default wishlistReducer.reducer;

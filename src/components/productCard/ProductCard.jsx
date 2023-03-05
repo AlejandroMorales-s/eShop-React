@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { doc, setDoc, getDoc } from "firebase/firestore";
 //* Icons
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
-import { database } from "../../libs/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../features/user/userSlice";
-import { addOrRemoveFromShoppingCart } from "../../features/shoppingCart/shoppingCartSlice";
-import { addOrRemoveFromWishlist } from "../../features/wishlist/wishlistSlice";
+import {
+  addOrRemoveFromShoppingCart,
+  selectShoppingCartProducts,
+} from "../../features/shoppingCart/shoppingCartSlice";
+import {
+  addOrRemoveFromWishlist,
+  selectWishlist,
+} from "../../features/wishlist/wishlistSlice";
 import { setModalInfo } from "../../features/modal/modalSlice";
 
 export default function ProductCard({ product }) {
@@ -19,13 +23,14 @@ export default function ProductCard({ product }) {
   const [inWishlist, setInWishlist] = useState(false);
   const [inShoppingCart, setInShoppingCart] = useState(false);
 
-  //* Context
+  //* Selectors
   const userData = useSelector(selectUserData);
+  const shoppingCart = useSelector(selectShoppingCartProducts);
+  const wishlist = useSelector(selectWishlist);
 
   const navigate = useNavigate();
 
   //* Img Lazy Load
-
   const lazyLoadingCallback = (entries) => {
     for (const entry of entries) {
       if (entry.isIntersecting) {
@@ -47,19 +52,22 @@ export default function ProductCard({ product }) {
   }
 
   const productCopy = JSON.parse(JSON.stringify(product));
+
   //* Add/Remove to cart
   const addToCart = (e) => {
     e.stopPropagation();
     dispatch(
-      setModalInfo({
-        message: `${name} added to shopping cart successfully`,
-        type: "error",
-        title: "Add to cart",
-      })
-    );
-    // dispatch(
-    //   addOrRemoveFromShoppingCart({ product: productCopy, uid: userData.uid })
-    // );
+      addOrRemoveFromShoppingCart({ product: productCopy, uid: userData.uid })
+    ).then((res) => {
+      if (!res.error) return;
+      dispatch(
+        setModalInfo({
+          message: res.error.message,
+          type: "error",
+          title: "Something went wrong...",
+        })
+      );
+    });
   };
 
   //* Add/Remove to wishlist
@@ -67,7 +75,16 @@ export default function ProductCard({ product }) {
     e.stopPropagation();
     dispatch(
       addOrRemoveFromWishlist({ product: productCopy, uid: userData.uid })
-    );
+    ).then((res) => {
+      if (!res.error) return;
+      dispatch(
+        setModalInfo({
+          message: res.error.message,
+          type: "error",
+          title: "Something went wrong...",
+        })
+      );
+    });
   };
 
   //* Buy now
@@ -86,18 +103,15 @@ export default function ProductCard({ product }) {
   };
 
   useEffect(() => {
-    if (!userData.uid) return;
-    const docRef = doc(database, "users", userData.uid);
-    getDoc(docRef)
-      .then((res) => {
-        const wishlist = res.get("wishlist");
-        const shoppingCart = res.get("shoppingCart");
+    const productInShoppingCart = shoppingCart.some(
+      (item) => item.id === product.id
+    );
 
-        setInWishlist(wishlist?.find((item) => item.id === product.id));
-        setInShoppingCart(shoppingCart?.find((item) => item.id === product.id));
-      })
-      .catch((error) => console.log(error));
-  }, [inWishlist, inShoppingCart, product.id, userData]);
+    const productInWishlist = wishlist.some((item) => item.id === product.id);
+
+    setInShoppingCart(productInShoppingCart);
+    setInWishlist(productInWishlist);
+  }, [shoppingCart, wishlist]);
 
   return (
     <div

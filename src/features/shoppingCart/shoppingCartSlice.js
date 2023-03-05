@@ -1,7 +1,7 @@
-import { async } from "@firebase/util";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
+import { setModalInfo } from "../modal/modalSlice";
 
 //* Async thunk
 export const getShoppingCart = createAsyncThunk(
@@ -47,6 +47,7 @@ export const addOrRemoveFromShoppingCart = createAsyncThunk(
         );
 
         if (!productIsInShoppingCart) {
+          console.log("adding");
           setDoc(
             docRef,
             { shoppingCart: [...shoppingCart, product] },
@@ -57,6 +58,14 @@ export const addOrRemoveFromShoppingCart = createAsyncThunk(
             productIsInShoppingCart: false,
             shoppingCartFiltered: [],
           };
+          thunkAPI.dispatch(
+            setModalInfo({
+              message: `${product.data.name}
+                added to shopping cart successfully`,
+              type: "success",
+              title: "Added to shopping cart",
+            })
+          );
         } else {
           const cartFilter = shoppingCart.filter((item) => item.id !== id);
 
@@ -66,6 +75,15 @@ export const addOrRemoveFromShoppingCart = createAsyncThunk(
             productIsInShoppingCart: true,
             shoppingCartFiltered: cartFilter,
           };
+
+          thunkAPI.dispatch(
+            setModalInfo({
+              message: `${product.data.name}
+                removed from shopping cart successfully`,
+              type: "success",
+              title: "Removed from shopping cart",
+            })
+          );
         }
       })
       .catch((error) => {

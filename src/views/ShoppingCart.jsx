@@ -1,21 +1,15 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import DocumentTitle from "react-document-title";
 import { Link } from "react-router-dom";
-import { globalContext } from "../components/globalContext/GlobalContext";
 //* Components
 import Navbar from "../components/navbar/Navbar";
 import OrderCard from "../components/orders/OrderCard";
 
-import Modal from "../components/modals/Modal";
+import { useSelector } from "react-redux";
+import { selectShoppingCartProducts } from "../features/shoppingCart/shoppingCartSlice";
 
 export default function ShoppingCart() {
-  const { shoppingCart } = useContext(globalContext);
-
-  const [showingModal, setShowingModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState({
-    title: "",
-    message: "",
-  });
+  const shoppingCart = useSelector(selectShoppingCartProducts);
 
   return (
     <>
@@ -23,12 +17,7 @@ export default function ShoppingCart() {
       <Navbar />
       <div className="w-95 max-w-[1000px] my-5 m-auto bg-white rounded shadow-containersShadow p-2 flex flex-col gap-2 dark:bg-darkBg">
         {shoppingCart.map((item) => (
-          <OrderCard
-            key={item.id}
-            item={item}
-            setModalMessage={setModalMessage}
-            setShowingModal={setShowingModal}
-          />
+          <OrderCard key={item.id} product={item} />
         ))}
         <Link to="/buy-cart">
           <button
@@ -39,7 +28,6 @@ export default function ShoppingCart() {
           </button>
         </Link>
       </div>
-      {showingModal && <Modal type="success" title={modalMessage.title} desc={modalMessage.message} setShowingModal={setShowingModal} />}
     </>
   );
 }
