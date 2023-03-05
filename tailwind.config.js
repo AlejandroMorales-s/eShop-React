@@ -45,6 +45,20 @@ module.exports = {
       65: "650px",
     },
     extend: {
+      keyframes: {
+        modalIn: {
+          "0%": { transform: "translate(-1000px)" },
+          "100%": { transform: "translate(0px)" },
+        },
+        modalOut: {
+          "0%": { transform: "translate(0px)" },
+          "100%": { transform: "translate(-1000px)" },
+        },
+      },
+      animation: {
+        modalIn: "modalIn 0.65s ease-in-out forwards",
+        modalOut: "modalOut 0.65s ease-in-out forwards",
+      },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
