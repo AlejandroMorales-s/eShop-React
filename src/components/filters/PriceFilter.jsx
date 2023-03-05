@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { filterProductsByPriceRange } from "../../features/filters/filtersSlice";
 import { selectAllProducts } from "../../features/products/productsSlice";
-import { globalContext } from "../globalContext/GlobalContext";
 
 export default function PriceFilter() {
   const options = [
@@ -44,16 +43,21 @@ export default function PriceFilter() {
     },
   ];
 
+  //* Navigate
   const navigate = useNavigate();
 
+  //* Dispatch
   const dispatch = useDispatch();
 
+  //* Selectors
   const products = useSelector(selectAllProducts);
 
+  //* States
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelectChange = (event) => {
-    const priceId = Number(event.target.id);
+  //* Filter products
+  const handleSelectChange = (e) => {
+    const priceId = Number(e.target.id);
 
     const priceRange = options.find((option) => option.id === priceId).data
       .range;
