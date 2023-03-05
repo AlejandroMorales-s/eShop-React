@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   AiOutlineClose,
   AiFillCheckCircle,
@@ -11,7 +11,6 @@ import {
   resetModal,
   selectModalClosing,
   selectModalData,
-  selectModalStatus,
   setClosingModal,
 } from "../../features/modal/modalSlice";
 
@@ -19,7 +18,6 @@ export default function Modal() {
   //* Selectors
   const data = useSelector(selectModalData);
   const modalClosing = useSelector(selectModalClosing);
-  const modalStatus = useSelector(selectModalStatus);
 
   const dispatch = useDispatch();
 
@@ -44,10 +42,6 @@ export default function Modal() {
       <AiFillCloseCircle className="text-[25px] text-red w-[25px] h-[25px]" />
     ),
   };
-
-  useEffect(() => {
-    if (modalStatus) console.log("opened");
-  }, []);
 
   return (
     <div

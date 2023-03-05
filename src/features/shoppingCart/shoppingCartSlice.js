@@ -47,7 +47,6 @@ export const addOrRemoveFromShoppingCart = createAsyncThunk(
         );
 
         if (!productIsInShoppingCart) {
-          console.log("adding");
           setDoc(
             docRef,
             { shoppingCart: [...shoppingCart, product] },
