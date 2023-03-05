@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { authChangeHandler, selectLoggedStatus, selectUserData } from "./features/user/userSlice";
+import {
+  authChangeHandler,
+  selectLoggedStatus,
+  selectUserData,
+} from "./features/user/userSlice";
 //* Welcome
 import Welcome from "./views/Welcome";
 //* Login - SignUp
@@ -39,20 +43,30 @@ import { auth } from "./libs/firebase";
 import { getProducts } from "./features/products/productsSlice";
 import { getShoppingCart } from "./features/shoppingCart/shoppingCartSlice";
 import { getWishlist } from "./features/wishlist/wishlistSlice";
+import { selectModalStatus } from "./features/modal/modalSlice";
+import Modal from "./components/modals/Modal";
 
 function App() {
+  //* Dispatch
   const dispatch = useDispatch();
+
+  //* Navigate
   const navigate = useNavigate();
 
   //* Selectors
-  const userData = useSelector(selectUserData)
+  const userData = useSelector(selectUserData);
   const loggedStatus = useSelector(selectLoggedStatus);
+  const modalOpened = useSelector(selectModalStatus);
 
   //* State
   const [showBtn, setShowBtn] = useState(false);
 
   //* Return to top button
-  window.addEventListener("scroll", () => (window.scrollY >= window.innerHeight / 2 ? setShowBtn(true) : setShowBtn(false)));
+  window.addEventListener("scroll", () =>
+    window.scrollY >= window.innerHeight / 2
+      ? setShowBtn(true)
+      : setShowBtn(false)
+  );
 
   const scroll = () => {
     window.scrollTo({
@@ -62,14 +76,13 @@ function App() {
     });
   };
 
-  
   useEffect(() => {
     dispatch(authChangeHandler(auth));
-    dispatch(getProducts())
-    dispatch(getShoppingCart(userData.uid))
-    dispatch(getWishlist(userData.uid))
-    if (loggedStatus) navigate('/feed')
-  }, [loggedStatus, userData.uid])
+    dispatch(getProducts());
+    dispatch(getShoppingCart(userData.uid));
+    dispatch(getWishlist(userData.uid));
+    if (loggedStatus) navigate("/feed");
+  }, [loggedStatus, userData.uid]);
 
   return (
     <>
@@ -84,7 +97,10 @@ function App() {
         <Route path="/search-products" element={<ProductsFiltered />} />
         {/* Address */}
         <Route path="/account/my-addresses" element={<Addresses />} />
-        <Route path="/account/my-addresses/add-address" element={<AddAddress />} />
+        <Route
+          path="/account/my-addresses/add-address"
+          element={<AddAddress />}
+        />
         {/* My Account */}
         <Route path="/account" element={<MyAccount />} />
         <Route path="/account/my-data" element={<MyData />} />
@@ -110,8 +126,13 @@ function App() {
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {showBtn
-        && <FaArrowCircleUp onClick={scroll} className="sticky z-50 shadow-shadow rounded-full text-primary dark:text-primary-light h-[50px] w-[50px] bottom-2 left-[95.5%] cursor-pointer" />}
+      {showBtn && (
+        <FaArrowCircleUp
+          onClick={scroll}
+          className="sticky z-50 shadow-shadow rounded-full text-primary dark:text-primary-light h-[50px] w-[50px] bottom-2 left-[95.5%] cursor-pointer"
+        />
+      )}
+      {modalOpened && <Modal />}
     </>
   );
 }
