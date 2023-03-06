@@ -2,159 +2,170 @@
 @tailwind components;
 @tailwind utilities;
 @font-face {
-    font-family: "Poppins";
-    src: url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+  font-family: "Poppins";
+  src: url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 }
-*{
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+* {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
 }
-body{
-    padding-top: 62px;
-}
-
-img{
-    width: 100%;
-    height: 100%;
+body {
+  padding-top: 62px;
+  overflow-x: hidden;
 }
 
-#input-dropdown::-webkit-scrollbar, 
-.horizontal-dropdown::-webkit-scrollbar, 
+img {
+  width: 100%;
+  height: 100%;
+}
+
+#input-dropdown::-webkit-scrollbar,
+.horizontal-dropdown::-webkit-scrollbar,
 body::-webkit-scrollbar {
-    -webkit-appearance: none;
+  -webkit-appearance: none;
 }
 
-#input-dropdown::-webkit-scrollbar:vertical, 
+#input-dropdown::-webkit-scrollbar:vertical,
 body::-webkit-scrollbar:vertical {
   width: 5px;
 }
-.horizontal-dropdown::-webkit-scrollbar:horizontal{
+.horizontal-dropdown::-webkit-scrollbar:horizontal {
   height: 5px;
 }
 
-#input-dropdown::-webkit-scrollbar-button:increment,#input-dropdown::-webkit-scrollbar-button, 
-.horizontal-dropdown::-webkit-scrollbar-button:increment,.horizontal-dropdown::-webkit-scrollbar-button, 
-body::-webkit-scrollbar-button:increment,body::-webkit-scrollbar-button {
-    display: none;
-} 
-
-#input-dropdown::-webkit-scrollbar-thumb, 
-.horizontal-dropdown::-webkit-scrollbar-thumb, 
-body::-webkit-scrollbar-thumb {
-    background-color: #9341dd;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+#input-dropdown::-webkit-scrollbar-button:increment,
+#input-dropdown::-webkit-scrollbar-button,
+.horizontal-dropdown::-webkit-scrollbar-button:increment,
+.horizontal-dropdown::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button:increment,
+body::-webkit-scrollbar-button {
+  display: none;
 }
 
-#input-dropdown::-webkit-scrollbar-track, 
-.horizontal-dropdown::-webkit-scrollbar-track, 
+#input-dropdown::-webkit-scrollbar-thumb,
+.horizontal-dropdown::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background-color: #9341dd;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+#input-dropdown::-webkit-scrollbar-track,
+.horizontal-dropdown::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
-    border-radius: 10px;  
+  border-radius: 10px;
 }
 
 .card {
-    color: #fff;
-    transform: rotateY(0deg);
-    transform-style: preserve-3d;
-    border-radius: 15% ;
-    -webkit-border-radius: 15% ;
-    -moz-border-radius: 15% ;
-    -ms-border-radius: 15% ;
-    -o-border-radius: 15% ;
-    -webkit-transform: rotateY(0deg);
-    -moz-transform: rotateY(0deg);
-    -ms-transform: rotateY(0deg);
-    -o-transform: rotateY(0deg);
+  color: #fff;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+  border-radius: 15%;
+  -webkit-border-radius: 15%;
+  -moz-border-radius: 15%;
+  -ms-border-radius: 15%;
+  -o-border-radius: 15%;
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  -o-transform: rotateY(0deg);
 }
 
 .card.active {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .card > div {
-	border-radius: 15px;
-	min-height: 315px;
+  border-radius: 15px;
+  min-height: 315px;
 }
-.back{
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    -ms-transform: rotateY(180deg);
-    -o-transform: rotateY(180deg);
+.back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
 }
-.visa{
-    background: rgb(41,36,94);
-    background: linear-gradient(230deg, rgba(41,36,94,1) 0%, rgba(41,57,145,1) 100%);
+.visa {
+  background: rgb(41, 36, 94);
+  background: linear-gradient(
+    230deg,
+    rgba(41, 36, 94, 1) 0%,
+    rgba(41, 57, 145, 1) 100%
+  );
 }
-.mastercard{
-    background: rgb(249,249,249);
-    background: linear-gradient(230deg, rgba(249,249,249,1) 0%, rgba(214,215,213,1) 100%);
+.mastercard {
+  background: rgb(249, 249, 249);
+  background: linear-gradient(
+    230deg,
+    rgba(249, 249, 249, 1) 0%,
+    rgba(214, 215, 213, 1) 100%
+  );
 }
 
 .loader {
-    --height-of-loader: 4px;
-    --loader-color: #9341dd;
-    width: 60%;
-    height: var(--height-of-loader);
-    border-radius: 30px;
-    background-color: rgba(0,0,0,0.2);
-    position: relative;
+  --height-of-loader: 4px;
+  --loader-color: #9341dd;
+  width: 60%;
+  height: var(--height-of-loader);
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 .dot-wave {
-    --uib-size: 50px;
-    --uib-speed: 0.6s;
-    --uib-color: #9341DD;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-between;
-    width: var(--uib-size);
-    height: calc(var(--uib-size) * 0.17);
-    padding-top: calc(var(--uib-size) * 0.34);
+  --uib-size: 50px;
+  --uib-speed: 0.6s;
+  --uib-color: #9341dd;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--uib-size);
+  height: calc(var(--uib-size) * 0.17);
+  padding-top: calc(var(--uib-size) * 0.34);
+}
+
+.dot-wave__dot {
+  flex-shrink: 0;
+  width: calc(var(--uib-size) * 0.17);
+  height: calc(var(--uib-size) * 0.17);
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  will-change: transform;
+}
+
+.dot-wave__dot:nth-child(1) {
+  animation: jump824 var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.45)
+    infinite;
+}
+
+.dot-wave__dot:nth-child(2) {
+  animation: jump824 var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.3)
+    infinite;
+}
+
+.dot-wave__dot:nth-child(3) {
+  animation: jump824 var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.15)
+    infinite;
+}
+
+.dot-wave__dot:nth-child(4) {
+  animation: jump824 var(--uib-speed) ease-in-out infinite;
+}
+
+@keyframes jump824 {
+  0%,
+  100% {
+    transform: translateY(0px);
   }
-  
-  .dot-wave__dot {
-    flex-shrink: 0;
-    width: calc(var(--uib-size) * 0.17);
-    height: calc(var(--uib-size) * 0.17);
-    border-radius: 50%;
-    background-color: var(--uib-color);
-    will-change: transform;
+
+  50% {
+    transform: translateY(-200%);
   }
-  
-  .dot-wave__dot:nth-child(1) {
-    animation: jump824 var(--uib-speed) ease-in-out
-      calc(var(--uib-speed) * -0.45) infinite;
-  }
-  
-  .dot-wave__dot:nth-child(2) {
-    animation: jump824 var(--uib-speed) ease-in-out
-      calc(var(--uib-speed) * -0.3) infinite;
-  }
-  
-  .dot-wave__dot:nth-child(3) {
-    animation: jump824 var(--uib-speed) ease-in-out
-      calc(var(--uib-speed) * -0.15) infinite;
-  }
-  
-  .dot-wave__dot:nth-child(4) {
-    animation: jump824 var(--uib-speed) ease-in-out infinite;
-  }
-  
-  @keyframes jump824 {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-  
-    50% {
-      transform: translateY(-200%);
-    }
-  }
-  
+}

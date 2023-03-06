@@ -45,7 +45,7 @@ export default function Modal() {
 
   return (
     <div
-      className={`rounded animate-modalIn z-30 p-2 h-fit items-start sticky bottom-2 left-2 sm:bottom-2 sm:left-2 w-fit flex gap-2 dark:bg-darkBg border-l-[5px] dark:border-y-2 dark:border-r-2 shadow-containersShadow dark:border-r-gray-grayDark dark:border-y-gray-grayDark 
+      className={`rounded animate-modalIn z-30 p-2 h-fit items-start fixed bottom-2 left-2 sm:bottom-2 sm:left-2 w-fit flex gap-2 dark:bg-darkBg border-l-[5px] dark:border-y-2 dark:border-r-2 shadow-containersShadow dark:border-r-gray-grayDark dark:border-y-gray-grayDark 
       ${data.type === "info" && "border-blue bg-lightBlue"} 
       ${data.type === "error" && "border-red bg-lightRed"} 
       ${data.type === "success" && "border-greenModal bg-lightGreenModal"} 
