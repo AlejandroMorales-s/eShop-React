@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -43,7 +43,7 @@ import { auth } from "./libs/firebase";
 import { getProducts } from "./features/products/productsSlice";
 import { getShoppingCart } from "./features/shoppingCart/shoppingCartSlice";
 import { getWishlist } from "./features/wishlist/wishlistSlice";
-import { selectModalStatus } from "./features/modal/modalSlice";
+import { selectModalStatus, setModalInfo } from "./features/modal/modalSlice";
 import Modal from "./components/modals/Modal";
 
 function App() {
@@ -52,6 +52,9 @@ function App() {
 
   //* Navigate
   const navigate = useNavigate();
+
+  //* Current path
+  const currentPath = useLocation().pathname;
 
   //* Selectors
   const userData = useSelector(selectUserData);
@@ -76,12 +79,26 @@ function App() {
     });
   };
 
+  const loginSignupAndWelcomePaths = ["/", "/login", "/signup"];
+
   useEffect(() => {
     dispatch(authChangeHandler(auth));
     dispatch(getProducts());
     dispatch(getShoppingCart(userData.uid));
     dispatch(getWishlist(userData.uid));
-    if (loggedStatus) navigate("/feed");
+
+    if (loggedStatus && loginSignupAndWelcomePaths.includes(currentPath))
+      navigate("/feed");
+    if (!loggedStatus) {
+      navigate("/");
+      dispatch(
+        setModalInfo({
+          message: "You must login or sign up before",
+          type: "error",
+          title: "Auth error",
+        })
+      );
+    }
   }, [loggedStatus, userData.uid]);
 
   return (
