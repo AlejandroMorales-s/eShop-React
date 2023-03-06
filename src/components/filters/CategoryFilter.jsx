@@ -1,6 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { globalContext } from "../globalContext/GlobalContext";
+import { filterProductsByCategory } from "../../features/filters/filtersSlice";
+import { selectAllProducts } from "../../features/products/productsSlice";
 
 export default function CategoryFilter() {
   const options = [
@@ -12,32 +14,15 @@ export default function CategoryFilter() {
 
   const navigate = useNavigate();
 
-  const { setProductsFiltered } = useContext(globalContext);
-  const { products } = useContext(globalContext);
+  const dispatch = useDispatch();
+
+  const products = useSelector(selectAllProducts);
+
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelectChange = (event) => {
+  const handleSelectChange = (category) => {
+    dispatch(filterProductsByCategory({ products, category }));
     navigate("/search-products");
-    switch (Number(event.target.id)) {
-    case 1:
-      setProductsFiltered(products);
-      setProductsFiltered(products.filter((product) => product.data.category.toLowerCase() === "living room"));
-      break;
-    case 2:
-      setProductsFiltered(products);
-      setProductsFiltered(products.filter((product) => product.data.category.toLowerCase() === "bedroom"));
-      break;
-    case 3:
-      setProductsFiltered(products);
-      setProductsFiltered(products.filter((product) => product.data.category.toLowerCase() === "bathroom"));
-      break;
-    case 4:
-      setProductsFiltered(products);
-      setProductsFiltered(products.filter((product) => product.data.category.toLowerCase() === "kitchen"));
-      break;
-    default:
-      setProductsFiltered(products);
-    }
   };
 
   const open = () => setIsOpen(!isOpen);
@@ -53,13 +38,16 @@ export default function CategoryFilter() {
           className="shadow-shadow relative w-full border-2 border-primary dark:border-primary-light focus:ring-1 focus:outline-none focus:border-primary focus:ring-primary dark:focus:border-primary-light dark:focus:ring-primary-light rounded dark:bg-darkBg font-medium"
         />
       </label>
-      <div className={`${isOpen ? "absolute" : "hidden"} flex flex-col gap-1 bg-white dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark p-1 w-full z-20 rounded shadow-containersShadow`}>
+      <div
+        className={`${
+          isOpen ? "absolute" : "hidden"
+        } flex flex-col gap-1 bg-white dark:bg-darkBg border-2 border-gray dark:border-gray-grayDark p-1 w-full z-20 rounded shadow-containersShadow`}
+      >
         {options.map((option) => (
           <button
             type="button"
             tabIndex={0}
-            onKeyDown={(e) => { if (e.keyCode === 13) handleSelectChange(e); }}
-            onClick={(e) => handleSelectChange(e)}
+            onClick={() => handleSelectChange(option.name)}
             id={option.id}
             key={option.id}
             className="p-0.5 text-center cursor-pointer hover:bg-primary dark:hover:bg-primary-light rounded hover:text-white dark:hover:text-boldText font-medium text-text dark:text-gray transition-all ease-in-out delay-50"

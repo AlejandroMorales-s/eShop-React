@@ -35,6 +35,20 @@ const options = {
 
         if (product.data.price >= minPrice && product.data.price <= maxPrice)
           return product;
+
+        return null;
+      });
+
+      state.productsFiltered = productsFiltered;
+    },
+    filterProductsByCategory: (state, action) => {
+      const { products, category } = action.payload;
+
+      const productsFiltered = products.filter((product) => {
+        if (product.data.category.toLowerCase() === category.toLowerCase())
+          return product;
+
+        return null;
       });
 
       state.productsFiltered = productsFiltered;
@@ -45,8 +59,11 @@ const options = {
 const filtersSlice = createSlice(options);
 
 //* Reducers
-export const { filterProductsByName, filterProductsByPriceRange } =
-  filtersSlice.actions;
+export const {
+  filterProductsByName,
+  filterProductsByPriceRange,
+  filterProductsByCategory,
+} = filtersSlice.actions;
 
 //* Selector
 export const selectProductsFiltered = (state) => state.filters.productsFiltered;
